@@ -5,6 +5,10 @@ import { LinkedinIcon } from './Icons';
 export default function LinkedInSection() {
   const [activeCardIndex, setActiveCardIndex] = useState(2);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  
+  // Touch swipe gesture states
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchEndX, setTouchEndX] = useState(0);
 
   const posts = [
     {
@@ -62,15 +66,34 @@ export default function LinkedInSection() {
     setActiveCardIndex((prev) => (prev === posts.length - 1 ? 0 : prev + 1));
   };
 
+  // Touch Swipe Handlers for Mobile
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    const minSwipeDistance = 40;
+    const distance = touchStartX - touchEndX;
+    
+    if (distance > minSwipeDistance) {
+      handleNext(); // Swiped left -> next card
+    } else if (distance < -minSwipeDistance) {
+      handlePrev(); // Swiped right -> prev card
+    }
+  };
+
   const getCardStyle = (index) => {
     const offset = index - activeCardIndex;
     const isHovered = hoveredIndex === index;
     const isAnyHovered = hoveredIndex !== null;
 
-    // Base fan offset
     let baseTranslateX = offset * 135;
 
-    // Accordion expansion on hover: push left/right cards away to create space!
     if (isAnyHovered) {
       if (index < hoveredIndex) {
         baseTranslateX -= (hoveredIndex - index) * 30 + 45;
@@ -105,11 +128,11 @@ export default function LinkedInSection() {
           LinkedIn
         </h2>
         <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-          17K+ Community · Top 5% Creator · Tap or hover cards to expand deck
+          17K+ Community · Top 5% Creator · Swipe left/right or tap cards
         </p>
       </div>
 
-      {/* 3D Interactive Expanding Card Deck */}
+      {/* 3D Interactive Card Fan Deck */}
       <div className="flex flex-col items-center w-full min-h-[520px] relative max-w-6xl mx-auto px-4 sm:px-8">
         
         {/* Left Navigation Arrow */}
@@ -132,7 +155,13 @@ export default function LinkedInSection() {
           <ChevronRight className="w-6 h-6" />
         </button>
 
-        <div className="relative w-full max-w-4xl h-[480px] flex justify-center items-center">
+        {/* Touch Swipeable Deck Container */}
+        <div
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          className="relative w-full max-w-4xl h-[480px] flex justify-center items-center touch-pan-y"
+        >
           {posts.map((post, index) => (
             <div
               key={post.id}

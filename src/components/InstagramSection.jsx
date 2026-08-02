@@ -6,6 +6,10 @@ export default function InstagramSection() {
   const [activeReelIndex, setActiveReelIndex] = useState(2);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
+  // Touch swipe gesture states
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchEndX, setTouchEndX] = useState(0);
+
   const reels = [
     {
       id: 'DZzn3h3M9Jp',
@@ -62,15 +66,34 @@ export default function InstagramSection() {
     setActiveReelIndex((prev) => (prev === reels.length - 1 ? 0 : prev + 1));
   };
 
+  // Touch Swipe Handlers for Mobile
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    const minSwipeDistance = 40;
+    const distance = touchStartX - touchEndX;
+    
+    if (distance > minSwipeDistance) {
+      handleNext(); // Swiped left -> next reel
+    } else if (distance < -minSwipeDistance) {
+      handlePrev(); // Swiped right -> prev reel
+    }
+  };
+
   const getReelStyle = (index) => {
     const offset = index - activeReelIndex;
     const isHovered = hoveredIndex === index;
     const isAnyHovered = hoveredIndex !== null;
 
-    // Base fan offset
     let baseTranslateX = offset * 135;
 
-    // Accordion expansion on hover: push surrounding cards away!
     if (isAnyHovered) {
       if (index < hoveredIndex) {
         baseTranslateX -= (hoveredIndex - index) * 30 + 45;
@@ -105,11 +128,11 @@ export default function InstagramSection() {
           Instagram
         </h2>
         <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-          Reels · Visual Storytelling · Personal Brand
+          Reels · Visual Storytelling · Swipe left/right or tap cards
         </p>
       </div>
 
-      {/* 3D Interactive Expanding Reel Deck */}
+      {/* 3D Interactive Card Fan Deck */}
       <div className="flex flex-col items-center w-full min-h-[520px] relative max-w-6xl mx-auto px-4 sm:px-8">
         
         {/* Left Navigation Arrow */}
@@ -132,7 +155,13 @@ export default function InstagramSection() {
           <ChevronRight className="w-6 h-6" />
         </button>
 
-        <div className="relative w-full max-w-4xl h-[480px] flex justify-center items-center">
+        {/* Touch Swipeable Container */}
+        <div
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          className="relative w-full max-w-4xl h-[480px] flex justify-center items-center touch-pan-y"
+        >
           {reels.map((reel, index) => (
             <div
               key={reel.id}
