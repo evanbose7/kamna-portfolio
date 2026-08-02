@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-caveat: 'Caveat', cursive;
+    --font-dm-sans: 'DM Sans', sans-serif;
+    --font-playfair: 'Playfair Display', serif;
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background-color: #0A0A0A;
+    color: #F5F0EB;
+    font-family: var(--font-dm-sans);
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E91E8C;
+}
+
+/* Selection Color */
+::selection {
+  background: #E91E8C;
+  color: #FFFFFF;
+}
+
+/* Custom Utilities */
+.font-caveat {
+  font-family: var(--font-caveat) !important;
+}
+
+/* Top Progress Bar Glow */
+.scroll-progress-bar {
+  background: linear-gradient(90deg, #E91E8C 0%, #E91E8C 60%, #FFB3CB 100%);
+  box-shadow: 0 0 10px rgba(255, 107, 174, 0.8);
+}
+
+/* Smooth Card Transitions */
+.fan-card {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), z-index 0.2s, box-shadow 0.35s, opacity 0.35s;
+}
+
+/* Gradient Button Sweep */
+.btn-gradient {
+  background: linear-gradient(123deg, #0A0A0A 7%, #E91E8C 37%, #E91E8C 72%, #FFB3CB 100%);
+  box-shadow: 0px 4px 20px rgba(212,0,108,0.4), 0 1px 0 rgba(255,255,255,0.15) inset;
+}
+
+/* Dynamic Cursor Glow */
+.cursor-glow {
+  pointer-events: none;
+  position: fixed;
+  z-index: 9998;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,0,108,0.18) 0%, rgba(255,107,174,0.08) 40%, transparent 70%);
+  filter: blur(8px);
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s ease-out;
+}
+
+.cursor-dot {
+  pointer-events: none;
+  position: fixed;
+  z-index: 9999;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #FFB3CB;
+  box-shadow: 0 0 14px rgba(255, 179, 203, 0.8);
+  transform: translate(-50%, -50%);
+  transition: transform 0.02s ease-out;
+}
