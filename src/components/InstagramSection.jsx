@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Heart, Eye, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Play, Heart, Eye, ExternalLink } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
 export default function InstagramSection() {
@@ -135,26 +135,6 @@ export default function InstagramSection() {
       {/* 3D Interactive Card Fan Deck */}
       <div className="flex flex-col items-center w-full min-h-[520px] relative max-w-6xl mx-auto px-4 sm:px-8">
         
-        {/* Left Navigation Arrow */}
-        <button
-          type="button"
-          onClick={handlePrev}
-          aria-label="Previous reel"
-          className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-[100] flex h-12 w-12 items-center justify-center rounded-full bg-[#121212]/90 border border-white/20 text-[#F5F0EB] backdrop-blur-md transition-all hover:border-[#E91E8C] hover:text-[#E91E8C] hover:scale-110 cursor-pointer shadow-[0_4px_25px_rgba(0,0,0,0.9)]"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-
-        {/* Right Navigation Arrow */}
-        <button
-          type="button"
-          onClick={handleNext}
-          aria-label="Next reel"
-          className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-[100] flex h-12 w-12 items-center justify-center rounded-full bg-[#121212]/90 border border-white/20 text-[#F5F0EB] backdrop-blur-md transition-all hover:border-[#E91E8C] hover:text-[#E91E8C] hover:scale-110 cursor-pointer shadow-[0_4px_25px_rgba(0,0,0,0.9)]"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-
         {/* Touch Swipeable Container */}
         <div
           onTouchStart={handleTouchStart}
