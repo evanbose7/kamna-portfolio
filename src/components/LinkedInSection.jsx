@@ -66,6 +66,16 @@ export default function LinkedInSection() {
     setActiveCardIndex((prev) => (prev === posts.length - 1 ? 0 : prev + 1));
   };
 
+  // Card click / tap toggle
+  const handleCardClick = (index) => {
+    setActiveCardIndex(index);
+    if (hoveredIndex === index) {
+      setHoveredIndex(null); // Tap again -> unpop back to normal
+    } else {
+      setHoveredIndex(index); // Tap -> pop up
+    }
+  };
+
   // Touch Swipe Handlers for Mobile
   const handleTouchStart = (e) => {
     setTouchStartX(e.targetTouches[0].clientX);
@@ -80,10 +90,14 @@ export default function LinkedInSection() {
     const minSwipeDistance = 40;
     const distance = touchStartX - touchEndX;
     
-    if (distance > minSwipeDistance) {
-      handleNext(); // Swiped left -> next card
-    } else if (distance < -minSwipeDistance) {
-      handlePrev(); // Swiped right -> prev card
+    if (Math.abs(distance) > minSwipeDistance) {
+      setHoveredIndex(null); // Automatically unpop card smoothly when swiping!
+      
+      if (distance > minSwipeDistance) {
+        handleNext(); // Swiped left -> next card
+      } else if (distance < -minSwipeDistance) {
+        handlePrev(); // Swiped right -> prev card
+      }
     }
   };
 
@@ -128,7 +142,7 @@ export default function LinkedInSection() {
           LinkedIn
         </h2>
         <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-          17K+ Community · Top 5% Creator · Swipe left/right or tap cards
+          17K+ Community · Top 5% Creator · Tap to pop/unpop · Swipe left/right
         </p>
       </div>
 
@@ -145,7 +159,7 @@ export default function LinkedInSection() {
           {posts.map((post, index) => (
             <div
               key={post.id}
-              onClick={() => setActiveCardIndex(index)}
+              onClick={() => handleCardClick(index)}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               style={getCardStyle(index)}
@@ -216,7 +230,10 @@ export default function LinkedInSection() {
           {posts.map((_, i) => (
             <button
               key={i}
-              onClick={() => setActiveCardIndex(i)}
+              onClick={() => {
+                setActiveCardIndex(i);
+                setHoveredIndex(null);
+              }}
               className={`h-2.5 rounded-full transition-all duration-300 ${
                 activeCardIndex === i ? 'w-8 bg-[#E91E8C]' : 'w-2.5 bg-white/20 hover:bg-white/40'
               }`}

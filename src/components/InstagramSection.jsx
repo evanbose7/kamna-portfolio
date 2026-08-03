@@ -66,6 +66,16 @@ export default function InstagramSection() {
     setActiveReelIndex((prev) => (prev === reels.length - 1 ? 0 : prev + 1));
   };
 
+  // Card click / tap toggle
+  const handleCardClick = (index) => {
+    setActiveReelIndex(index);
+    if (hoveredIndex === index) {
+      setHoveredIndex(null); // Tap again -> unpop back to normal
+    } else {
+      setHoveredIndex(index); // Tap -> pop up
+    }
+  };
+
   // Touch Swipe Handlers for Mobile
   const handleTouchStart = (e) => {
     setTouchStartX(e.targetTouches[0].clientX);
@@ -80,10 +90,14 @@ export default function InstagramSection() {
     const minSwipeDistance = 40;
     const distance = touchStartX - touchEndX;
     
-    if (distance > minSwipeDistance) {
-      handleNext(); // Swiped left -> next reel
-    } else if (distance < -minSwipeDistance) {
-      handlePrev(); // Swiped right -> prev reel
+    if (Math.abs(distance) > minSwipeDistance) {
+      setHoveredIndex(null); // Automatically unpop card smoothly when swiping!
+      
+      if (distance > minSwipeDistance) {
+        handleNext(); // Swiped left -> next reel
+      } else if (distance < -minSwipeDistance) {
+        handlePrev(); // Swiped right -> prev reel
+      }
     }
   };
 
@@ -128,7 +142,7 @@ export default function InstagramSection() {
           Instagram
         </h2>
         <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-          Reels · Visual Storytelling · Swipe left/right or tap cards
+          Reels · Visual Storytelling · Tap to pop/unpop · Swipe left/right
         </p>
       </div>
 
@@ -145,7 +159,7 @@ export default function InstagramSection() {
           {reels.map((reel, index) => (
             <div
               key={reel.id}
-              onClick={() => setActiveReelIndex(index)}
+              onClick={() => handleCardClick(index)}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               style={getReelStyle(index)}
@@ -187,7 +201,7 @@ export default function InstagramSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="p-1 hover:text-white"
+                      className="p-1 hover:text-[#E91E8C]"
                     >
                       <ExternalLink className="w-4 h-4" />
                     </a>
@@ -204,7 +218,10 @@ export default function InstagramSection() {
           {reels.map((_, i) => (
             <button
               key={i}
-              onClick={() => setActiveReelIndex(i)}
+              onClick={() => {
+                setActiveReelIndex(i);
+                setHoveredIndex(null);
+              }}
               className={`h-2.5 rounded-full transition-all duration-300 ${
                 activeReelIndex === i ? 'w-8 bg-[#E91E8C]' : 'w-2.5 bg-white/20 hover:bg-white/40'
               }`}
