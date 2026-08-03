@@ -9,6 +9,7 @@ import Hero from './components/Hero';
 import LinkedInSection from './components/LinkedInSection';
 import AboutSection from './components/AboutSection';
 import FreeResourceSection from './components/FreeResourceSection';
+import BrandCollaborationsSection from './components/BrandCollaborationsSection';
 import PdfModal from './components/PdfModal';
 import InstagramSection from './components/InstagramSection';
 import TestimonialsSection from './components/TestimonialsSection';
@@ -66,7 +67,10 @@ export default function App() {
       {/* About Section */}
       <AboutSection />
 
-      {/* Free Resource PDF Section */}
+      {/* NEW Brand Collaborations Section (Option 1 Preview) */}
+      <BrandCollaborationsSection />
+
+      {/* Original Free Resource PDF Section (Preserved) */}
       <FreeResourceSection onOpenPdfModal={() => setIsPdfModalOpen(true)} />
 
       {/* Instagram 3D Fan Deck Section */}
