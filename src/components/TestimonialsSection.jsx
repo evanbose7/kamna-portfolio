@@ -34,13 +34,28 @@ export default function TestimonialsSection() {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
+  const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
+
+  const changeSlide = (newIndex, direction) => {
+    if (isFading) return;
+    setSlideDirection(direction);
+    setIsFading(true);
+
+    setTimeout(() => {
+      setCurrentIndex(newIndex);
+      setIsFading(false);
+    }, 180);
+  };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+    const newIndex = currentIndex === 0 ? testimonials.length - 1 : currentIndex - 1;
+    changeSlide(newIndex, 'left');
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+    const newIndex = currentIndex === testimonials.length - 1 ? 0 : currentIndex + 1;
+    changeSlide(newIndex, 'right');
   };
 
   const current = testimonials[currentIndex];
@@ -109,16 +124,33 @@ export default function TestimonialsSection() {
               </div>
             </div>
 
-            {/* Middle Quote Body with Fixed Line Height & Scrollable/Clamped Text */}
-            <div className="flex-1 my-4 flex flex-col justify-center overflow-hidden">
-              <p className="font-light leading-relaxed text-[#F5F0EB]/85 text-xs sm:text-sm italic line-clamp-6">
-                “{current.quote}”
-              </p>
+            {/* Smooth Fade & Slide Quote Body */}
+            <div className="flex-1 my-4 flex flex-col justify-center overflow-hidden relative">
+              <div
+                className="transition-all duration-250 ease-out"
+                style={{
+                  opacity: isFading ? 0 : 1,
+                  transform: isFading
+                    ? slideDirection === 'right'
+                      ? 'translateX(-16px)'
+                      : 'translateX(16px)'
+                    : 'translateX(0px)',
+                }}
+              >
+                <p className="font-light leading-relaxed text-[#F5F0EB]/85 text-xs sm:text-sm italic line-clamp-6">
+                  “{current.quote}”
+                </p>
+              </div>
             </div>
 
             {/* Bottom Footer: Author Info & Controls */}
             <div className="space-y-3 pt-3 border-t border-[#F5F0EB]/10">
-              <div className="flex items-center justify-between">
+              <div
+                className="flex items-center justify-between transition-all duration-250 ease-out"
+                style={{
+                  opacity: isFading ? 0 : 1,
+                }}
+              >
                 <div>
                   <p className="font-bold text-[#F5F0EB] text-sm">{current.author}</p>
                   <p className="text-[11px] text-[#F5F0EB]/50">{current.role}</p>
@@ -136,16 +168,18 @@ export default function TestimonialsSection() {
                   <button
                     type="button"
                     onClick={handlePrev}
+                    disabled={isFading}
                     aria-label="Previous testimonial"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F5F0EB]/20 text-[#F5F0EB]/70 transition-all duration-200 hover:border-[#E91E8C] hover:text-[#E91E8C] hover:shadow-[0_0_14px_rgba(255,107,174,0.5)] cursor-pointer"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F5F0EB]/20 text-[#F5F0EB]/70 transition-all duration-200 hover:border-[#E91E8C] hover:text-[#E91E8C] hover:shadow-[0_0_14px_rgba(255,107,174,0.5)] cursor-pointer disabled:opacity-50"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
                   <button
                     type="button"
                     onClick={handleNext}
+                    disabled={isFading}
                     aria-label="Next testimonial"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F5F0EB]/20 text-[#F5F0EB]/70 transition-all duration-200 hover:border-[#E91E8C] hover:text-[#E91E8C] hover:shadow-[0_0_14px_rgba(255,107,174,0.5)] cursor-pointer"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F5F0EB]/20 text-[#F5F0EB]/70 transition-all duration-200 hover:border-[#E91E8C] hover:text-[#E91E8C] hover:shadow-[0_0_14px_rgba(255,107,174,0.5)] cursor-pointer disabled:opacity-50"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </button>
