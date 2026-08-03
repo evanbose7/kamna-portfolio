@@ -62,89 +62,94 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        {/* Testimonial Card */}
+        {/* Static Dimensions Testimonial Card */}
         <div className="flex justify-center">
-          <div className="w-full max-w-xl rounded-3xl border border-[#F5F0EB]/15 bg-[#121212]/90 text-[#F5F0EB] shadow-[0_20px_50px_rgba(0,0,0,0.8)] p-7 sm:p-9 space-y-6 backdrop-blur-md relative overflow-hidden">
+          <div className="w-full max-w-xl h-[440px] sm:h-[420px] rounded-3xl border border-[#F5F0EB]/15 bg-[#121212]/90 text-[#F5F0EB] shadow-[0_20px_50px_rgba(0,0,0,0.8)] p-7 sm:p-9 flex flex-col justify-between backdrop-blur-md relative overflow-hidden select-none">
             
             {/* Ambient Pink Glow */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#E91E8C]/10 rounded-full blur-2xl pointer-events-none" />
 
-            {/* Rating Stars & Platform Header */}
-            <div className="flex items-start justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-[#E91E8C] text-[#E91E8C]" />
-                    ))}
+            {/* Top Header & Rating */}
+            <div className="space-y-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-[#E91E8C] text-[#E91E8C]" />
+                      ))}
+                    </div>
+                    <span className="text-xs font-bold text-[#E91E8C] uppercase tracking-widest">
+                      5/5
+                    </span>
                   </div>
-                  <span className="text-xs font-bold text-[#E91E8C] uppercase tracking-widest">
-                    5/5
-                  </span>
+                  <p className="text-[11px] text-[#F5F0EB]/40 uppercase tracking-widest">
+                    28 verified reviews · Topmate
+                  </p>
                 </div>
-                <p className="text-[11px] text-[#F5F0EB]/40 uppercase tracking-widest">
-                  28 verified reviews · Topmate
-                </p>
+
+                <div className="text-right">
+                  <p className="font-black uppercase tracking-tight text-[#F5F0EB]/90 text-lg leading-none">
+                    Topmate
+                  </p>
+                </div>
               </div>
 
-              <div className="text-right">
-                <p className="font-black uppercase tracking-tight text-[#F5F0EB]/90 text-lg leading-none">
-                  Topmate
-                </p>
+              {/* Badge Pills */}
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded-full border border-[#E91E8C]/40 px-3 py-0.5 text-[10px] font-bold text-[#FFB3CB] uppercase tracking-widest bg-[#E91E8C]/10">
+                  People's Choice
+                </span>
+                <span className="rounded-full border border-[#E91E8C]/40 px-3 py-0.5 text-[10px] font-bold text-[#FFB3CB] uppercase tracking-widest bg-[#E91E8C]/10">
+                  Top 5%
+                </span>
+                <span className="rounded-full border border-[#E91E8C]/40 px-3 py-0.5 text-[10px] font-bold text-[#FFB3CB] uppercase tracking-widest bg-[#E91E8C]/10">
+                  Community Care
+                </span>
               </div>
             </div>
 
-            {/* Badge Pills */}
-            <div className="flex flex-wrap gap-2 pt-1">
-              <span className="rounded-full border border-[#E91E8C]/40 px-3 py-0.5 text-[10px] font-bold text-[#FFB3CB] uppercase tracking-widest bg-[#E91E8C]/10">
-                People's Choice
-              </span>
-              <span className="rounded-full border border-[#E91E8C]/40 px-3 py-0.5 text-[10px] font-bold text-[#FFB3CB] uppercase tracking-widest bg-[#E91E8C]/10">
-                Top 5%
-              </span>
-              <span className="rounded-full border border-[#E91E8C]/40 px-3 py-0.5 text-[10px] font-bold text-[#FFB3CB] uppercase tracking-widest bg-[#E91E8C]/10">
-                Community Care
-              </span>
-            </div>
-
-            {/* Quote Body */}
-            <div className="relative min-h-[150px] flex flex-col justify-between pt-2">
-              <p className="font-light leading-relaxed text-[#F5F0EB]/85 text-sm sm:text-base italic">
+            {/* Middle Quote Body with Fixed Line Height & Scrollable/Clamped Text */}
+            <div className="flex-1 my-4 flex flex-col justify-center overflow-hidden">
+              <p className="font-light leading-relaxed text-[#F5F0EB]/85 text-xs sm:text-sm italic line-clamp-6">
                 “{current.quote}”
               </p>
+            </div>
 
-              <div className="flex items-center justify-between border-t border-[#F5F0EB]/10 pt-4 mt-4">
+            {/* Bottom Footer: Author Info & Controls */}
+            <div className="space-y-3 pt-3 border-t border-[#F5F0EB]/10">
+              <div className="flex items-center justify-between">
                 <div>
                   <p className="font-bold text-[#F5F0EB] text-sm">{current.author}</p>
                   <p className="text-[11px] text-[#F5F0EB]/50">{current.role}</p>
                 </div>
                 <span className="text-xs text-[#F5F0EB]/40">{current.date}</span>
               </div>
-            </div>
 
-            {/* Carousel Controls */}
-            <div className="flex items-center justify-between border-t border-[#F5F0EB]/10 pt-3">
-              <span className="text-xs text-[#F5F0EB]/40 uppercase tracking-widest font-mono">
-                {currentIndex + 1} / {testimonials.length}
-              </span>
+              {/* Carousel Controls */}
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-xs text-[#F5F0EB]/40 uppercase tracking-widest font-mono">
+                  {currentIndex + 1} / {testimonials.length}
+                </span>
 
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={handlePrev}
-                  aria-label="Previous testimonial"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F5F0EB]/20 text-[#F5F0EB]/70 transition-all duration-200 hover:border-[#E91E8C] hover:text-[#E91E8C] hover:shadow-[0_0_14px_rgba(255,107,174,0.5)] cursor-pointer"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  aria-label="Next testimonial"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F5F0EB]/20 text-[#F5F0EB]/70 transition-all duration-200 hover:border-[#E91E8C] hover:text-[#E91E8C] hover:shadow-[0_0_14px_rgba(255,107,174,0.5)] cursor-pointer"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    aria-label="Previous testimonial"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F5F0EB]/20 text-[#F5F0EB]/70 transition-all duration-200 hover:border-[#E91E8C] hover:text-[#E91E8C] hover:shadow-[0_0_14px_rgba(255,107,174,0.5)] cursor-pointer"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    aria-label="Next testimonial"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F5F0EB]/20 text-[#F5F0EB]/70 transition-all duration-200 hover:border-[#E91E8C] hover:text-[#E91E8C] hover:shadow-[0_0_14px_rgba(255,107,174,0.5)] cursor-pointer"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
             </div>
 
