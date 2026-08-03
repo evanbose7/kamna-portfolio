@@ -142,7 +142,7 @@ export default function LinkedInSection() {
           LinkedIn
         </h2>
         <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-          17K+ Community · Top 5% Creator · Tap to pop/unpop · Swipe left/right
+          17K+ Community · Top 5% Creator · Personal Brand
         </p>
       </div>
 

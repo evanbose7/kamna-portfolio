@@ -142,7 +142,7 @@ export default function InstagramSection() {
           Instagram
         </h2>
         <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-          Reels · Visual Storytelling · Tap to pop/unpop · Swipe left/right
+          Reels · Visual Storytelling · Personal Brand
         </p>
       </div>
 
