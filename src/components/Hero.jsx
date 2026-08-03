@@ -5,6 +5,11 @@ export default function Hero({ onOpenPdfModal }) {
   const [isMuted, setIsMuted] = useState(true);
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
 
+  // Toggle portrait pop & tilt state on tap (mobile friendly)
+  const handlePortraitClick = () => {
+    setIsPortraitHovered((prev) => !prev);
+  };
+
   return (
     <section className="relative flex flex-col bg-[#0A0A0A] min-h-[92vh] justify-center px-6 sm:px-14 md:px-24 py-10 overflow-hidden">
       {/* Background ambient radial glow */}
@@ -82,19 +87,30 @@ export default function Hero({ onOpenPdfModal }) {
           </div>
         </div>
 
-        {/* Right Column: Polaroid Portrait Frame with Hover-Revealed Handwritten Stickers */}
+        {/* Right Column: Polaroid Portrait Frame with Tap & Hover Tilt/Pop */}
         <div className="order-1 lg:order-2 flex justify-center lg:justify-end py-6">
           <div
-            className="relative w-[min(75vw,340px)] sm:w-[360px] my-6 group cursor-pointer"
+            onClick={handlePortraitClick}
             onMouseEnter={() => setIsPortraitHovered(true)}
             onMouseLeave={() => setIsPortraitHovered(false)}
+            className="relative w-[min(75vw,340px)] sm:w-[360px] my-6 cursor-pointer select-none"
           >
             
             {/* Polaroid Radial Glow */}
-            <div className="pointer-events-none absolute inset-0 m-auto h-[85%] w-[85%] rounded-full blur-3xl bg-gradient-to-r from-[#FFB3CB]/40 via-[#E91E8C]/30 to-transparent" />
+            <div
+              className={`pointer-events-none absolute inset-0 m-auto h-[85%] w-[85%] rounded-full blur-3xl bg-gradient-to-r from-[#FFB3CB]/40 via-[#E91E8C]/30 to-transparent transition-opacity duration-500 ${
+                isPortraitHovered ? 'opacity-100' : 'opacity-60'
+              }`}
+            />
 
-            {/* White Polaroid Card */}
-            <div className="relative bg-white p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform transition-transform duration-500 group-hover:rotate-1 group-hover:scale-[1.02]">
+            {/* White Polaroid Card with Tilt & Pop Animation */}
+            <div
+              className={`relative bg-white p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform transition-all duration-500 ease-out ${
+                isPortraitHovered
+                  ? 'rotate-3 scale-[1.04] -translate-y-3 shadow-[0_35px_70px_-15px_rgba(233,30,140,0.4)]'
+                  : 'rotate-0 scale-100 translate-y-0'
+              }`}
+            >
               <div className="relative overflow-hidden aspect-[2/3] bg-[#F5F0EB]">
                 <img
                   src="/assets/kamna-portrait.jpg"
@@ -105,7 +121,10 @@ export default function Hero({ onOpenPdfModal }) {
                 {/* Audio/Video Mute Toggle Button */}
                 <button
                   type="button"
-                  onClick={() => setIsMuted(!isMuted)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMuted(!isMuted);
+                  }}
                   aria-label="Toggle Mute"
                   className="absolute bottom-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#0A0A0A]/70 text-[#F5F0EB] backdrop-blur-md transition-colors hover:bg-[#0A0A0A]/90 cursor-pointer"
                 >
@@ -119,7 +138,7 @@ export default function Hero({ onOpenPdfModal }) {
               </p>
             </div>
 
-            {/* --- HOVER POPUP HANDWRITTEN STICKERS --- */}
+            {/* --- TAP / HOVER POPUP HANDWRITTEN STICKERS --- */}
 
             {/* 1. Sticker Top-Left: "21 years old" */}
             <div
