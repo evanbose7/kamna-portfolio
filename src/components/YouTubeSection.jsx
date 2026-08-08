@@ -75,7 +75,7 @@ export default function YouTubeSection() {
       <div className="pointer-events-none absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="pointer-events-none absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#E91E8C]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 md:px-10">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8 md:px-10 overflow-visible">
         
         {/* Section Header */}
         <div className="mb-8 sm:mb-12 text-center">
@@ -90,19 +90,19 @@ export default function YouTubeSection() {
             Featured Videos
           </h2>
           <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-            Long-Form Tutorials · Masterclasses · Creator Vlog
+            Swipe left & right on phone · Hover or click on desktop
           </p>
         </div>
 
-        {/* --- 📱 MOBILE VIEW: STANDARD VERTICAL STACK (ZERO HORIZONTAL SCROLL / ZERO PITCH) --- */}
-        <div className="md:hidden flex flex-col gap-6 w-full">
+        {/* --- 📱 MOBILE VIEW: HORIZONTAL SWIPE CAROUSEL (THUMBNAIL + INFO UNDERNEATH) --- */}
+        <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-1 -mx-5 px-5">
           {videos.map((video) => (
             <a
               key={video.id}
               href={video.youtubeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex flex-col gap-3 rounded-2xl bg-[#141414] border border-white/10 p-3.5 shadow-lg hover:border-red-500/40 transition-colors"
+              className="w-[82vw] max-w-[310px] shrink-0 snap-center flex flex-col gap-3 rounded-2xl bg-[#141414] border border-white/10 p-3 shadow-lg hover:border-red-500/40 transition-colors"
             >
               {/* Clean Widescreen Thumbnail Image */}
               <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black">
@@ -112,8 +112,8 @@ export default function YouTubeSection() {
                   </div>
                 )}
                 <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/25">
-                  <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl">
-                    <Play className="w-6 h-6 fill-white ml-0.5" />
+                  <div className="w-11 h-11 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl">
+                    <Play className="w-5 h-5 fill-white ml-0.5" />
                   </div>
                 </div>
                 <img
@@ -125,14 +125,14 @@ export default function YouTubeSection() {
 
               {/* Info Directly Below Thumbnail */}
               <div className="flex flex-col gap-1.5 px-1 pb-1">
-                <div className="flex items-center justify-between text-xs text-white/60">
+                <div className="flex items-center justify-between text-[11px] text-white/60">
                   <span className="font-bold text-red-400 uppercase tracking-wider">{video.tags.join(' • ')}</span>
                   <span>{video.duration}</span>
                 </div>
-                <h3 className="font-bold text-sm text-white leading-snug">{video.title}</h3>
-                <div className="flex items-center justify-between text-xs text-white/40 pt-1">
+                <h3 className="font-bold text-sm text-white leading-snug line-clamp-2">{video.title}</h3>
+                <div className="flex items-center justify-between text-[11px] text-white/40 pt-1">
                   <span>{video.views}</span>
-                  <span className="flex items-center gap-1 text-red-500 font-bold">Watch Video <ExternalLink className="w-3.5 h-3.5" /></span>
+                  <span className="flex items-center gap-1 text-red-500 font-bold">Watch Video <ExternalLink className="w-3 h-3" /></span>
                 </div>
               </div>
             </a>
@@ -140,7 +140,7 @@ export default function YouTubeSection() {
         </div>
 
         {/* --- 🖥 DESKTOP VIEW: AUTHENTIC NETFLIX HOVER SHOWCASE (hidden md:grid) --- */}
-        <div className="hidden md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-14 pb-44">
+        <div className="hidden md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-14 pb-44 overflow-visible">
           {videos.map((video, index) => {
             const isHovered = hoveredVideoId === video.id;
 
@@ -159,7 +159,7 @@ export default function YouTubeSection() {
                 onClick={() => setSelectedVideo(video)}
                 onMouseEnter={() => handleMouseEnter(video.id)}
                 onMouseLeave={handleMouseLeave}
-                className="relative aspect-video w-auto cursor-pointer select-none"
+                className="relative aspect-video w-auto cursor-pointer select-none overflow-visible"
               >
                 {/* 1. Default Clean Static Thumbnail (Fixed in grid flow) */}
                 <div className="w-full h-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg relative group">
