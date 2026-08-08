@@ -54,6 +54,8 @@ export default function YouTubeSection() {
   ];
 
   const handleMouseEnter = (id) => {
+    // Only trigger hover state on desktop screens (width >= 768px)
+    if (window.innerWidth < 768) return;
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     setIsVideoLoaded(false);
     hoverTimeoutRef.current = setTimeout(() => {
@@ -67,14 +69,9 @@ export default function YouTubeSection() {
     setIsVideoLoaded(false);
   };
 
-  const handleCardClick = (id) => {
-    // Toggle pop state on mobile touch screens
-    if (hoveredVideoId === id) {
-      setHoveredVideoId(null);
-    } else {
-      setIsVideoLoaded(false);
-      setHoveredVideoId(id);
-    }
+  const handleCardClick = (video) => {
+    // Tapping video on phone opens modal directly with video & full info visible without scrolling
+    setSelectedVideo(video);
   };
 
   return (
@@ -99,31 +96,39 @@ export default function YouTubeSection() {
             Featured Videos
           </h2>
           <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-            Swipe left & right on phone · Hover for video preview
+            Swipe left & right on phone · Tap video to watch & see full info
           </p>
         </div>
 
         {/* Netflix Horizontal Touch Swipe Row on Mobile & 3-Column Grid on Desktop */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 md:grid md:grid-cols-3 md:gap-8 relative z-10 pb-12 pt-6 px-4 sm:px-0 -mx-4 sm:mx-0">
+        <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 md:grid md:grid-cols-3 md:gap-8 relative z-10 pb-8 pt-4 px-4 sm:px-0 -mx-4 sm:mx-0">
           {videos.map((video) => {
             const isHovered = hoveredVideoId === video.id;
 
             return (
-              /* Fixed 16:9 Aspect Ratio Container (Horizontal swipe item on mobile) */
+              /* Fixed 16:9 Aspect Ratio Container */
               <div
                 key={video.id}
-                onClick={() => handleCardClick(video.id)}
+                onClick={() => handleCardClick(video)}
                 onMouseEnter={() => handleMouseEnter(video.id)}
                 onMouseLeave={handleMouseLeave}
                 className="relative aspect-video w-[82vw] max-w-[340px] shrink-0 snap-center md:w-auto md:max-w-none md:shrink cursor-pointer select-none"
               >
                 {/* 1. Default Clean Static Thumbnail (Fixed in grid/carousel flow) */}
-                <div className="w-full h-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg">
+                <div className="w-full h-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg relative group">
                   {video.top10 && (
                     <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
                       TOP 10
                     </div>
                   )}
+
+                  {/* Mobile Tap Play Badge Indicator */}
+                  <div className="absolute inset-0 flex items-center justify-center z-20 md:hidden bg-black/30">
+                    <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl">
+                      <Play className="w-6 h-6 fill-white ml-0.5" />
+                    </div>
+                  </div>
+
                   <img
                     src={video.thumbnail}
                     alt={video.title}
@@ -131,11 +136,11 @@ export default function YouTubeSection() {
                   />
                 </div>
 
-                {/* 2. Absolute Floating Netflix Hover Overlay (GPU-Accelerated 60 FPS Butter Smooth) */}
+                {/* 2. Desktop Absolute Floating Netflix Hover Overlay */}
                 <div
-                  className={`absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.75)] transform-gpu will-change-transform transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                  className={`hidden md:block absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.75)] transform-gpu will-change-transform transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                     isHovered
-                      ? 'opacity-100 scale-108 md:scale-115 -translate-y-4 md:-translate-y-5 pointer-events-auto shadow-[0_40px_80px_rgba(229,9,20,0.5)]'
+                      ? 'opacity-100 scale-115 -translate-y-5 pointer-events-auto shadow-[0_40px_80px_rgba(229,9,20,0.5)]'
                       : 'opacity-0 scale-100 translate-y-0 pointer-events-none'
                   }`}
                   style={{ minWidth: '100%' }}
@@ -161,7 +166,7 @@ export default function YouTubeSection() {
                       {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-red-500" />}
                     </button>
 
-                    {/* Background Static Thumbnail Poster (Cross-Fades smoothly into video) */}
+                    {/* Background Static Thumbnail Poster */}
                     <img
                       src={video.thumbnail}
                       alt={video.title}
@@ -265,7 +270,7 @@ export default function YouTubeSection() {
         </div>
 
         {/* Subscribe CTA */}
-        <div className="mt-8 sm:mt-14 text-center">
+        <div className="mt-6 sm:mt-14 text-center">
           <a
             href="https://www.youtube.com/@thekamnabhardwaj"
             target="_blank"
@@ -279,18 +284,19 @@ export default function YouTubeSection() {
 
       </div>
 
-      {/* 🍿 Video Info / Player Modal */}
+      {/* 🍿 Video Info / Player Modal (Centered on Screen, 0 Page Scrolling Required) */}
       {selectedVideo && (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 p-4 sm:p-6 backdrop-blur-xl animate-fadeIn">
-          <div className="relative w-full max-w-4xl rounded-2xl border border-red-500/30 bg-[#121212] p-4 sm:p-6 shadow-[0_0_80px_rgba(229,9,20,0.5)]">
+          <div className="relative w-full max-w-4xl rounded-2xl border border-red-500/30 bg-[#121212] p-4 sm:p-6 shadow-[0_0_80px_rgba(229,9,20,0.5)] max-h-[92vh] flex flex-col justify-between overflow-y-auto">
             <button
               type="button"
               onClick={() => setSelectedVideo(null)}
-              className="absolute -top-4 -right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-red-600 text-white shadow-xl hover:scale-110 cursor-pointer"
+              className="absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-red-600 text-white shadow-xl hover:scale-110 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
+            {/* Embedded Widescreen Video Player */}
             <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black">
               <iframe
                 src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
@@ -301,11 +307,17 @@ export default function YouTubeSection() {
               />
             </div>
 
+            {/* Video Info Directly Below Player (Fit to screen, 0 page scrolling) */}
             <div className="mt-4 flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-red-500 uppercase tracking-widest">
-                  {selectedVideo.tags.join(' • ')} · {selectedVideo.views}
-                </span>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="rounded border border-red-500/50 bg-red-500/10 px-2 py-0.5 text-[10px] font-bold text-red-500 uppercase tracking-widest">
+                    {selectedVideo.rating}
+                  </span>
+                  <span className="text-xs font-bold text-red-400 uppercase tracking-widest">
+                    {selectedVideo.tags.join(' • ')}
+                  </span>
+                </div>
                 <a
                   href={selectedVideo.youtubeUrl}
                   target="_blank"
@@ -315,7 +327,10 @@ export default function YouTubeSection() {
                   Watch on YouTube <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
-              <h3 className="text-lg font-bold text-white">{selectedVideo.title}</h3>
+              <h3 className="text-base sm:text-lg font-bold text-white leading-snug">{selectedVideo.title}</h3>
+              <p className="text-xs text-[#F5F0EB]/60">
+                {selectedVideo.views} · Duration: {selectedVideo.duration}
+              </p>
             </div>
           </div>
         </div>
