@@ -4,17 +4,19 @@ import { Volume2, VolumeX, Sparkles, ArrowRight } from 'lucide-react';
 export default function Hero({ onOpenPdfModal }) {
   const [isMuted, setIsMuted] = useState(true);
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
-  const [hasTappedPortrait, setHasTappedPortrait] = useState(false);
+  const [isTapped, setIsTapped] = useState(false);
 
   // Video media configuration (change to true if using video file in public/assets/)
   const isVideoMedia = false; 
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
 
-  // Toggle portrait pop & tilt state on tap (mobile friendly) and hide hint badge permanently
+  // Toggle portrait pop & tilt state on tap (mobile friendly)
   const handlePortraitClick = () => {
-    setIsPortraitHovered((prev) => !prev);
-    setHasTappedPortrait(true);
+    setIsTapped((prev) => !prev);
   };
+
+  // Card is active if hovered on desktop or tapped on mobile
+  const isCardActive = isPortraitHovered || isTapped;
 
   return (
     <section className="relative flex flex-col bg-[#0A0A0A] min-h-[92vh] justify-center px-6 sm:px-14 md:px-24 py-10 overflow-hidden">
@@ -96,8 +98,8 @@ export default function Hero({ onOpenPdfModal }) {
         {/* Right Column: Polaroid Portrait Frame (Supports Image & Auto-Playing Video) */}
         <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end justify-center py-4">
           
-          {/* Subtle Grey-White Surprise Hint Badge (Mobile ONLY, disappears permanently when photo is tapped) */}
-          {!hasTappedPortrait && (
+          {/* Subtle Grey-White Surprise Hint Badge (Mobile ONLY, disappears when photo is tapped) */}
+          {!isTapped && (
             <div className="lg:hidden mb-2 z-40 whitespace-nowrap transition-opacity duration-300">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-[#F5F0EB]/15 bg-[#F5F0EB]/5 px-3.5 py-1 text-[10px] font-medium text-[#F5F0EB]/60 shadow-sm uppercase tracking-widest backdrop-blur-sm">
                 ✨ tap to see surprise
@@ -114,14 +116,14 @@ export default function Hero({ onOpenPdfModal }) {
             {/* Polaroid Radial Glow */}
             <div
               className={`pointer-events-none absolute inset-0 m-auto h-[85%] w-[85%] rounded-full blur-3xl bg-gradient-to-r from-[#FFB3CB]/40 via-[#E91E8C]/30 to-transparent transition-opacity duration-500 ${
-                isPortraitHovered ? 'opacity-100' : 'opacity-60'
+                isCardActive ? 'opacity-100' : 'opacity-60'
               }`}
             />
 
             {/* White Polaroid Card with Tilt & Pop Animation */}
             <div
               className={`relative bg-white p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform transition-all duration-500 ease-out ${
-                isPortraitHovered
+                isCardActive
                   ? 'rotate-3 scale-[1.04] -translate-y-3 shadow-[0_35px_70px_-15px_rgba(233,30,140,0.4)]'
                   : 'rotate-0 scale-100 translate-y-0'
               }`}
@@ -170,7 +172,7 @@ export default function Hero({ onOpenPdfModal }) {
             {/* 1. Sticker Top-Left: "21 years old" */}
             <div
               className={`pointer-events-none absolute -top-6 -left-6 sm:-left-10 z-30 transform -rotate-6 transition-all duration-300 ease-back-out ${
-                isPortraitHovered
+                isCardActive
                   ? 'opacity-100 scale-100 translate-y-0 delay-75'
                   : 'opacity-0 scale-75 translate-y-4'
               }`}
@@ -188,7 +190,7 @@ export default function Hero({ onOpenPdfModal }) {
             {/* 2. Sticker Top-Right: "social media strategist" */}
             <div
               className={`pointer-events-none absolute -top-6 -right-6 sm:-right-12 z-30 transform rotate-6 transition-all duration-300 ease-back-out ${
-                isPortraitHovered
+                isCardActive
                   ? 'opacity-100 scale-100 translate-y-0 delay-150'
                   : 'opacity-0 scale-75 translate-y-4'
               }`}
@@ -206,7 +208,7 @@ export default function Hero({ onOpenPdfModal }) {
             {/* 3. Sticker Middle-Left: "ghostwriter" */}
             <div
               className={`pointer-events-none absolute top-1/2 -left-12 sm:-left-20 transform -translate-y-1/2 -rotate-12 z-30 transition-all duration-300 ease-back-out ${
-                isPortraitHovered
+                isCardActive
                   ? 'opacity-100 scale-100 translate-x-0 delay-220'
                   : 'opacity-0 scale-75 -translate-x-4'
               }`}
@@ -224,7 +226,7 @@ export default function Hero({ onOpenPdfModal }) {
             {/* 4. Sticker Bottom-Left: "content creator" */}
             <div
               className={`pointer-events-none absolute -bottom-9 -left-4 sm:-left-6 z-30 transform rotate-3 transition-all duration-300 ease-back-out ${
-                isPortraitHovered
+                isCardActive
                   ? 'opacity-100 scale-100 translate-y-0 delay-300'
                   : 'opacity-0 scale-75 -translate-y-4'
               }`}
@@ -242,7 +244,7 @@ export default function Hero({ onOpenPdfModal }) {
             {/* 5. Sticker Bottom-Right: "storyteller" */}
             <div
               className={`pointer-events-none absolute -bottom-9 -right-4 sm:-right-6 z-30 transform -rotate-3 transition-all duration-300 ease-back-out ${
-                isPortraitHovered
+                isCardActive
                   ? 'opacity-100 scale-108 translate-y-0 delay-350'
                   : 'opacity-0 scale-75 -translate-y-4'
               }`}
