@@ -54,7 +54,6 @@ export default function YouTubeSection() {
   ];
 
   const handleMouseEnter = (id) => {
-    // Only trigger hover state on desktop screens (width >= 768px)
     if (window.innerWidth < 768) return;
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     setIsVideoLoaded(false);
@@ -70,12 +69,11 @@ export default function YouTubeSection() {
   };
 
   const handleCardClick = (video) => {
-    // Tapping video on phone opens modal directly with video & full info visible without scrolling
     setSelectedVideo(video);
   };
 
   return (
-    <section id="youtube" className="bg-[#0A0A0A] scroll-mt-6 py-20 sm:py-28 md:py-32 relative overflow-hidden">
+    <section id="youtube" className="bg-[#0A0A0A] scroll-mt-6 py-16 sm:py-24 md:py-28 relative overflow-hidden">
       
       {/* Background Ambient Glows */}
       <div className="pointer-events-none absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -84,7 +82,7 @@ export default function YouTubeSection() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8 md:px-10">
         
         {/* Section Header */}
-        <div className="mb-12 text-center">
+        <div className="mb-10 sm:mb-12 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3.5 py-1 text-xs font-bold text-red-500 uppercase tracking-widest mb-4">
             <YoutubeIcon className="w-4 h-4 text-red-500" />
             Netflix Style Showcase
@@ -96,17 +94,17 @@ export default function YouTubeSection() {
             Featured Videos
           </h2>
           <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-            Swipe left & right on phone · Tap video to watch & see full info
+            Swipe on phone · Hover or click on desktop for video player
           </p>
         </div>
 
         {/* Netflix Horizontal Touch Swipe Row on Mobile & 3-Column Grid on Desktop */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 md:grid md:grid-cols-3 md:gap-8 relative z-10 pb-8 pt-4 px-4 sm:px-0 -mx-4 sm:mx-0">
+        <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 md:grid md:grid-cols-3 md:gap-8 relative z-10 pb-10 pt-4 px-4 sm:px-0 -mx-4 sm:mx-0">
           {videos.map((video) => {
             const isHovered = hoveredVideoId === video.id;
 
             return (
-              /* Fixed 16:9 Aspect Ratio Container */
+              /* Fixed 16:9 Aspect Ratio Grid Slot Container */
               <div
                 key={video.id}
                 onClick={() => handleCardClick(video)}
@@ -122,7 +120,7 @@ export default function YouTubeSection() {
                     </div>
                   )}
 
-                  {/* Mobile Tap Play Badge Indicator */}
+                  {/* Play Badge Indicator */}
                   <div className="absolute inset-0 flex items-center justify-center z-20 md:hidden bg-black/30">
                     <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl">
                       <Play className="w-6 h-6 fill-white ml-0.5" />
@@ -136,11 +134,11 @@ export default function YouTubeSection() {
                   />
                 </div>
 
-                {/* 2. Desktop Absolute Floating Netflix Hover Overlay */}
+                {/* 2. Desktop Floating Netflix Hover Overlay (Proportioned Scale-108, 100% visible) */}
                 <div
-                  className={`hidden md:block absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.75)] transform-gpu will-change-transform transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                  className={`hidden md:block absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_25px_50px_-10px_rgba(229,9,20,0.65)] transform-gpu will-change-transform transition-all duration-450 ease-[cubic-bezier(0.25,1,0.5,1)] origin-center ${
                     isHovered
-                      ? 'opacity-100 scale-115 -translate-y-5 pointer-events-auto shadow-[0_40px_80px_rgba(229,9,20,0.5)]'
+                      ? 'opacity-100 scale-108 -translate-y-3 pointer-events-auto shadow-[0_35px_70px_rgba(229,9,20,0.5)]'
                       : 'opacity-0 scale-100 translate-y-0 pointer-events-none'
                   }`}
                   style={{ minWidth: '100%' }}
@@ -161,16 +159,16 @@ export default function YouTubeSection() {
                         setIsMuted(!isMuted);
                       }}
                       aria-label="Toggle Mute"
-                      className="absolute bottom-3 right-3 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/30 text-white backdrop-blur-md transition-transform hover:scale-110 cursor-pointer"
+                      className="absolute bottom-2.5 right-2.5 z-30 flex h-7 w-7 items-center justify-center rounded-full bg-black/80 border border-white/30 text-white backdrop-blur-md transition-transform hover:scale-110 cursor-pointer"
                     >
-                      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-red-500" />}
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-red-500" />}
                     </button>
 
                     {/* Background Static Thumbnail Poster */}
                     <img
                       src={video.thumbnail}
                       alt={video.title}
-                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
                         isVideoLoaded ? 'opacity-0' : 'opacity-100'
                       }`}
                     />
@@ -183,14 +181,14 @@ export default function YouTubeSection() {
                           title={video.title}
                           onLoad={() => setIsVideoLoaded(true)}
                           allow="autoplay; encrypted-media"
-                          className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125 transition-opacity duration-700"
+                          className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125 transition-opacity duration-500"
                         />
                       </div>
                     )}
                   </div>
 
-                  {/* Netflix Action Controls & Metadata */}
-                  <div className="p-4 sm:p-5 flex flex-col gap-3 bg-[#181818]">
+                  {/* Netflix Action Controls & Metadata (Fits perfectly on screen) */}
+                  <div className="p-3.5 sm:p-4 flex flex-col gap-2.5 bg-[#181818]">
                     
                     {/* Row 1: Action Controls */}
                     <div className="flex items-center justify-between">
@@ -200,25 +198,25 @@ export default function YouTubeSection() {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label="Play Video on YouTube"
-                          className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black shadow-lg hover:scale-110 transition-transform cursor-pointer"
+                          className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black shadow-lg hover:scale-110 transition-transform cursor-pointer"
                         >
-                          <Play className="w-4 h-4 fill-black ml-0.5" />
+                          <Play className="w-3.5 h-3.5 fill-black ml-0.5" />
                         </a>
 
                         <button
                           type="button"
                           aria-label="Add to list"
-                          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
+                          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
                         >
-                          <Plus className="w-4 h-4" />
+                          <Plus className="w-3.5 h-3.5" />
                         </button>
 
                         <button
                           type="button"
                           aria-label="Like video"
-                          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
+                          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
                         >
-                          <ThumbsUp className="w-3.5 h-3.5" />
+                          <ThumbsUp className="w-3 h-3" />
                         </button>
                       </div>
 
@@ -229,34 +227,34 @@ export default function YouTubeSection() {
                           setSelectedVideo(video);
                         }}
                         aria-label="More Info"
-                        className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
+                        className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
                       >
-                        <ChevronDown className="w-4 h-4" />
+                        <ChevronDown className="w-3.5 h-3.5" />
                       </button>
                     </div>
 
                     {/* Row 2: Metadata Badges */}
-                    <div className="flex items-center gap-2 text-xs text-white/70 font-semibold pt-1">
-                      <span className="rounded border border-white/30 px-1.5 py-0.5 text-[10px] text-white">
+                    <div className="flex items-center gap-2 text-xs text-white/70 font-semibold pt-0.5">
+                      <span className="rounded border border-white/30 px-1.5 py-0.5 text-[9px] text-white">
                         {video.rating}
                       </span>
-                      <span className="rounded border border-white/30 px-1 py-0.5 text-[10px] text-white">
+                      <span className="rounded border border-white/30 px-1 py-0.5 text-[9px] text-white">
                         {video.quality}
                       </span>
-                      <span className="text-[#F5F0EB]/60 text-[11px]">
+                      <span className="text-[#F5F0EB]/60 text-[10px]">
                         {video.duration}
                       </span>
-                      <span className="text-[#F5F0EB]/40 text-[11px] ml-auto">
+                      <span className="text-[#F5F0EB]/40 text-[10px] ml-auto">
                         {video.views}
                       </span>
                     </div>
 
                     {/* Row 3: Title & Tags */}
-                    <div className="space-y-1">
-                      <h3 className="font-bold text-xs sm:text-sm text-white line-clamp-1">
+                    <div className="space-y-0.5">
+                      <h3 className="font-bold text-xs text-white line-clamp-1">
                         {video.title}
                       </h3>
-                      <p className="text-[11px] text-white/50 font-medium">
+                      <p className="text-[10px] text-white/50 font-medium">
                         {video.tags.join(' • ')}
                       </p>
                     </div>
@@ -270,7 +268,7 @@ export default function YouTubeSection() {
         </div>
 
         {/* Subscribe CTA */}
-        <div className="mt-6 sm:mt-14 text-center">
+        <div className="mt-6 sm:mt-12 text-center">
           <a
             href="https://www.youtube.com/@thekamnabhardwaj"
             target="_blank"
@@ -284,16 +282,16 @@ export default function YouTubeSection() {
 
       </div>
 
-      {/* 🍿 Video Info / Player Modal (Slow & Smooth 500ms Cubic-Bezier Pop-In) */}
+      {/* 🍿 Video Info / Player Modal (100% Fit to Screen on Both Desktop & Mobile, 0 Page Scrolling) */}
       {selectedVideo && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/85 p-4 sm:p-6 animate-backdrop-fade">
-          <div className="relative w-full max-w-4xl rounded-2xl border border-red-500/30 bg-[#121212] p-4 sm:p-6 shadow-[0_0_80px_rgba(229,9,20,0.6)] max-h-[92vh] flex flex-col justify-between overflow-y-auto transform-gpu will-change-transform animate-modal-pop">
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/85 p-3 sm:p-6 animate-backdrop-fade">
+          <div className="relative w-full max-w-3xl lg:max-w-4xl rounded-2xl border border-red-500/30 bg-[#121212] p-4 sm:p-6 shadow-[0_0_80px_rgba(229,9,20,0.6)] max-h-[88vh] flex flex-col justify-between overflow-y-auto transform-gpu will-change-transform animate-modal-pop">
             <button
               type="button"
               onClick={() => setSelectedVideo(null)}
-              className="absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-red-600 text-white shadow-xl hover:scale-110 transition-transform cursor-pointer"
+              className="absolute top-3 right-3 z-20 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-red-600 text-white shadow-xl hover:scale-110 transition-transform cursor-pointer"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
             {/* Embedded Widescreen Video Player */}
@@ -307,8 +305,8 @@ export default function YouTubeSection() {
               />
             </div>
 
-            {/* Video Info Directly Below Player */}
-            <div className="mt-4 flex flex-col gap-2">
+            {/* Video Info Directly Below Player (100% Fit to Screen Viewport) */}
+            <div className="mt-3 sm:mt-4 flex flex-col gap-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <span className="rounded border border-red-500/50 bg-red-500/10 px-2 py-0.5 text-[10px] font-bold text-red-500 uppercase tracking-widest">
@@ -327,7 +325,7 @@ export default function YouTubeSection() {
                   Watch on YouTube <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
-              <h3 className="text-base sm:text-lg font-bold text-white leading-snug">{selectedVideo.title}</h3>
+              <h3 className="text-sm sm:text-base md:text-lg font-bold text-white leading-snug">{selectedVideo.title}</h3>
               <p className="text-xs text-[#F5F0EB]/60">
                 {selectedVideo.views} · Duration: {selectedVideo.duration}
               </p>
