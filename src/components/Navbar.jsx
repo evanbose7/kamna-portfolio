@@ -9,9 +9,9 @@ export default function Navbar({ onOpenPdfModal }) {
   const languages = ['English', 'Hindi', 'Spanish', 'French'];
 
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'LinkedIn', href: '#linkedin' },
     { name: 'Instagram', href: '#insta' },
+    { name: 'About', href: '#about' },
+    { name: 'YouTube', href: '#youtube' },
     { name: 'Connect', href: '#connect' },
   ];
 

@@ -6,13 +6,12 @@ import ProgressBar from './components/ProgressBar';
 import SplashLoader from './components/SplashLoader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import LinkedInSection from './components/LinkedInSection';
+import InstagramSection from './components/InstagramSection';
 import AboutSection from './components/AboutSection';
 import BrandCollaborationsSection from './components/BrandCollaborationsSection';
 import FreeResourceSection from './components/FreeResourceSection';
 import YouTubeSection from './components/YouTubeSection';
 import PdfModal from './components/PdfModal';
-import InstagramSection from './components/InstagramSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import ConnectSection from './components/ConnectSection';
 import Footer from './components/Footer';
@@ -62,8 +61,8 @@ export default function App() {
       {/* Hero Section */}
       <Hero onOpenPdfModal={() => setIsPdfModalOpen(true)} />
 
-      {/* LinkedIn 3D Fan Deck Section */}
-      <LinkedInSection />
+      {/* Instagram 3D Fan Deck Section (In place of LinkedIn Section) */}
+      <InstagramSection />
 
       {/* About Section */}
       <AboutSection />
@@ -74,11 +73,8 @@ export default function App() {
       {/* Free Resource PDF Section */}
       <FreeResourceSection onOpenPdfModal={() => setIsPdfModalOpen(true)} />
 
-      {/* 🍿 NEW Netflix-Style YouTube Video Showcase Section (Right After Free Resources) */}
+      {/* 🍿 Netflix-Style YouTube Video Showcase Section */}
       <YouTubeSection />
-
-      {/* Instagram 3D Fan Deck Section */}
-      <InstagramSection />
 
       {/* Testimonials Carousel Section */}
       <TestimonialsSection />
