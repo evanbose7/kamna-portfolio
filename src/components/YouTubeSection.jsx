@@ -18,6 +18,7 @@ export default function YouTubeSection() {
       views: '142K views',
       rating: 'U/A 16+',
       quality: 'HD',
+      top10: true,
       tags: ['LinkedIn', 'Blueprint', 'Strategy'],
     },
     {
@@ -30,6 +31,7 @@ export default function YouTubeSection() {
       views: '98K views',
       rating: 'U/A 13+',
       quality: '4K',
+      top10: false,
       tags: ['Ghostwriting', 'Positioning', 'Outreach'],
     },
     {
@@ -42,6 +44,7 @@ export default function YouTubeSection() {
       views: '210K views',
       rating: 'U/A 16+',
       quality: 'HD',
+      top10: true,
       tags: ['Vlog', 'Workflow', 'Daily Routine'],
     },
   ];
@@ -68,12 +71,12 @@ export default function YouTubeSection() {
             Featured Videos
           </h2>
           <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-            Hover card to auto-play video preview & reveal controls
+            Hover thumbnail for video preview & controls
           </p>
         </div>
 
-        {/* Netflix 3-Column Video Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative z-10 min-h-[320px]">
+        {/* Netflix 3-Column Video Row (Clean Thumbnails Default) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative z-10 items-start">
           {videos.map((video) => {
             const isHovered = hoveredVideoId === video.id;
 
@@ -82,21 +85,23 @@ export default function YouTubeSection() {
                 key={video.id}
                 onMouseEnter={() => setHoveredVideoId(video.id)}
                 onMouseLeave={() => setHoveredVideoId(null)}
-                className={`group relative rounded-2xl overflow-hidden bg-[#181818] border transition-all duration-400 select-none ${
+                className={`group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 select-none ${
                   isHovered
-                    ? 'z-50 scale-105 -translate-y-4 border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.65)]'
-                    : 'z-10 scale-100 translate-y-0 border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.8)]'
+                    ? 'z-50 scale-108 -translate-y-4 bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.7)]'
+                    : 'z-10 scale-100 translate-y-0 border border-white/5 shadow-lg hover:border-white/20'
                 }`}
               >
                 {/* Widescreen Thumbnail & Auto-Playing Video Preview Container (16:9) */}
-                <div className="relative aspect-video w-full overflow-hidden bg-black">
+                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black">
                   
-                  {/* Red Netflix Style Brand Badge Top-Left */}
-                  <div className="absolute top-3 left-3 z-20 font-black text-xl text-red-600 tracking-tighter drop-shadow-md">
-                    N
-                  </div>
+                  {/* Top 10 Badge */}
+                  {video.top10 && (
+                    <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
+                      TOP 10
+                    </div>
+                  )}
 
-                  {/* Audio Mute/Unmute Toggle Button */}
+                  {/* Audio Mute/Unmute Toggle Button (Revealed on Hover) */}
                   {isHovered && (
                     <button
                       type="button"
@@ -105,13 +110,13 @@ export default function YouTubeSection() {
                         setIsMuted(!isMuted);
                       }}
                       aria-label="Toggle Mute"
-                      className="absolute bottom-3 right-3 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 border border-white/20 text-white backdrop-blur-md transition-colors hover:bg-black"
+                      className="absolute bottom-3 right-3 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/30 text-white backdrop-blur-md transition-colors hover:bg-black"
                     >
                       {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-red-500" />}
                     </button>
                   )}
 
-                  {/* Clean Thumbnail Only by Default vs Auto-Play Video on Hover */}
+                  {/* Clean Thumbnail Image Default vs Auto-Play Video on Hover */}
                   {isHovered ? (
                     <div className="w-full h-full relative pointer-events-none">
                       <iframe
@@ -125,15 +130,15 @@ export default function YouTubeSection() {
                     <img
                       src={video.thumbnail}
                       alt={video.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
                     />
                   )}
 
                 </div>
 
-                {/* --- NETFLIX CONTROL BAR & METADATA (REVEALED ONLY ON HOVER) --- */}
+                {/* --- NETFLIX CONTROL BAR & METADATA (REVEALED EXCLUSIVELY ON HOVER) --- */}
                 {isHovered && (
-                  <div className="p-4 sm:p-5 flex flex-col gap-3 bg-[#181818] animate-fadeIn transition-all duration-300">
+                  <div className="p-4 sm:p-5 flex flex-col gap-3 bg-[#181818] animate-fadeIn">
                     
                     {/* Row 1: Action Controls (Play, Plus, Like, More Info) */}
                     <div className="flex items-center justify-between">
