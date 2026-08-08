@@ -22,16 +22,17 @@ export default function YouTubeSection() {
   const videos = [
     {
       id: 'video-1',
-      title: 'How I Built a 17K+ LinkedIn Audience in 12 Months (Full Blueprint)',
-      thumbnail: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
-      youtubeId: 'M576WGiDBdQ',
-      youtubeUrl: 'https://www.youtube.com/watch?v=M576WGiDBdQ',
-      duration: '14:20',
-      views: '142K views',
-      rating: 'U/A 16+',
-      quality: 'HD',
+      title: '10th BOARD RESULT | Tears, Celebration & Heartbreaks | Official Film',
+      thumbnail: '/assets/yt-thumb-1.jpg',
+      mp4Preview: '/assets/yt-preview-1.mp4',
+      youtubeId: 'UN3Nqzh-nrQ',
+      youtubeUrl: 'https://youtu.be/UN3Nqzh-nrQ?si=glKRxw3dFc2vYPqM',
+      duration: '12:45',
+      views: '185K views',
+      rating: 'U/A 13+',
+      quality: '1080P',
       top10: true,
-      tags: ['LinkedIn', 'Blueprint', 'Strategy'],
+      tags: ['Short Film', 'Storytelling', 'Arnav Films'],
     },
     {
       id: 'video-2',
@@ -140,7 +141,6 @@ export default function YouTubeSection() {
     );
 
     if (newIndex !== activeMobileIndex) {
-      // Immediately reset preview video to null (show thumbnail) upon swiping to a new card
       setActivePreviewVideoId(null);
       setActiveMobileIndex(newIndex);
     }
@@ -169,7 +169,7 @@ export default function YouTubeSection() {
           </h2>
         </div>
 
-        {/* --- 📱 MOBILE VIEW: SWIPE CAROUSEL (SHOWS THUMBNAIL FOR 1.5s -> THEN PLAYS VIDEO) --- */}
+        {/* --- 📱 MOBILE VIEW: SWIPE CAROUSEL (SHOWS THUMBNAIL FOR 1.5s -> THEN PLAYS MP4 VIDEO) --- */}
         <div
           ref={mobileScrollRef}
           onScroll={handleMobileScroll}
@@ -210,16 +210,27 @@ export default function YouTubeSection() {
                     className="absolute inset-0 w-full h-full object-cover rounded-xl"
                   />
 
-                  {/* Auto-Playing Muted 10s Video Preview (MOUNTED STRICTLY AFTER 1.5s HAS ELAPSED) */}
+                  {/* Auto-Playing Video Preview (MP4 OR YOUTUBE IFRAME) */}
                   {isPreviewActive && (
                     <div className="absolute inset-0 w-full h-full z-10 overflow-hidden rounded-xl bg-black animate-fadeIn">
-                      <iframe
-                        src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&mute=1&playsinline=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
-                        title={video.title}
-                        onLoad={() => setIsVideoLoaded(true)}
-                        allow="autoplay; encrypted-media; picture-in-picture"
-                        className="w-full h-full border-0 pointer-events-none object-cover"
-                      />
+                      {video.mp4Preview ? (
+                        <video
+                          src={video.mp4Preview}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="w-full h-full object-cover rounded-xl"
+                        />
+                      ) : (
+                        <iframe
+                          src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&mute=1&playsinline=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
+                          title={video.title}
+                          onLoad={() => setIsVideoLoaded(true)}
+                          allow="autoplay; encrypted-media; picture-in-picture"
+                          className="w-full h-full border-0 pointer-events-none object-cover"
+                        />
+                      )}
                     </div>
                   )}
                 </div>
@@ -243,12 +254,11 @@ export default function YouTubeSection() {
           })}
         </div>
 
-        {/* --- 🖥 DESKTOP VIEW: AUTHENTIC NETFLIX HOVER SHOWCASE (hidden md:grid) --- */}
+        {/* --- 🖥 DESKTOP VIEW: NETFLIX HOVER SHOWCASE WITH INSTANT MP4 VIDEO PREVIEW --- */}
         <div className="hidden md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-14 pb-44 overflow-visible">
           {videos.map((video, index) => {
             const isHovered = hoveredVideoId === video.id;
 
-            // Netflix dynamic transform origin positioning for desktop
             const transformOriginClass =
               index === 0
                 ? 'origin-left'
@@ -257,7 +267,6 @@ export default function YouTubeSection() {
                 : 'origin-center';
 
             return (
-              /* Fixed 16:9 Aspect Ratio Grid Slot Container */
               <div
                 key={video.id}
                 onClick={() => setSelectedVideo(video)}
@@ -265,7 +274,7 @@ export default function YouTubeSection() {
                 onMouseLeave={handleMouseLeave}
                 className="relative aspect-video w-auto cursor-pointer select-none overflow-visible"
               >
-                {/* 1. Default Clean Static Thumbnail (Fixed in grid flow) */}
+                {/* 1. Default Clean Static Thumbnail */}
                 <div className="w-full h-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg relative group">
                   {video.top10 && (
                     <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
@@ -314,20 +323,31 @@ export default function YouTubeSection() {
                       src={video.thumbnail}
                       alt={video.title}
                       className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                        isVideoLoaded ? 'opacity-0' : 'opacity-100'
+                        isVideoLoaded || video.mp4Preview ? 'opacity-0' : 'opacity-100'
                       }`}
                     />
 
-                    {/* Auto-Playing Muted Video Preview */}
+                    {/* Auto-Playing Video Preview (MP4 OR YOUTUBE IFRAME) */}
                     {isHovered && (
-                      <div className="w-full h-full relative pointer-events-none">
-                        <iframe
-                          src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
-                          title={video.title}
-                          onLoad={() => setIsVideoLoaded(true)}
-                          allow="autoplay; encrypted-media"
-                          className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125 transition-opacity duration-500"
-                        />
+                      <div className="w-full h-full relative">
+                        {video.mp4Preview ? (
+                          <video
+                            src={video.mp4Preview}
+                            autoPlay
+                            loop
+                            muted={isMuted}
+                            playsInline
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <iframe
+                            src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
+                            title={video.title}
+                            onLoad={() => setIsVideoLoaded(true)}
+                            allow="autoplay; encrypted-media"
+                            className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125 transition-opacity duration-500 pointer-events-none"
+                          />
+                        )}
                       </div>
                     )}
                   </div>
