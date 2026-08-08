@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { ChevronDown, Menu, X, Globe } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
-export default function Navbar({ onOpenPdfModal }) {
-  const [langOpen, setLangOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState('English');
+export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const languages = ['English', 'Hindi', 'Spanish', 'French'];
 
   const navLinks = [
     { name: 'Instagram', href: '#insta' },
@@ -36,53 +32,10 @@ export default function Navbar({ onOpenPdfModal }) {
             <span className="absolute left-0 top-[1.5em] h-[2px] w-full bg-[#E91E8C] transition-transform duration-300 origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100" />
           </a>
         ))}
-
-        {/* Language Selector Dropdown */}
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setLangOpen(!langOpen)}
-            className="flex items-center gap-1.5 rounded-full border border-[#F5F0EB]/20 px-3.5 py-1.5 text-xs font-medium tracking-wide text-[#F5F0EB]/70 transition-all duration-200 hover:border-[#E91E8C]/60 hover:text-[#E91E8C] cursor-pointer whitespace-nowrap"
-          >
-            <Globe className="w-3.5 h-3.5 text-[#E91E8C]" />
-            {currentLang}
-            <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${langOpen ? 'rotate-180' : ''}`} />
-          </button>
-
-          {langOpen && (
-            <div className="absolute right-0 mt-2 w-32 rounded-xl border border-[#F5F0EB]/15 bg-[#121212] py-2 shadow-2xl backdrop-blur-xl z-50">
-              {languages.map((lang) => (
-                <button
-                  key={lang}
-                  type="button"
-                  onClick={() => {
-                    setCurrentLang(lang);
-                    setLangOpen(false);
-                  }}
-                  className={`w-full text-left px-4 py-1.5 text-xs font-medium transition-colors ${
-                    currentLang === lang
-                      ? 'text-[#E91E8C] bg-[#E91E8C]/10 font-bold'
-                      : 'text-[#F5F0EB]/70 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  {lang}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Mobile Menu Trigger */}
       <div className="flex sm:hidden items-center gap-3">
-        <button
-          type="button"
-          onClick={() => setLangOpen(!langOpen)}
-          className="flex items-center gap-1 rounded-full border border-[#F5F0EB]/20 px-3 py-1 text-xs font-medium text-[#F5F0EB]/70"
-        >
-          {currentLang}
-        </button>
-
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
