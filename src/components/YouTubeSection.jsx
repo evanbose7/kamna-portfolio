@@ -284,20 +284,20 @@ export default function YouTubeSection() {
 
       </div>
 
-      {/* 🍿 Video Info / Player Modal (Centered on Screen, 0 Page Scrolling Required) */}
+      {/* 🍿 Video Info / Player Modal (Slow & Smooth 500ms Cubic-Bezier Pop-In) */}
       {selectedVideo && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 p-4 sm:p-6 backdrop-blur-xl animate-fadeIn">
-          <div className="relative w-full max-w-4xl rounded-2xl border border-red-500/30 bg-[#121212] p-4 sm:p-6 shadow-[0_0_80px_rgba(229,9,20,0.5)] max-h-[92vh] flex flex-col justify-between overflow-y-auto">
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/85 p-4 sm:p-6 animate-backdrop-fade">
+          <div className="relative w-full max-w-4xl rounded-2xl border border-red-500/30 bg-[#121212] p-4 sm:p-6 shadow-[0_0_80px_rgba(229,9,20,0.6)] max-h-[92vh] flex flex-col justify-between overflow-y-auto transform-gpu will-change-transform animate-modal-pop">
             <button
               type="button"
               onClick={() => setSelectedVideo(null)}
-              className="absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-red-600 text-white shadow-xl hover:scale-110 cursor-pointer"
+              className="absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-red-600 text-white shadow-xl hover:scale-110 transition-transform cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Embedded Widescreen Video Player */}
-            <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black">
+            <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black shadow-2xl">
               <iframe
                 src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
                 title={selectedVideo.title}
@@ -307,7 +307,7 @@ export default function YouTubeSection() {
               />
             </div>
 
-            {/* Video Info Directly Below Player (Fit to screen, 0 page scrolling) */}
+            {/* Video Info Directly Below Player */}
             <div className="mt-4 flex flex-col gap-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
