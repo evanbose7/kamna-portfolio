@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play, Plus, ThumbsUp, ChevronDown, Volume2, VolumeX, ExternalLink, X } from 'lucide-react';
 import { YoutubeIcon } from './Icons';
 
@@ -8,7 +8,13 @@ export default function YouTubeSection() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  // Hover timeout ref for smooth 200ms hover intent
+  // Mobile Active Video & Instant Preview State
+  const [activeMobileIndex, setActiveMobileIndex] = useState(0);
+  const [isSectionInView, setIsSectionInView] = useState(false);
+
+  // Refs for mobile swipe container & section
+  const sectionRef = useRef(null);
+  const mobileScrollRef = useRef(null);
   const hoverTimeoutRef = useRef(null);
 
   const videos = [
@@ -16,8 +22,8 @@ export default function YouTubeSection() {
       id: 'video-1',
       title: 'How I Built a 17K+ LinkedIn Audience in 12 Months (Full Blueprint)',
       thumbnail: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
-      youtubeId: 'dQw4w9WgXcQ',
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      youtubeId: 'M576WGiDBdQ',
+      youtubeUrl: 'https://www.youtube.com/watch?v=M576WGiDBdQ',
       duration: '14:20',
       views: '142K views',
       rating: 'U/A 16+',
@@ -53,6 +59,7 @@ export default function YouTubeSection() {
     },
   ];
 
+  // Desktop Hover Handlers
   const handleMouseEnter = (id) => {
     if (window.innerWidth < 768) return;
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
@@ -68,14 +75,48 @@ export default function YouTubeSection() {
     setIsVideoLoaded(false);
   };
 
+  // IntersectionObserver to detect when section enters mobile screen
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsSectionInView(true);
+          } else {
+            setIsSectionInView(false);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Track Mobile Horizontal Swipe Scroll Position
+  const handleMobileScroll = () => {
+    if (!mobileScrollRef.current) return;
+    const container = mobileScrollRef.current;
+    const cardWidth = container.scrollWidth / videos.length;
+    const newIndex = Math.min(
+      videos.length - 1,
+      Math.max(0, Math.round(container.scrollLeft / cardWidth))
+    );
+
+    if (newIndex !== activeMobileIndex) {
+      setActiveMobileIndex(newIndex);
+    }
+  };
+
   return (
-    <section id="youtube" className="bg-[#0A0A0A] scroll-mt-6 py-12 sm:py-20 md:py-24 relative overflow-hidden">
+    <section ref={sectionRef} id="youtube" className="bg-[#0A0A0A] scroll-mt-6 py-12 sm:py-20 md:py-24 relative overflow-hidden">
       
       {/* Background Ambient Glows */}
       <div className="pointer-events-none absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="pointer-events-none absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#E91E8C]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 md:px-10 overflow-visible">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8 md:px-10">
         
         {/* Section Header */}
         <div className="mb-8 sm:mb-12 text-center">
@@ -90,53 +131,81 @@ export default function YouTubeSection() {
             Featured Videos
           </h2>
           <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-            Swipe left & right on phone · Hover or click on desktop
+            Swipe left & right on phone · Instant video preview
           </p>
         </div>
 
-        {/* --- 📱 MOBILE VIEW: HORIZONTAL SWIPE CAROUSEL (THUMBNAIL + INFO UNDERNEATH) --- */}
-        <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-1 -mx-5 px-5">
-          {videos.map((video) => (
-            <a
-              key={video.id}
-              href={video.youtubeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-[82vw] max-w-[310px] shrink-0 snap-center flex flex-col gap-3 rounded-2xl bg-[#141414] border border-white/10 p-3 shadow-lg hover:border-red-500/40 transition-colors"
-            >
-              {/* Clean Widescreen Thumbnail Image */}
-              <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black">
-                {video.top10 && (
-                  <div className="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
-                    TOP 10
-                  </div>
-                )}
-                <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/25">
-                  <div className="w-11 h-11 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl">
-                    <Play className="w-5 h-5 fill-white ml-0.5" />
-                  </div>
-                </div>
-                <img
-                  src={video.thumbnail}
-                  alt={video.title}
-                  className="w-full h-full object-cover rounded-xl"
-                />
-              </div>
+        {/* --- 📱 MOBILE VIEW: SWIPE CAROUSEL (INSTANT AUTO-PLAY VIDEO PREVIEW WHEN SWIPING OR IN VIEW) --- */}
+        <div
+          ref={mobileScrollRef}
+          onScroll={handleMobileScroll}
+          className="md:hidden flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-1 -mx-5 px-5"
+        >
+          {videos.map((video, idx) => {
+            const isCurrentActiveCard = isSectionInView && activeMobileIndex === idx;
 
-              {/* Info Directly Below Thumbnail */}
-              <div className="flex flex-col gap-1.5 px-1 pb-1">
-                <div className="flex items-center justify-between text-[11px] text-white/60">
-                  <span className="font-bold text-red-400 uppercase tracking-wider">{video.tags.join(' • ')}</span>
-                  <span>{video.duration}</span>
+            return (
+              <a
+                key={video.id}
+                href={video.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[82vw] max-w-[310px] shrink-0 snap-center flex flex-col gap-3 rounded-2xl bg-[#141414] border border-white/10 p-3 shadow-lg hover:border-red-500/40 transition-colors"
+              >
+                {/* 16:9 In-Place Thumbnail & Instant Auto-Preview Container */}
+                <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black transform-gpu">
+                  {video.top10 && (
+                    <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
+                      TOP 10
+                    </div>
+                  )}
+
+                  {/* Play Icon Badge when NOT actively playing */}
+                  {!isCurrentActiveCard && (
+                    <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/25">
+                      <div className="w-11 h-11 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl">
+                        <Play className="w-5 h-5 fill-white ml-0.5" />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Static Thumbnail Poster (Permanent background image beneath iframe -> NEVER BLANK) */}
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="absolute inset-0 w-full h-full object-cover rounded-xl"
+                  />
+
+                  {/* Instant Auto-Playing Muted Video Preview (playsinline=1 for smooth mobile playback) */}
+                  {isCurrentActiveCard && (
+                    <div className="absolute inset-0 w-full h-full z-10 overflow-hidden rounded-xl bg-black">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&mute=1&playsinline=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
+                        title={video.title}
+                        allow="autoplay; encrypted-media; picture-in-picture"
+                        className="w-full h-full border-0 pointer-events-none object-cover"
+                      />
+                    </div>
+                  )}
                 </div>
-                <h3 className="font-bold text-sm text-white leading-snug line-clamp-2">{video.title}</h3>
-                <div className="flex items-center justify-between text-[11px] text-white/40 pt-1">
-                  <span>{video.views}</span>
-                  <span className="flex items-center gap-1 text-red-500 font-bold">Watch Video <ExternalLink className="w-3 h-3" /></span>
+
+                {/* Info Sitting Directly Underneath */}
+                <div className="flex flex-col gap-1.5 px-1 pb-1">
+                  <div className="flex items-center justify-between text-[11px] text-white/60">
+                    <span className="font-bold text-red-400 uppercase tracking-wider">{video.tags.join(' • ')}</span>
+                    <span>{video.duration}</span>
+                  </div>
+                  <h3 className="font-bold text-sm text-white leading-snug line-clamp-2">{video.title}</h3>
+                  <div className="flex items-center justify-between text-[11px] text-white/40 pt-1">
+                    <span>{video.views}</span>
+                    <span className="flex items-center gap-1 text-red-500 font-bold">
+                      {isCurrentActiveCard ? 'Previewing...' : 'Watch Video'} <ExternalLink className="w-3 h-3" />
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </a>
-          ))}
+              </a>
+            );
+          })}
         </div>
 
         {/* --- 🖥 DESKTOP VIEW: AUTHENTIC NETFLIX HOVER SHOWCASE (hidden md:grid) --- */}
