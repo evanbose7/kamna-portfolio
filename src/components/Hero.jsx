@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
-export default function Hero({ onOpenPdfModal }) {
-  const [isMuted, setIsMuted] = useState(true);
+export default function Hero() {
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
   const [isTapped, setIsTapped] = useState(false);
   const [hasTappedOnce, setHasTappedOnce] = useState(false);
@@ -100,7 +99,7 @@ export default function Hero({ onOpenPdfModal }) {
           </div>
         </div>
 
-        {/* Right Column: Polaroid Portrait Frame (Supports Image & Auto-Playing Video) */}
+        {/* Right Column: Polaroid Portrait Frame */}
         <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end justify-center py-4">
           
           {/* Subtle Grey-White Surprise Hint Badge (Mobile ONLY, shown ONLY BEFORE first tap) */}
@@ -140,7 +139,7 @@ export default function Hero({ onOpenPdfModal }) {
                     poster="/assets/kamna-portrait.jpg"
                     autoPlay
                     loop
-                    muted={isMuted}
+                    muted
                     playsInline
                     className="w-full h-full object-cover object-center select-none"
                   />
@@ -151,19 +150,6 @@ export default function Hero({ onOpenPdfModal }) {
                     className="w-full h-full object-cover object-center select-none"
                   />
                 )}
-                
-                {/* Audio/Video Mute Toggle Button */}
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsMuted(!isMuted);
-                  }}
-                  aria-label="Toggle Mute"
-                  className="absolute bottom-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#0A0A0A]/70 text-[#F5F0EB] backdrop-blur-md transition-colors hover:bg-[#0A0A0A]/90 cursor-pointer"
-                >
-                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#E91E8C]" />}
-                </button>
               </div>
 
               {/* Handwritten Polaroid Caption */}

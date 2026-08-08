@@ -9,7 +9,6 @@ import Hero from './components/Hero';
 import InstagramSection from './components/InstagramSection';
 import AboutSection from './components/AboutSection';
 import BrandCollaborationsSection from './components/BrandCollaborationsSection';
-import FreeResourceSection from './components/FreeResourceSection';
 import YouTubeSection from './components/YouTubeSection';
 import PdfModal from './components/PdfModal';
 import TestimonialsSection from './components/TestimonialsSection';
@@ -59,9 +58,9 @@ export default function App() {
       <Navbar onOpenPdfModal={() => setIsPdfModalOpen(true)} />
 
       {/* Hero Section */}
-      <Hero onOpenPdfModal={() => setIsPdfModalOpen(true)} />
+      <Hero />
 
-      {/* Instagram 3D Fan Deck Section (In place of LinkedIn Section) */}
+      {/* Instagram 3D Fan Deck Section */}
       <InstagramSection />
 
       {/* About Section */}
@@ -69,9 +68,6 @@ export default function App() {
 
       {/* Brand Collaborations Section */}
       <BrandCollaborationsSection />
-
-      {/* Free Resource PDF Section */}
-      <FreeResourceSection onOpenPdfModal={() => setIsPdfModalOpen(true)} />
 
       {/* 🍿 Netflix-Style YouTube Video Showcase Section */}
       <YouTubeSection />
