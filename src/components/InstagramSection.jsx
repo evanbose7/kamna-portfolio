@@ -13,7 +13,7 @@ export default function InstagramSection() {
 
   const instagramProfileUrl = 'https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr';
 
-  // Exactly 3 Instagram Reels Cards
+  // Exactly 4 Instagram Reels Cards
   const reels = [
     {
       id: 'DZzn3h3M9Jp',
@@ -41,6 +41,15 @@ export default function InstagramSection() {
       likes: '11.2K',
       tag: 'STORYTELLING',
       bgGradient: 'from-fuchsia-950/80 to-stone-950',
+    },
+    {
+      id: 'DYpMyXuNiTF',
+      url: instagramProfileUrl,
+      title: 'Stop making boring posts — try this visual layout framework 🎨',
+      views: '63.8K',
+      likes: '5.1K',
+      tag: 'VISUAL CREATIVE',
+      bgGradient: 'from-pink-950/60 to-slate-950',
     },
   ];
 
