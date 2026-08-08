@@ -20,28 +20,24 @@ export default function InstagramSection() {
       url: 'https://www.instagram.com/reel/DTS2wbWk2Nk/?igsh=bTNtN2xvZXh2cTRq',
       thumbnail: '/assets/reel-thumb-1.jpg',
       title: 'POV: Found the best side hustle (Paid per reel) 💰',
-      tag: 'SIDE HUSTLE',
     },
     {
       id: 'DTDD_1rDKQP',
       url: 'https://www.instagram.com/reel/DTDD_1rDKQP/?igsh=MXYya3dvaTFydGtrZw==',
       thumbnail: '/assets/reel-thumb-2.jpg',
       title: 'Earn Money Via Reels 💵',
-      tag: 'MONETIZATION',
     },
     {
       id: 'DS4qmEQjJLn',
       url: 'https://www.instagram.com/reel/DS4qmEQjJLn/?igsh=MTl3aHI1c2g1OTE=',
       thumbnail: '/assets/reel-thumb-3.jpg',
       title: 'To anyone who is scared to create content 📸',
-      tag: 'CREATOR MINDSET',
     },
     {
       id: 'DSCoQNZjCH7',
       url: 'https://www.instagram.com/reel/DSCoQNZjCH7/?igsh=Y3ZjbDA5eDBmdmtt',
       thumbnail: '/assets/reel-thumb-4.jpg',
       title: 'Ep 2 Indie Filmmaker Berozgar:( Making My Film 🎥',
-      tag: 'FILMMAKING',
     },
   ];
 
@@ -116,7 +112,7 @@ export default function InstagramSection() {
     }
 
     let scale = isHovered ? 1.05 : absOffset >= 2 ? 0.75 : 0.95;
-    let opacity = absOffset >= 2 ? 0 : absOffset === 1 ? 0.85 : 1;
+    let opacity = absOffset >= 2 ? 0 : absOffset === 1 ? 0.88 : 1;
     const zIndex = isHovered ? 50 : absOffset >= 2 ? 5 : 30 - absOffset * 10;
     const translateY = isHovered ? -16 : 0;
 
@@ -183,21 +179,15 @@ export default function InstagramSection() {
                 style={getReelStyle(index)}
                 className="absolute w-[240px] sm:w-[270px] h-[420px] sm:h-[460px] rounded-3xl overflow-hidden border border-white/20 bg-[#121212] cursor-pointer select-none group transform-gpu shadow-2xl"
               >
-                {/* Thumbnail Image Cover */}
+                {/* Crisp Bright & Ultra-Clean Thumbnail Image Cover */}
                 <img
                   src={reel.thumbnail}
                   alt={reel.title}
-                  className="w-full h-full object-cover object-center select-none transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover object-center select-none brightness-[1.05] contrast-[1.05] saturate-[1.05] transition-transform duration-500 group-hover:scale-105"
                 />
 
-                {/* Dark Vignette Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 group-hover:via-black/10 transition-colors" />
-
-                {/* Top Tag & Instagram Icon */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
-                  <span className="rounded-full bg-black/60 border border-white/20 px-3 py-1 text-[10px] font-bold text-white uppercase tracking-widest backdrop-blur-md">
-                    {reel.tag}
-                  </span>
+                {/* Top Right Instagram Icon (Black label removed) */}
+                <div className="absolute top-4 right-4 z-20">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#FFB3CB] to-[#E91E8C] flex items-center justify-center shadow-lg">
                     <InstagramIcon className="w-4 h-4 text-white" />
                   </div>
@@ -209,7 +199,7 @@ export default function InstagramSection() {
                 </div>
 
                 {/* Bottom Title & Action */}
-                <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between p-3 rounded-2xl bg-black/60 backdrop-blur-md border border-white/10">
+                <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between p-3 rounded-2xl bg-black/70 backdrop-blur-md border border-white/10">
                   <h3 className="font-bold text-xs text-white leading-snug line-clamp-1">
                     {reel.title}
                   </h3>
