@@ -180,7 +180,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 4 Cards Deck Container with Official Instagram Video iFrame Embeds */}
+      {/* 4 Cards Deck Container with Clean Edge-to-Edge Instagram Video Embeds */}
       <div
         className="relative mx-auto h-[500px] sm:h-[540px] max-w-6xl flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform"
         onTouchStart={handleTouchStart}
@@ -214,19 +214,19 @@ export default function InstagramSection() {
                 </a>
               </div>
 
-              {/* Live Official Instagram Reel Video iFrame Embed */}
+              {/* Live Official Instagram Reel Video iFrame Embed (Cropped -54px to remove white header band) */}
               <div className="relative w-full h-full overflow-hidden bg-black">
                 <iframe
                   src={reel.embedUrl}
                   title={reel.title}
-                  className="w-full h-full border-0 rounded-b-3xl pointer-events-auto"
+                  className="w-full h-[calc(100%+60px)] -mt-[54px] border-0 rounded-b-3xl pointer-events-auto"
                   allowTransparency="true"
                   allow="encrypted-media"
                   scrolling="no"
                 />
               </div>
 
-              {/* Hover Footer Info Bar */}
+              {/* Footer Info Bar */}
               <div className="p-3 px-4 bg-[#121212]/95 border-t border-white/10 flex items-center justify-between text-[10px] text-white/70 font-semibold z-20">
                 <span className="flex items-center gap-1">
                   <Eye className="w-3 h-3 text-[#FFB3CB]" /> {reel.views}
