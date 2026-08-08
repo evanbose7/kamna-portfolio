@@ -56,7 +56,7 @@ export default function YouTubeSection() {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredVideoId(id);
-    }, 220);
+    }, 200);
   };
 
   const handleMouseLeave = () => {
@@ -90,38 +90,48 @@ export default function YouTubeSection() {
           </p>
         </div>
 
-        {/* Netflix 3-Column Video Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative z-10 min-h-[220px]">
+        {/* Netflix 3-Column Video Row (Fixed Grid Height to Prevent Page Jitter) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative z-10">
           {videos.map((video) => {
             const isHovered = hoveredVideoId === video.id;
 
             return (
+              /* Fixed 16:9 Grid Slot Wrapper (Never resizes on hover) */
               <div
                 key={video.id}
                 onMouseEnter={() => handleMouseEnter(video.id)}
                 onMouseLeave={handleMouseLeave}
-                className="relative rounded-2xl cursor-pointer select-none group"
+                className="relative aspect-video w-full cursor-pointer select-none"
               >
-                {/* Unified Hover Container (No Inner Dividing Lines) */}
-                <div
-                  className={`relative rounded-2xl overflow-hidden bg-[#181818] transition-all duration-300 ${
-                    isHovered
-                      ? 'scale-108 -translate-y-3 z-50 border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.7)]'
-                      : 'scale-100 translate-y-0 z-10 border border-white/10 shadow-lg'
-                  }`}
-                >
-                  {/* Widescreen Thumbnail & Auto-Playing Video Preview Container (16:9) */}
-                  <div className="relative aspect-video w-full overflow-hidden bg-black">
-                    
-                    {/* Top 10 Badge */}
-                    {video.top10 && (
-                      <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
-                        TOP 10
-                      </div>
-                    )}
+                {/* 1. Default Clean Static Thumbnail (Always fixed in grid flow) */}
+                <div className="w-full h-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg">
+                  {video.top10 && (
+                    <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
+                      TOP 10
+                    </div>
+                  )}
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
 
-                    {/* Audio Mute/Unmute Toggle Button */}
-                    {isHovered && (
+                {/* 2. Absolute Floating Hover Overlay Card (Floats ABOVE grid, 0 page movement) */}
+                {isHovered && (
+                  <div
+                    className="absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.7)] scale-108 -translate-y-3 transition-all duration-300 animate-fadeIn"
+                    style={{ minWidth: '100%' }}
+                  >
+                    {/* Top Video Preview Container */}
+                    <div className="relative aspect-video w-full overflow-hidden bg-black">
+                      {video.top10 && (
+                        <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
+                          TOP 10
+                        </div>
+                      )}
+
+                      {/* Mute Button */}
                       <button
                         type="button"
                         onClick={(e) => {
@@ -133,20 +143,9 @@ export default function YouTubeSection() {
                       >
                         {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-red-500" />}
                       </button>
-                    )}
 
-                    {/* Clean Static Poster Thumbnail */}
-                    <img
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className={`w-full h-full object-cover transition-opacity duration-500 ${
-                        isHovered ? 'opacity-0' : 'opacity-100'
-                      }`}
-                    />
-
-                    {/* Auto-Playing Muted Video Preview */}
-                    {isHovered && (
-                      <div className="absolute inset-0 w-full h-full pointer-events-none animate-fadeIn">
+                      {/* Auto-Playing Muted Video Preview */}
+                      <div className="w-full h-full relative pointer-events-none">
                         <iframe
                           src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
                           title={video.title}
@@ -154,17 +153,14 @@ export default function YouTubeSection() {
                           className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125"
                         />
                       </div>
-                    )}
-                  </div>
+                    </div>
 
-                  {/* --- SEAMLESS NETFLIX CONTROL BAR (NO DIVIDING LINE) --- */}
-                  {isHovered && (
-                    <div className="p-4 sm:p-5 flex flex-col gap-3 bg-[#181818] animate-fadeIn">
+                    {/* Netflix Action Controls & Metadata */}
+                    <div className="p-4 sm:p-5 flex flex-col gap-3 bg-[#181818]">
                       
                       {/* Row 1: Action Controls */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          {/* Play Button */}
                           <a
                             href={video.youtubeUrl}
                             target="_blank"
@@ -175,7 +171,6 @@ export default function YouTubeSection() {
                             <Play className="w-4 h-4 fill-black ml-0.5" />
                           </a>
 
-                          {/* Plus Button */}
                           <button
                             type="button"
                             aria-label="Add to list"
@@ -184,7 +179,6 @@ export default function YouTubeSection() {
                             <Plus className="w-4 h-4" />
                           </button>
 
-                          {/* Like Button */}
                           <button
                             type="button"
                             aria-label="Like video"
@@ -194,7 +188,6 @@ export default function YouTubeSection() {
                           </button>
                         </div>
 
-                        {/* Info Button */}
                         <button
                           type="button"
                           onClick={() => setSelectedVideo(video)}
@@ -205,7 +198,7 @@ export default function YouTubeSection() {
                         </button>
                       </div>
 
-                      {/* Row 2: Badges & Metrics */}
+                      {/* Row 2: Metadata Badges */}
                       <div className="flex items-center gap-2 text-xs text-white/70 font-semibold pt-1">
                         <span className="rounded border border-white/30 px-1.5 py-0.5 text-[10px] text-white">
                           {video.rating}
@@ -232,8 +225,8 @@ export default function YouTubeSection() {
                       </div>
 
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
 
               </div>
             );
