@@ -8,14 +8,16 @@ export default function YouTubeSection() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  // Mobile Active Video & Instant Preview State
+  // Mobile Active Video & Preview Delay State
   const [activeMobileIndex, setActiveMobileIndex] = useState(0);
+  const [activePreviewVideoId, setActivePreviewVideoId] = useState(null);
   const [isSectionInView, setIsSectionInView] = useState(false);
 
   // Refs for mobile swipe container & section
   const sectionRef = useRef(null);
   const mobileScrollRef = useRef(null);
   const hoverTimeoutRef = useRef(null);
+  const mobilePreviewTimerRef = useRef(null);
 
   const videos = [
     {
@@ -84,15 +86,46 @@ export default function YouTubeSection() {
             setIsSectionInView(true);
           } else {
             setIsSectionInView(false);
+            setActivePreviewVideoId(null);
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.25 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+
+  // Thumbnail First (1.5s delay) -> Auto-Play Video Preview Transition Logic
+  useEffect(() => {
+    if (window.innerWidth >= 768 || !isSectionInView) {
+      setActivePreviewVideoId(null);
+      return;
+    }
+
+    // Step 1: Always show thumbnail first (reset preview video)
+    setActivePreviewVideoId(null);
+    setIsVideoLoaded(false);
+
+    if (mobilePreviewTimerRef.current) {
+      clearTimeout(mobilePreviewTimerRef.current);
+    }
+
+    // Step 2: Wait 1.5s, then transition to video preview
+    mobilePreviewTimerRef.current = setTimeout(() => {
+      const currentVideo = videos[activeMobileIndex];
+      if (currentVideo) {
+        setActivePreviewVideoId(currentVideo.id);
+      }
+    }, 1500);
+
+    return () => {
+      if (mobilePreviewTimerRef.current) {
+        clearTimeout(mobilePreviewTimerRef.current);
+      }
+    };
+  }, [activeMobileIndex, isSectionInView]);
 
   // Track Mobile Horizontal Swipe Scroll Position
   const handleMobileScroll = () => {
@@ -131,18 +164,18 @@ export default function YouTubeSection() {
             Featured Videos
           </h2>
           <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-            Swipe left & right on phone · Instant video preview
+            Swipe left & right on phone · Shows thumbnail first then video
           </p>
         </div>
 
-        {/* --- 📱 MOBILE VIEW: SWIPE CAROUSEL (INSTANT AUTO-PLAY VIDEO PREVIEW WHEN SWIPING OR IN VIEW) --- */}
+        {/* --- 📱 MOBILE VIEW: SWIPE CAROUSEL (THUMBNAIL FIRST -> 1.5s DELAY -> VIDEO PREVIEW) --- */}
         <div
           ref={mobileScrollRef}
           onScroll={handleMobileScroll}
           className="md:hidden flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-1 -mx-5 px-5"
         >
           {videos.map((video, idx) => {
-            const isCurrentActiveCard = isSectionInView && activeMobileIndex === idx;
+            const isAutoPreviewing = activePreviewVideoId === video.id;
 
             return (
               <a
@@ -152,7 +185,7 @@ export default function YouTubeSection() {
                 rel="noopener noreferrer"
                 className="w-[82vw] max-w-[310px] shrink-0 snap-center flex flex-col gap-3 rounded-2xl bg-[#141414] border border-white/10 p-3 shadow-lg hover:border-red-500/40 transition-colors"
               >
-                {/* 16:9 In-Place Thumbnail & Instant Auto-Preview Container */}
+                {/* 16:9 Thumbnail & Video Container */}
                 <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black transform-gpu">
                   {video.top10 && (
                     <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
@@ -160,8 +193,8 @@ export default function YouTubeSection() {
                     </div>
                   )}
 
-                  {/* Play Icon Badge when NOT actively playing */}
-                  {!isCurrentActiveCard && (
+                  {/* Play Icon Badge when NOT previewing */}
+                  {!isAutoPreviewing && (
                     <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/25">
                       <div className="w-11 h-11 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl">
                         <Play className="w-5 h-5 fill-white ml-0.5" />
@@ -169,19 +202,20 @@ export default function YouTubeSection() {
                     </div>
                   )}
 
-                  {/* Static Thumbnail Poster (Permanent background image beneath iframe -> NEVER BLANK) */}
+                  {/* Static Thumbnail Poster (Always shown first!) */}
                   <img
                     src={video.thumbnail}
                     alt={video.title}
                     className="absolute inset-0 w-full h-full object-cover rounded-xl"
                   />
 
-                  {/* Instant Auto-Playing Muted Video Preview (playsinline=1 for smooth mobile playback) */}
-                  {isCurrentActiveCard && (
-                    <div className="absolute inset-0 w-full h-full z-10 overflow-hidden rounded-xl bg-black">
+                  {/* Auto-Playing Muted 10s Video Preview (Reveals smoothly after 1.5s) */}
+                  {isAutoPreviewing && (
+                    <div className="absolute inset-0 w-full h-full z-10 overflow-hidden rounded-xl bg-black animate-fadeIn">
                       <iframe
                         src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&mute=1&playsinline=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
                         title={video.title}
+                        onLoad={() => setIsVideoLoaded(true)}
                         allow="autoplay; encrypted-media; picture-in-picture"
                         className="w-full h-full border-0 pointer-events-none object-cover"
                       />
@@ -199,7 +233,7 @@ export default function YouTubeSection() {
                   <div className="flex items-center justify-between text-[11px] text-white/40 pt-1">
                     <span>{video.views}</span>
                     <span className="flex items-center gap-1 text-red-500 font-bold">
-                      {isCurrentActiveCard ? 'Previewing...' : 'Watch Video'} <ExternalLink className="w-3 h-3" />
+                      {isAutoPreviewing ? '10s Previewing...' : 'Watch Video'} <ExternalLink className="w-3 h-3" />
                     </span>
                   </div>
                 </div>
