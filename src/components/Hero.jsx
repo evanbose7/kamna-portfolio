@@ -10,7 +10,7 @@ export default function Hero({ onOpenPdfModal }) {
   const isVideoMedia = false; 
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
 
-  // Toggle portrait pop & tilt state on tap (mobile friendly) and hide hint badge
+  // Toggle portrait pop & tilt state on tap (mobile friendly) and hide hint badge permanently
   const handlePortraitClick = () => {
     setIsPortraitHovered((prev) => !prev);
     setHasTappedPortrait(true);
@@ -96,8 +96,8 @@ export default function Hero({ onOpenPdfModal }) {
         {/* Right Column: Polaroid Portrait Frame (Supports Image & Auto-Playing Video) */}
         <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end justify-center py-4">
           
-          {/* Subtle Grey-White Surprise Hint Badge (Mobile ONLY, disappears when photo is tapped) */}
-          {!hasTappedPortrait && !isPortraitHovered && (
+          {/* Subtle Grey-White Surprise Hint Badge (Mobile ONLY, disappears permanently when photo is tapped) */}
+          {!hasTappedPortrait && (
             <div className="lg:hidden mb-2 z-40 whitespace-nowrap transition-opacity duration-300">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-[#F5F0EB]/15 bg-[#F5F0EB]/5 px-3.5 py-1 text-[10px] font-medium text-[#F5F0EB]/60 shadow-sm uppercase tracking-widest backdrop-blur-sm">
                 ✨ tap to see surprise
@@ -169,17 +169,17 @@ export default function Hero({ onOpenPdfModal }) {
 
             {/* 1. Sticker Top-Left: "21 years old" */}
             <div
-              className={`pointer-events-none absolute -top-6 -left-10 z-30 transform -rotate-6 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute -top-6 -left-6 sm:-left-10 z-30 transform -rotate-6 transition-all duration-300 ease-back-out ${
                 isPortraitHovered
                   ? 'opacity-100 scale-100 translate-y-0 delay-75'
                   : 'opacity-0 scale-75 translate-y-4'
               }`}
             >
               <div className="relative">
-                <div className="bg-[#FFB3CB] text-[#0A0A0A] font-caveat text-lg sm:text-xl font-bold px-3 py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
+                <div className="bg-[#FFB3CB] text-[#0A0A0A] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
                   21 years old
                 </div>
-                <svg className="w-16 h-14 absolute top-[80%] left-[80%] overflow-visible" viewBox="0 0 72 64" fill="none">
+                <svg className="w-12 h-10 sm:w-16 sm:h-14 absolute top-[80%] left-[80%] overflow-visible" viewBox="0 0 72 64" fill="none">
                   <path d="M5 5 C 22 0, 26 10, 18 14 C 8 18, 8 26, 22 26 C 32 26, 40 30, 46 38" stroke="#FFB3CB" strokeWidth="2.5" strokeLinecap="round" fill="none" />
                 </svg>
               </div>
@@ -187,17 +187,17 @@ export default function Hero({ onOpenPdfModal }) {
 
             {/* 2. Sticker Top-Right: "social media strategist" */}
             <div
-              className={`pointer-events-none absolute -top-6 -right-12 z-30 transform rotate-6 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute -top-6 -right-6 sm:-right-12 z-30 transform rotate-6 transition-all duration-300 ease-back-out ${
                 isPortraitHovered
                   ? 'opacity-100 scale-100 translate-y-0 delay-150'
                   : 'opacity-0 scale-75 translate-y-4'
               }`}
             >
               <div className="relative">
-                <div className="bg-[#E91E8C] text-[#F5F0EB] font-caveat text-lg sm:text-xl font-bold px-3 py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
+                <div className="bg-[#E91E8C] text-[#F5F0EB] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
                   social media strategist
                 </div>
-                <svg className="w-16 h-14 absolute top-[80%] right-[80%] overflow-visible" viewBox="0 0 72 64" fill="none">
+                <svg className="w-12 h-10 sm:w-16 sm:h-14 absolute top-[80%] right-[80%] overflow-visible" viewBox="0 0 72 64" fill="none">
                   <path d="M67 5 C 50 0, 46 10, 54 14 C 64 18, 64 26, 50 26 C 40 26, 32 30, 26 38" stroke="#E91E8C" strokeWidth="2.5" strokeLinecap="round" fill="none" />
                 </svg>
               </div>
@@ -205,17 +205,17 @@ export default function Hero({ onOpenPdfModal }) {
 
             {/* 3. Sticker Middle-Left: "ghostwriter" */}
             <div
-              className={`pointer-events-none absolute top-1/2 -left-20 transform -translate-y-1/2 -rotate-12 z-30 hidden sm:block transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute top-1/2 -left-12 sm:-left-20 transform -translate-y-1/2 -rotate-12 z-30 transition-all duration-300 ease-back-out ${
                 isPortraitHovered
                   ? 'opacity-100 scale-100 translate-x-0 delay-220'
                   : 'opacity-0 scale-75 -translate-x-4'
               }`}
             >
               <div className="relative">
-                <div className="bg-[#FFB3CB] text-[#0A0A0A] font-caveat text-lg sm:text-xl font-bold px-3 py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
+                <div className="bg-[#FFB3CB] text-[#0A0A0A] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
                   ghostwriter
                 </div>
-                <svg className="w-20 h-8 absolute top-1/2 left-full -translate-y-1/2 overflow-visible ml-1" viewBox="0 0 84 28" fill="none">
+                <svg className="w-14 h-6 sm:w-20 sm:h-8 absolute top-1/2 left-full -translate-y-1/2 overflow-visible ml-1" viewBox="0 0 84 28" fill="none">
                   <path d="M2 14 Q 22 4, 42 14 T 78 14" stroke="#FFB3CB" strokeWidth="2.5" strokeLinecap="round" fill="none" />
                 </svg>
               </div>
@@ -223,17 +223,17 @@ export default function Hero({ onOpenPdfModal }) {
 
             {/* 4. Sticker Bottom-Left: "content creator" */}
             <div
-              className={`pointer-events-none absolute -bottom-9 -left-6 z-30 transform rotate-3 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute -bottom-9 -left-4 sm:-left-6 z-30 transform rotate-3 transition-all duration-300 ease-back-out ${
                 isPortraitHovered
                   ? 'opacity-100 scale-100 translate-y-0 delay-300'
                   : 'opacity-0 scale-75 -translate-y-4'
               }`}
             >
               <div className="relative">
-                <div className="bg-[#FFB3CB] text-[#0A0A0A] font-caveat text-lg sm:text-xl font-bold px-3 py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
+                <div className="bg-[#FFB3CB] text-[#0A0A0A] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
                   content creator
                 </div>
-                <svg className="w-16 h-16 absolute bottom-[85%] left-2 overflow-visible" viewBox="0 0 64 72" fill="none">
+                <svg className="w-12 h-12 sm:w-16 sm:h-16 absolute bottom-[85%] left-2 overflow-visible" viewBox="0 0 64 72" fill="none">
                   <path d="M8 66 C 8 50, 12 32, 16 18 Q 18 10, 20 6" stroke="#FFB3CB" strokeWidth="2.5" strokeLinecap="round" fill="none" />
                 </svg>
               </div>
@@ -241,17 +241,17 @@ export default function Hero({ onOpenPdfModal }) {
 
             {/* 5. Sticker Bottom-Right: "storyteller" */}
             <div
-              className={`pointer-events-none absolute -bottom-9 -right-6 z-30 transform -rotate-3 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute -bottom-9 -right-4 sm:-right-6 z-30 transform -rotate-3 transition-all duration-300 ease-back-out ${
                 isPortraitHovered
                   ? 'opacity-100 scale-108 translate-y-0 delay-350'
                   : 'opacity-0 scale-75 -translate-y-4'
               }`}
             >
               <div className="relative">
-                <div className="bg-[#E91E8C] text-[#F5F0EB] font-caveat text-lg sm:text-xl font-bold px-3 py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
+                <div className="bg-[#E91E8C] text-[#F5F0EB] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
                   storyteller
                 </div>
-                <svg className="w-16 h-16 absolute bottom-[85%] right-2 overflow-visible" viewBox="0 0 64 72" fill="none">
+                <svg className="w-12 h-12 sm:w-16 sm:h-16 absolute bottom-[85%] right-2 overflow-visible" viewBox="0 0 64 72" fill="none">
                   <path d="M56 66 C 56 50, 52 32, 48 18 Q 46 10, 44 6" stroke="#E91E8C" strokeWidth="2.5" strokeLinecap="round" fill="none" />
                 </svg>
               </div>
