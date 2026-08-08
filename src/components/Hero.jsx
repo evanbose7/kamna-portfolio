@@ -5,6 +5,10 @@ export default function Hero({ onOpenPdfModal }) {
   const [isMuted, setIsMuted] = useState(true);
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
 
+  // Video media configuration (change to true if using video file in public/assets/)
+  const isVideoMedia = false; 
+  const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
+
   // Toggle portrait pop & tilt state on tap (mobile friendly)
   const handlePortraitClick = () => {
     setIsPortraitHovered((prev) => !prev);
@@ -87,7 +91,7 @@ export default function Hero({ onOpenPdfModal }) {
           </div>
         </div>
 
-        {/* Right Column: Polaroid Portrait Frame with Tap & Hover Tilt/Pop */}
+        {/* Right Column: Polaroid Portrait Frame (Supports Image & Auto-Playing Video) */}
         <div className="order-1 lg:order-2 flex justify-center lg:justify-end py-6">
           <div
             onClick={handlePortraitClick}
@@ -112,11 +116,23 @@ export default function Hero({ onOpenPdfModal }) {
               }`}
             >
               <div className="relative overflow-hidden aspect-[2/3] bg-[#F5F0EB]">
-                <img
-                  src="/assets/kamna-portrait.jpg"
-                  alt="Kamna Bhardwaj — Content Strategist"
-                  className="w-full h-full object-cover object-center select-none"
-                />
+                {isVideoMedia ? (
+                  <video
+                    src={mediaSrc}
+                    poster="/assets/kamna-portrait.jpg"
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    className="w-full h-full object-cover object-center select-none"
+                  />
+                ) : (
+                  <img
+                    src={mediaSrc}
+                    alt="Kamna Bhardwaj — Content Strategist"
+                    className="w-full h-full object-cover object-center select-none"
+                  />
+                )}
                 
                 {/* Audio/Video Mute Toggle Button */}
                 <button
