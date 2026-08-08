@@ -128,7 +128,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 📱 MOBILE VIEW: Smooth 60FPS Snap Track with Unblocked Vertical Page Scroll (touch-pan-y) */}
+      {/* 📱 MOBILE VIEW: Full 2D Dual Swipe (Up/Down page scroll + Left/Right 60FPS card swiping) */}
       <div className="md:hidden relative w-full overflow-hidden px-4">
         <div
           ref={scrollContainerRef}
@@ -140,8 +140,12 @@ export default function InstagramSection() {
               setActiveReelIndex(newIndex);
             }
           }}
-          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-[calc(50vw-130px)] touch-pan-y transform-gpu will-change-transform"
-          style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
+          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-[calc(50vw-130px)] transform-gpu will-change-transform"
+          style={{
+            scrollBehavior: 'smooth',
+            WebkitOverflowScrolling: 'touch',
+            touchAction: 'pan-x pan-y', // Dual 2D touch permission: Up/Down scrolls page, Left/Right swipes cards!
+          }}
         >
           {reels.map((reel) => (
             <div
@@ -180,7 +184,7 @@ export default function InstagramSection() {
         </div>
       </div>
 
-      {/* 💻 DESKTOP VIEW: 3-Card Carousel with Side Chevron Buttons */}
+      {/* 💻 DESKTOP VIEW: Unchanged 3-Card Carousel with Side Chevron Buttons */}
       <div className="hidden md:flex relative mx-auto h-[460px] sm:h-[500px] max-w-6xl items-center justify-center relative z-10">
         
         {/* Left Navigation Chevron Button */}
