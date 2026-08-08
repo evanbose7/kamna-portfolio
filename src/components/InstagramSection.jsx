@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Play, Heart, Eye, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
@@ -6,10 +6,12 @@ export default function InstagramSection() {
   const [activeReelIndex, setActiveReelIndex] = useState(1);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  // 60FPS Touch Drag Tracking State
+  // 60FPS Touch Drag & Long Press States
   const [touchStartX, setTouchStartX] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+
+  const longPressTimerRef = useRef(null);
 
   const instagramProfileUrl = 'https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr';
 
@@ -61,21 +63,23 @@ export default function InstagramSection() {
     setActiveReelIndex((prev) => (prev === reels.length - 1 ? 0 : prev + 1));
   };
 
-  // Card click / tap toggle
+  // Card click: Quick tap centers/selects card without sticky pop
   const handleCardClick = (index) => {
-    if (Math.abs(dragOffset) > 10) return; // Ignore click if user was dragging
+    if (Math.abs(dragOffset) > 10) return;
     setActiveReelIndex(index);
-    if (hoveredIndex === index) {
-      setHoveredIndex(null);
-    } else {
-      setHoveredIndex(index);
-    }
   };
 
-  // 60FPS Continuous Finger Drag Handlers
-  const handleTouchStart = (e) => {
-    setTouchStartX(e.targetTouches[0].clientX);
+  // 60FPS Touch Drag & Long Press Handlers
+  const handleTouchStart = (e, index) => {
+    const startX = e.targetTouches[0].clientX;
+    setTouchStartX(startX);
     setIsDragging(true);
+
+    // Start Long Press Timer (300ms hold triggers pop on mobile)
+    if (longPressTimerRef.current) clearTimeout(longPressTimerRef.current);
+    longPressTimerRef.current = setTimeout(() => {
+      setHoveredIndex(index);
+    }, 300);
   };
 
   const handleTouchMove = (e) => {
@@ -83,10 +87,22 @@ export default function InstagramSection() {
     const currentX = e.targetTouches[0].clientX;
     const delta = currentX - touchStartX;
     setDragOffset(delta);
+
+    // If finger moves more than 10px (swiping), cancel long press pop
+    if (Math.abs(delta) > 10) {
+      if (longPressTimerRef.current) clearTimeout(longPressTimerRef.current);
+      setHoveredIndex(null);
+    }
   };
 
   const handleTouchEnd = () => {
+    if (longPressTimerRef.current) clearTimeout(longPressTimerRef.current);
     setIsDragging(false);
+
+    // Unpop card when finger lifts
+    setHoveredIndex(null);
+
+    // Swipe card logic
     if (Math.abs(dragOffset) > 40) {
       if (dragOffset < 0) {
         handleNext();
@@ -95,6 +111,19 @@ export default function InstagramSection() {
       }
     }
     setDragOffset(0);
+  };
+
+  // Desktop Mouse Handlers
+  const handleMouseEnter = (index) => {
+    if (window.innerWidth >= 1024) {
+      setHoveredIndex(index);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (window.innerWidth >= 1024) {
+      setHoveredIndex(null);
+    }
   };
 
   // Cyclic distance math to keep 4th card hidden between/behind the 3 visible cards
@@ -165,13 +194,8 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 60FPS Cyclic Drag Deck Container (3 Visible Cards + 4th Hidden Card) */}
-      <div
-        className="relative mx-auto h-[480px] sm:h-[520px] max-w-5xl flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
+      {/* 60FPS Cyclic Drag Deck Container with Long Press Pop on Mobile */}
+      <div className="relative mx-auto h-[480px] sm:h-[520px] max-w-5xl flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform">
         {reels.map((reel, index) => {
           const isHovered = hoveredIndex === index;
 
@@ -179,8 +203,12 @@ export default function InstagramSection() {
             <div
               key={reel.id}
               onClick={() => handleCardClick(index)}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
+              onTouchStart={(e) => handleTouchStart(e, index)}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onTouchCancel={handleTouchEnd}
               style={getReelStyle(index)}
               className="absolute w-[240px] sm:w-[270px] h-[400px] sm:h-[450px] rounded-3xl overflow-hidden border border-white/10 bg-[#121212] cursor-pointer select-none group transform-gpu"
             >
@@ -210,7 +238,7 @@ export default function InstagramSection() {
                     <Play className="w-6 h-6 fill-white ml-0.5" />
                   </div>
                   <span className="text-[10px] uppercase font-bold text-white/60 tracking-wider">
-                    {isHovered ? 'Click to Open Reel' : 'Swipe or Tap'}
+                    {isHovered ? 'Pressing Reel...' : 'Hold to Pop · Swipe to Switch'}
                   </span>
                 </div>
 
