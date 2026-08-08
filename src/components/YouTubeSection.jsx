@@ -159,7 +159,7 @@ export default function YouTubeSection() {
         <div className="mb-8 sm:mb-12 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3.5 py-1 text-xs font-bold text-red-500 uppercase tracking-widest mb-4">
             <YoutubeIcon className="w-4 h-4 text-red-500" />
-            Netflix Style Showcase
+            YouTube
           </div>
           <h2
             className="font-black uppercase leading-none tracking-tight text-[#F5F0EB]"
@@ -168,7 +168,7 @@ export default function YouTubeSection() {
             Featured Videos
           </h2>
           <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-            Swipe left & right on phone · Thumbnail first (1.5s) then video preview
+            Swipe left & right on phone · Shows thumbnail first then video
           </p>
         </div>
 
