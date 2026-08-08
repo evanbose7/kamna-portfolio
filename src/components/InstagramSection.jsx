@@ -3,19 +3,19 @@ import { Play, Heart, Eye, ExternalLink } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
 export default function InstagramSection() {
-  // Set default active reel to middle index (1 out of 3)
   const [activeReelIndex, setActiveReelIndex] = useState(1);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  // Touch swipe gesture states
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchEndX, setTouchEndX] = useState(0);
+
+  const instagramProfileUrl = 'https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr';
 
   // Exactly 3 Instagram Reels Cards
   const reels = [
     {
       id: 'DZzn3h3M9Jp',
-      url: 'https://www.instagram.com/ariimakesflims/',
+      url: instagramProfileUrl,
       title: 'How to write hooks that grab attention in 2 seconds 🔥',
       views: '45.2K',
       likes: '3.8K',
@@ -24,7 +24,7 @@ export default function InstagramSection() {
     },
     {
       id: 'DXvzWqTMfIp',
-      url: 'https://www.instagram.com/ariimakesflims/',
+      url: instagramProfileUrl,
       title: 'Day in the life of a personal branding strategist 💻',
       views: '82.1K',
       likes: '6.4K',
@@ -33,7 +33,7 @@ export default function InstagramSection() {
     },
     {
       id: 'DZ10LkGNC-0',
-      url: 'https://www.instagram.com/ariimakesflims/',
+      url: instagramProfileUrl,
       title: 'The storytelling secret top creators charge $5,000 for 🤐',
       views: '120.5K',
       likes: '11.2K',
@@ -102,7 +102,7 @@ export default function InstagramSection() {
     const absOffset = Math.abs(offset);
     let scale = isHovered ? 1.08 : 1 - absOffset * 0.12;
     
-    // Set 0deg rotation so first and last cards are 100% flat and facing straight forward like the center card
+    // Set 0deg rotation so first and last cards face flat forward like the center card
     let rotateY = 0;
 
     let opacity = 1;
@@ -226,13 +226,13 @@ export default function InstagramSection() {
       {/* Instagram Profile CTA */}
       <div className="mt-8 text-center">
         <a
-          href="https://www.instagram.com/ariimakesflims/"
+          href={instagramProfileUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-full border border-[#E91E8C]/40 bg-[#E91E8C]/10 px-8 py-3.5 text-xs font-bold uppercase tracking-widest text-[#E91E8C] transition-all duration-300 hover:bg-[#E91E8C] hover:text-white hover:shadow-[0_0_25px_rgba(233,30,140,0.5)] cursor-pointer"
         >
           <InstagramIcon className="w-4 h-4" />
-          Follow @ariimakesflims on Instagram
+          Follow @ariimakesfilms on Instagram
         </a>
       </div>
     </section>

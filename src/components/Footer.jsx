@@ -24,10 +24,10 @@ export default function Footer() {
             <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/30 mb-1 font-bold">
               Navigate
             </p>
-            {['About', 'LinkedIn', 'Instagram', 'Connect'].map((item) => (
+            {['Instagram', 'About', 'YouTube', 'Connect'].map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase()}`}
+                href={`#${item.toLowerCase() === 'instagram' ? 'insta' : item.toLowerCase()}`}
                 className="group relative inline-flex w-fit items-center text-xs font-semibold uppercase tracking-widest text-[#F5F0EB]/60 hover:text-[#F5F0EB] transition-colors"
               >
                 {item}
@@ -42,16 +42,7 @@ export default function Footer() {
             
             <div className="flex items-center gap-4">
               <a
-                href="https://www.linkedin.com/in/kamna-bharadwaj/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="text-[#F5F0EB]/40 hover:text-[#E91E8C] transition-colors"
-              >
-                <LinkedinIcon className="w-5 h-5" />
-              </a>
-              <a
-                href="https://www.instagram.com/thekamnabhardwaj/"
+                href="https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
