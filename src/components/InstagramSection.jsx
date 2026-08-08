@@ -101,7 +101,9 @@ export default function InstagramSection() {
 
     const absOffset = Math.abs(offset);
     let scale = isHovered ? 1.08 : 1 - absOffset * 0.12;
-    let rotateY = offset * -15;
+    
+    // Set 0deg rotation so first and last cards are 100% flat and facing straight forward like the center card
+    let rotateY = 0;
 
     let opacity = 1;
     if (absOffset > 2) {
@@ -139,7 +141,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 3D Fan Deck Container */}
+      {/* 3D Fan Deck Container with Flat Facing Cards */}
       <div
         className="relative mx-auto h-[480px] sm:h-[520px] max-w-5xl flex items-center justify-center perspective-[1200px] touch-pan-y"
         onTouchStart={handleTouchStart}
@@ -148,7 +150,6 @@ export default function InstagramSection() {
       >
         {reels.map((reel, index) => {
           const isHovered = hoveredIndex === index;
-          const isActive = activeReelIndex === index;
 
           return (
             <div
