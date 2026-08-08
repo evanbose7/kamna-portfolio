@@ -28,10 +28,8 @@ export default function YouTubeSection() {
       youtubeId: 'UN3Nqzh-nrQ',
       youtubeUrl: 'https://youtu.be/UN3Nqzh-nrQ?si=glKRxw3dFc2vYPqM',
       duration: '12:45',
-      views: '185K views',
       rating: 'U/A 13+',
       quality: '1080P',
-      top10: true,
       tags: ['Short Film', 'Storytelling', 'Arnav Films'],
     },
     {
@@ -41,10 +39,8 @@ export default function YouTubeSection() {
       youtubeId: 'L_LUpnjgPso',
       youtubeUrl: 'https://www.youtube.com/watch?v=L_LUpnjgPso',
       duration: '22:15',
-      views: '98K views',
       rating: 'U/A 13+',
       quality: '4K',
-      top10: false,
       tags: ['Ghostwriting', 'Positioning', 'Outreach'],
     },
     {
@@ -54,10 +50,8 @@ export default function YouTubeSection() {
       youtubeId: '3JZ_D3ELwOQ',
       youtubeUrl: 'https://www.youtube.com/watch?v=3JZ_D3ELwOQ',
       duration: '18:45',
-      views: '210K views',
       rating: 'U/A 16+',
       quality: 'HD',
-      top10: true,
       tags: ['Vlog', 'Workflow', 'Daily Routine'],
     },
   ];
@@ -169,7 +163,7 @@ export default function YouTubeSection() {
           </h2>
         </div>
 
-        {/* --- 📱 MOBILE VIEW: SWIPE CAROUSEL (SHOWS THUMBNAIL FOR 1.5s -> THEN PLAYS MP4 VIDEO) --- */}
+        {/* --- 📱 MOBILE VIEW: SWIPE CAROUSEL --- */}
         <div
           ref={mobileScrollRef}
           onScroll={handleMobileScroll}
@@ -188,12 +182,6 @@ export default function YouTubeSection() {
               >
                 {/* 16:9 Thumbnail & Video Container */}
                 <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black transform-gpu">
-                  {video.top10 && (
-                    <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
-                      TOP 10
-                    </div>
-                  )}
-
                   {/* Play Icon Badge when showing static thumbnail */}
                   {!isPreviewActive && (
                     <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/25">
@@ -210,7 +198,7 @@ export default function YouTubeSection() {
                     className="absolute inset-0 w-full h-full object-cover rounded-xl"
                   />
 
-                  {/* Auto-Playing Video Preview (MP4 OR YOUTUBE IFRAME) */}
+                  {/* Auto-Playing Video Preview */}
                   {isPreviewActive && (
                     <div className="absolute inset-0 w-full h-full z-10 overflow-hidden rounded-xl bg-black animate-fadeIn">
                       {video.mp4Preview ? (
@@ -243,8 +231,7 @@ export default function YouTubeSection() {
                   </div>
                   <h3 className="font-bold text-sm text-white leading-snug line-clamp-2">{video.title}</h3>
                   <div className="flex items-center justify-between text-[11px] text-white/40 pt-1">
-                    <span>{video.views}</span>
-                    <span className="flex items-center gap-1 text-red-500 font-bold">
+                    <span className="flex items-center gap-1 text-red-500 font-bold ml-auto">
                       Watch on YouTube <ExternalLink className="w-3 h-3" />
                     </span>
                   </div>
@@ -254,7 +241,7 @@ export default function YouTubeSection() {
           })}
         </div>
 
-        {/* --- 🖥 DESKTOP VIEW: NETFLIX HOVER SHOWCASE WITH INSTANT MP4 VIDEO PREVIEW --- */}
+        {/* --- 🖥 DESKTOP VIEW: NETFLIX HOVER SHOWCASE --- */}
         <div className="hidden md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-14 pb-44 overflow-visible">
           {videos.map((video, index) => {
             const isHovered = hoveredVideoId === video.id;
@@ -276,11 +263,6 @@ export default function YouTubeSection() {
               >
                 {/* 1. Default Clean Static Thumbnail */}
                 <div className="w-full h-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg relative group">
-                  {video.top10 && (
-                    <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
-                      TOP 10
-                    </div>
-                  )}
                   <img
                     src={video.thumbnail}
                     alt={video.title}
@@ -299,12 +281,6 @@ export default function YouTubeSection() {
                 >
                   {/* Top Video Preview Container */}
                   <div className="relative aspect-video w-full overflow-hidden bg-black">
-                    {video.top10 && (
-                      <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
-                        TOP 10
-                      </div>
-                    )}
-
                     {/* Mute Button */}
                     <button
                       type="button"
@@ -327,7 +303,7 @@ export default function YouTubeSection() {
                       }`}
                     />
 
-                    {/* Auto-Playing Video Preview (MP4 OR YOUTUBE IFRAME) */}
+                    {/* Auto-Playing Video Preview */}
                     {isHovered && (
                       <div className="w-full h-full relative">
                         {video.mp4Preview ? (
@@ -406,11 +382,8 @@ export default function YouTubeSection() {
                       <span className="rounded border border-white/40 px-1.5 py-0.5 text-[10px] text-white font-bold">
                         {video.quality}
                       </span>
-                      <span className="text-[#F5F0EB]/70 text-[11px] font-semibold">
-                        {video.duration}
-                      </span>
-                      <span className="text-[#F5F0EB]/50 text-[11px] ml-auto">
-                        {video.views}
+                      <span className="text-[#F5F0EB]/70 text-[11px] font-semibold ml-auto">
+                        Duration: {video.duration}
                       </span>
                     </div>
 
@@ -492,7 +465,7 @@ export default function YouTubeSection() {
               </div>
               <h3 className="text-base md:text-lg font-bold text-white leading-snug">{selectedVideo.title}</h3>
               <p className="text-xs text-[#F5F0EB]/60">
-                {selectedVideo.views} · Duration: {selectedVideo.duration}
+                Duration: {selectedVideo.duration}
               </p>
             </div>
           </div>
