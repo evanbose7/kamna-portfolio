@@ -13,21 +13,21 @@ export default function InstagramSection() {
 
   const instagramProfileUrl = 'https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr';
 
-  // Exactly 4 Reels with your exact uploaded thumbnail covers & Instagram links
+  // 4 Reels with exact matched thumbnail covers & Instagram links requested by user
   const reels = [
     {
       id: 'DTS2wbWk2Nk',
       url: 'https://www.instagram.com/reel/DTS2wbWk2Nk/?igsh=bTNtN2xvZXh2cTRq',
       thumbnail: '/assets/reel-thumb-1.jpg',
-      title: 'Earn Money Via Reels 💵',
-      tag: 'MONETIZATION',
+      title: 'POV: Found the best side hustle (Paid per reel) 💰',
+      tag: 'SIDE HUSTLE',
     },
     {
       id: 'DTDD_1rDKQP',
       url: 'https://www.instagram.com/reel/DTDD_1rDKQP/?igsh=MXYya3dvaTFydGtrZw==',
       thumbnail: '/assets/reel-thumb-2.jpg',
-      title: 'Ep 2 Indie Filmmaker Berozgar:( Making My Film 🎥',
-      tag: 'FILMMAKING',
+      title: 'Earn Money Via Reels 💵',
+      tag: 'MONETIZATION',
     },
     {
       id: 'DS4qmEQjJLn',
@@ -40,8 +40,8 @@ export default function InstagramSection() {
       id: 'DSCoQNZjCH7',
       url: 'https://www.instagram.com/reel/DSCoQNZjCH7/?igsh=Y3ZjbDA5eDBmdmtt',
       thumbnail: '/assets/reel-thumb-4.jpg',
-      title: 'POV: Found the best side hustle (Paid per reel) 💰',
-      tag: 'SIDE HUSTLE',
+      title: 'Ep 2 Indie Filmmaker Berozgar:( Making My Film 🎥',
+      tag: 'FILMMAKING',
     },
   ];
 
@@ -53,7 +53,7 @@ export default function InstagramSection() {
     setActiveReelIndex((prev) => (prev === reels.length - 1 ? 0 : prev + 1));
   };
 
-  // Card click: opens exact Reel link on Instagram
+  // Card click: opens exact matched Reel link on Instagram
   const handleCardClick = (url) => {
     if (Math.abs(dragOffset) > 10) return;
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -203,7 +203,7 @@ export default function InstagramSection() {
                   </div>
                 </div>
 
-                {/* Center Dark Circular Play Button (Matching Screenshot 5) */}
+                {/* Center Dark Circular Play Button */}
                 <div className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-black/60 border border-white/30 backdrop-blur-md flex items-center justify-center text-white z-20 transition-all duration-300 group-hover:scale-115 group-hover:bg-[#E91E8C] group-hover:border-none group-hover:shadow-[0_0_30px_rgba(233,30,140,0.8)]">
                   <Play className="w-6 h-6 fill-white ml-0.5" />
                 </div>
