@@ -5,9 +5,10 @@ import { YoutubeIcon } from './Icons';
 export default function YouTubeSection() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [hoveredVideoId, setHoveredVideoId] = useState(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  // Hover timeout ref for smooth 300ms hover intent
+  // Hover timeout ref for smooth 200ms hover intent
   const hoverTimeoutRef = useRef(null);
 
   const videos = [
@@ -54,14 +55,16 @@ export default function YouTubeSection() {
 
   const handleMouseEnter = (id) => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setIsVideoLoaded(false);
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredVideoId(id);
-    }, 250);
+    }, 200);
   };
 
   const handleMouseLeave = () => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     setHoveredVideoId(null);
+    setIsVideoLoaded(false);
   };
 
   return (
@@ -113,16 +116,16 @@ export default function YouTubeSection() {
                   <img
                     src={video.thumbnail}
                     alt={video.title}
-                    className="w-full h-full object-cover rounded-2xl transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover rounded-2xl"
                   />
                 </div>
 
-                {/* 2. Absolute Floating Netflix Hover Overlay (Always rendered, smooth 600ms slow scale-120 pop-up) */}
+                {/* 2. Absolute Floating Netflix Hover Overlay (GPU-Accelerated 60 FPS Butter Smooth) */}
                 <div
-                  className={`absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_35px_70px_-10px_rgba(229,9,20,0.75)] transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] origin-center ${
+                  className={`absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.75)] transform-gpu will-change-transform transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                     isHovered
-                      ? 'opacity-100 scale-120 -translate-y-6 pointer-events-auto'
-                      : 'opacity-0 scale-95 translate-y-0 pointer-events-none'
+                      ? 'opacity-100 scale-115 -translate-y-5 pointer-events-auto shadow-[0_40px_80px_rgba(229,9,20,0.5)]'
+                      : 'opacity-0 scale-100 translate-y-0 pointer-events-none'
                   }`}
                   style={{ minWidth: '100%' }}
                 >
@@ -147,14 +150,24 @@ export default function YouTubeSection() {
                       {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-red-500" />}
                     </button>
 
+                    {/* Background Static Thumbnail Poster (Cross-Fades smoothly into video) */}
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                        isVideoLoaded ? 'opacity-0' : 'opacity-100'
+                      }`}
+                    />
+
                     {/* Auto-Playing Muted Video Preview */}
                     {isHovered && (
                       <div className="w-full h-full relative pointer-events-none">
                         <iframe
                           src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
                           title={video.title}
+                          onLoad={() => setIsVideoLoaded(true)}
                           allow="autoplay; encrypted-media"
-                          className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125"
+                          className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125 transition-opacity duration-700"
                         />
                       </div>
                     )}
