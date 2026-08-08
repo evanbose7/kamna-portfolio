@@ -5,14 +5,16 @@ export default function Hero({ onOpenPdfModal }) {
   const [isMuted, setIsMuted] = useState(true);
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
   const [isTapped, setIsTapped] = useState(false);
+  const [hasTappedOnce, setHasTappedOnce] = useState(false);
 
   // Video media configuration (change to true if using video file in public/assets/)
   const isVideoMedia = false; 
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
 
-  // Toggle portrait pop & tilt state on tap (mobile friendly)
+  // Toggle portrait pop & tilt state on tap (mobile friendly) and hide hint badge permanently after first tap
   const handlePortraitClick = () => {
     setIsTapped((prev) => !prev);
+    setHasTappedOnce(true);
   };
 
   // Card is active if hovered on desktop or tapped on mobile
@@ -98,8 +100,8 @@ export default function Hero({ onOpenPdfModal }) {
         {/* Right Column: Polaroid Portrait Frame (Supports Image & Auto-Playing Video) */}
         <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end justify-center py-4">
           
-          {/* Subtle Grey-White Surprise Hint Badge (Mobile ONLY, disappears when photo is tapped) */}
-          {!isTapped && (
+          {/* Subtle Grey-White Surprise Hint Badge (Mobile ONLY, shown ONLY BEFORE first tap) */}
+          {!hasTappedOnce && (
             <div className="lg:hidden mb-2 z-40 whitespace-nowrap transition-opacity duration-300">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-[#F5F0EB]/15 bg-[#F5F0EB]/5 px-3.5 py-1 text-[10px] font-medium text-[#F5F0EB]/60 shadow-sm uppercase tracking-widest backdrop-blur-sm">
                 ✨ tap to see surprise
@@ -120,7 +122,7 @@ export default function Hero({ onOpenPdfModal }) {
               }`}
             />
 
-            {/* White Polaroid Card with Tilt & Pop Animation */}
+            {/* White Polaroid Card with Tilt & Pop Toggle Animation */}
             <div
               className={`relative bg-white p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform transition-all duration-500 ease-out ${
                 isCardActive
