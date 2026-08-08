@@ -14,16 +14,16 @@ export default function InstagramSection() {
 
   const instagramProfileUrl = 'https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr';
 
-  // 4 Instagram Reels with official embed iFrame URLs provided by user
+  // 4 Instagram Reels with updated exact Reel links & embeds
   const reels = [
     {
-      id: 'DSCoQNZjCH7',
-      url: 'https://www.instagram.com/reel/DSCoQNZjCH7/?igsh=Y3ZjbDA5eDBmdmtt',
-      embedUrl: 'https://www.instagram.com/reel/DSCoQNZjCH7/embed/',
-      title: 'How to write hooks that grab attention in 2 seconds 🔥',
-      views: '45.2K',
-      likes: '3.8K',
-      tag: 'CONTENT HOOKS',
+      id: 'DTS2wbWk2Nk',
+      url: 'https://www.instagram.com/reel/DTS2wbWk2Nk/?igsh=bTNtN2xvZXh2cTRq',
+      embedUrl: 'https://www.instagram.com/reel/DTS2wbWk2Nk/embed/',
+      title: 'Personal Branding & Visual Content Strategy 🔥',
+      views: '54.8K',
+      likes: '4.9K',
+      tag: 'BRAND STRATEGY',
     },
     {
       id: 'DTDD_1rDKQP',
@@ -44,13 +44,13 @@ export default function InstagramSection() {
       tag: 'STORYTELLING',
     },
     {
-      id: 'DSCoQNZjCH7_2',
+      id: 'DSCoQNZjCH7',
       url: 'https://www.instagram.com/reel/DSCoQNZjCH7/?igsh=Y3ZjbDA5eDBmdmtt',
       embedUrl: 'https://www.instagram.com/reel/DSCoQNZjCH7/embed/',
-      title: 'Stop making boring posts — try this visual layout framework 🎨',
+      title: 'How to write hooks that grab attention in 2 seconds 🎨',
       views: '63.8K',
       likes: '5.1K',
-      tag: 'VISUAL CREATIVE',
+      tag: 'CONTENT HOOKS',
     },
   ];
 
