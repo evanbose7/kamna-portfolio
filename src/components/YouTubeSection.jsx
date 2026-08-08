@@ -98,10 +98,18 @@ export default function YouTubeSection() {
           </p>
         </div>
 
-        {/* Netflix Horizontal Touch Swipe Row on Mobile & 3-Column Grid on Desktop (Generous pt-16 & pb-40 prevents top and bottom clipping) */}
+        {/* Netflix Horizontal Touch Swipe Row on Mobile & 3-Column Grid on Desktop */}
         <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-14 pb-44 px-4 sm:px-0 -mx-4 sm:mx-0 overflow-visible">
-          {videos.map((video) => {
+          {videos.map((video, index) => {
             const isHovered = hoveredVideoId === video.id;
+
+            // Netflix dynamic transform origin positioning (Prevents left/right edge clipping)
+            const transformOriginClass =
+              index === 0
+                ? 'origin-left'
+                : index === videos.length - 1
+                ? 'origin-right'
+                : 'origin-center';
 
             return (
               /* Fixed 16:9 Aspect Ratio Grid Slot Container */
@@ -134,9 +142,9 @@ export default function YouTubeSection() {
                   />
                 </div>
 
-                {/* 2. Desktop Floating Netflix Hover Overlay (100% Unclipped Top & Bottom) */}
+                {/* 2. Desktop Floating Netflix Hover Overlay (Origin-Left for 1st card, Origin-Right for 3rd card -> 100% ZERO CLIPPING) */}
                 <div
-                  className={`hidden md:block absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_70px_rgba(229,9,20,0.75)] transform-gpu will-change-transform transition-all duration-450 ease-[cubic-bezier(0.25,1,0.5,1)] origin-center ${
+                  className={`hidden md:block absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_70px_rgba(229,9,20,0.75)] transform-gpu will-change-transform transition-all duration-450 ease-[cubic-bezier(0.25,1,0.5,1)] ${transformOriginClass} ${
                     isHovered
                       ? 'opacity-100 scale-108 -translate-y-4 pointer-events-auto'
                       : 'opacity-0 scale-100 translate-y-0 pointer-events-none'
