@@ -23,7 +23,6 @@ export default function InstagramSection() {
       likes: '3.8K',
       tag: 'CONTENT HOOKS',
       bgGradient: 'from-pink-900/60 to-purple-950/80',
-      baseRotation: -9,
     },
     {
       id: 'DXvzWqTMfIp',
@@ -33,7 +32,6 @@ export default function InstagramSection() {
       likes: '6.4K',
       tag: 'VLOG / STORY',
       bgGradient: 'from-rose-950/70 to-zinc-950',
-      baseRotation: -3,
     },
     {
       id: 'DZ10LkGNC-0',
@@ -43,7 +41,6 @@ export default function InstagramSection() {
       likes: '11.2K',
       tag: 'STORYTELLING',
       bgGradient: 'from-fuchsia-950/80 to-stone-950',
-      baseRotation: 3,
     },
     {
       id: 'DYpMyXuNiTF',
@@ -53,7 +50,6 @@ export default function InstagramSection() {
       likes: '5.1K',
       tag: 'VISUAL CREATIVE',
       bgGradient: 'from-pink-950/60 to-slate-950',
-      baseRotation: 9,
     },
   ];
 
@@ -101,12 +97,12 @@ export default function InstagramSection() {
     setDragOffset(0);
   };
 
-  // 🃏 Fanned Poker Deck Style Calculation
+  // Straight Horizontal Deck Style Calculation (0deg rotation for all cards)
   const getReelStyle = (index) => {
     const isHovered = hoveredIndex === index;
     const isAnyHovered = hoveredIndex !== null;
 
-    // Fanned Horizontal Offset Spacing
+    // Horizontal offset spacing between cards
     let baseTranslateX = (index - 1.5) * 110 + (isDragging ? dragOffset : 0);
 
     if (isAnyHovered && !isDragging) {
@@ -117,13 +113,13 @@ export default function InstagramSection() {
       }
     }
 
-    // Fanned Rotation Angle: -9deg, -3deg, +3deg, +9deg
-    let rotationAngle = isHovered ? 0 : reels[index].baseRotation;
+    // Straight 0deg rotation for all cards!
+    let rotationAngle = 0;
     
     // Scale & Depth
     let scale = isHovered ? 1.08 : 0.94;
     const zIndex = isHovered ? 50 : index === activeReelIndex ? 35 : 10 + index * 5;
-    const translateY = isHovered ? -28 : Math.abs(index - 1.5) * 8;
+    const translateY = isHovered ? -28 : 0;
 
     return {
       transform: `translateX(${baseTranslateX}px) translateY(${translateY}px) scale(${scale}) rotate(${rotationAngle}deg)`,
@@ -152,7 +148,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 🃏 Fanned Poker Card Deck Container */}
+      {/* Straight Horizontal Deck Container (0deg Rotation) */}
       <div
         className="relative mx-auto h-[480px] sm:h-[520px] max-w-5xl flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform"
         onTouchStart={handleTouchStart}
@@ -169,7 +165,7 @@ export default function InstagramSection() {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               style={getReelStyle(index)}
-              className="absolute w-[230px] sm:w-[260px] h-[390px] sm:h-[440px] rounded-3xl overflow-hidden border border-white/15 bg-[#121212] cursor-pointer select-none group transform-gpu origin-bottom"
+              className="absolute w-[230px] sm:w-[260px] h-[390px] sm:h-[440px] rounded-3xl overflow-hidden border border-white/15 bg-[#121212] cursor-pointer select-none group transform-gpu"
             >
               {/* Animated Gradient Background */}
               <div className={`absolute inset-0 bg-gradient-to-b ${reel.bgGradient} opacity-90 group-hover:opacity-100 transition-opacity duration-300`} />
