@@ -97,8 +97,18 @@ export default function InstagramSection() {
     setDragOffset(0);
   };
 
+  // Cyclic distance math to keep 4th card hidden between/behind the 3 visible cards
   const getReelStyle = (index) => {
-    const offset = index - activeReelIndex;
+    let diff = index - activeReelIndex;
+    const half = reels.length / 2;
+
+    if (diff > half) {
+      diff -= reels.length;
+    } else if (diff < -half) {
+      diff += reels.length;
+    }
+
+    const offset = diff;
     const isHovered = hoveredIndex === index;
     const isAnyHovered = hoveredIndex !== null;
 
@@ -115,18 +125,17 @@ export default function InstagramSection() {
 
     const absOffset = Math.abs(offset);
     let scale = isHovered ? 1.08 : 1 - absOffset * 0.12;
-    let rotateY = 0; // Completely flat facing forward
+    let rotateY = 0; // Flat facing forward
 
+    // Exactly 3 visible cards (offset -1, 0, 1). Offset >= 2 or <= -2 stays hidden with opacity 0!
     let opacity = 1;
-    if (absOffset > 2) {
+    if (absOffset >= 2) {
       opacity = 0;
-    } else if (absOffset === 2) {
-      opacity = 0.4;
     } else if (absOffset === 1) {
       opacity = 0.85;
     }
 
-    const zIndex = isHovered ? 50 : 30 - absOffset * 5;
+    const zIndex = isHovered ? 50 : 30 - absOffset * 10;
     const translateY = isHovered ? -20 : absOffset * 10;
 
     return {
@@ -156,7 +165,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 60FPS Hardware Accelerated Drag Deck Container */}
+      {/* 60FPS Cyclic Drag Deck Container (3 Visible Cards + 4th Hidden Card) */}
       <div
         className="relative mx-auto h-[480px] sm:h-[520px] max-w-5xl flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform"
         onTouchStart={handleTouchStart}
