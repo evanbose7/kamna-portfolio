@@ -102,14 +102,14 @@ export default function Hero() {
         {/* Right Column: Polaroid Portrait Frame */}
         <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end justify-center py-4">
           
-          {/* Subtle Grey-White Surprise Hint Badge (Mobile ONLY, shown ONLY BEFORE first tap) */}
-          {!hasTappedOnce && (
-            <div className="lg:hidden mb-2 z-40 whitespace-nowrap transition-opacity duration-300">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#F5F0EB]/15 bg-[#F5F0EB]/5 px-3.5 py-1 text-[10px] font-medium text-[#F5F0EB]/60 shadow-sm uppercase tracking-widest backdrop-blur-sm">
-                ✨ tap to see surprise
-              </span>
-            </div>
-          )}
+          {/* Subtle Grey-White Surprise Hint Badge (Preserves layout height to prevent "Hi I'm Arnav" shift) */}
+          <div className={`lg:hidden mb-2 z-40 whitespace-nowrap transition-opacity duration-300 ${
+            hasTappedOnce ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          }`}>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#F5F0EB]/15 bg-[#F5F0EB]/5 px-3.5 py-1 text-[10px] font-medium text-[#F5F0EB]/60 shadow-sm uppercase tracking-widest backdrop-blur-sm">
+              ✨ tap to see surprise
+            </span>
+          </div>
 
           <div
             onClick={handlePortraitClick}
@@ -128,7 +128,7 @@ export default function Hero() {
             <div
               className={`relative bg-white p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform transition-all duration-500 ease-out ${
                 isCardActive
-                  ? 'rotate-3 scale-[1.04] -translate-y-3 shadow-[0_35px_70px_-15px_rgba(233,30,140,0.4)]'
+                  ? 'rotate-3 scale-[1.04] translate-y-0 shadow-[0_35px_70px_-15px_rgba(233,30,140,0.4)]'
                   : 'rotate-0 scale-100 translate-y-0'
               }`}
             >
