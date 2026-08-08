@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Play, Plus, ThumbsUp, ChevronDown, Volume2, VolumeX, ExternalLink, X } from 'lucide-react';
 import { YoutubeIcon } from './Icons';
 
@@ -6,6 +6,9 @@ export default function YouTubeSection() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [hoveredVideoId, setHoveredVideoId] = useState(null);
   const [isMuted, setIsMuted] = useState(true);
+
+  // Hover timeout ref to prevent rapid flicker sweeps
+  const hoverTimeoutRef = useRef(null);
 
   const videos = [
     {
@@ -49,6 +52,19 @@ export default function YouTubeSection() {
     },
   ];
 
+  const handleMouseEnter = (id) => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    // Smooth 250ms debounced hover intent
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredVideoId(id);
+    }, 250);
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setHoveredVideoId(null);
+  };
+
   return (
     <section id="youtube" className="bg-[#0A0A0A] scroll-mt-6 py-20 sm:py-28 md:py-32 relative overflow-hidden">
       
@@ -75,25 +91,26 @@ export default function YouTubeSection() {
           </p>
         </div>
 
-        {/* Netflix 3-Column Video Row (Clean Thumbnails Default) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative z-10 items-start">
+        {/* Netflix 3-Column Video Row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative z-10 min-h-[220px]">
           {videos.map((video) => {
             const isHovered = hoveredVideoId === video.id;
 
             return (
               <div
                 key={video.id}
-                onMouseEnter={() => setHoveredVideoId(video.id)}
-                onMouseLeave={() => setHoveredVideoId(null)}
-                className={`group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 select-none ${
-                  isHovered
-                    ? 'z-50 scale-108 -translate-y-4 bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.7)]'
-                    : 'z-10 scale-100 translate-y-0 border border-white/5 shadow-lg hover:border-white/20'
-                }`}
+                onMouseEnter={() => handleMouseEnter(video.id)}
+                onMouseLeave={handleMouseLeave}
+                className="relative rounded-2xl cursor-pointer select-none group"
               >
-                {/* Widescreen Thumbnail & Auto-Playing Video Preview Container (16:9) */}
-                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black">
-                  
+                {/* Default Clean Widescreen Thumbnail Frame (16:9) */}
+                <div
+                  className={`relative aspect-video w-full rounded-2xl overflow-hidden bg-black transition-all duration-300 ${
+                    isHovered
+                      ? 'scale-108 -translate-y-2 z-50 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.65)] border border-red-600 rounded-b-none'
+                      : 'scale-100 translate-y-0 z-10 border border-white/10 shadow-lg'
+                  }`}
+                >
                   {/* Top 10 Badge */}
                   {video.top10 && (
                     <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
@@ -101,7 +118,7 @@ export default function YouTubeSection() {
                     </div>
                   )}
 
-                  {/* Audio Mute/Unmute Toggle Button (Revealed on Hover) */}
+                  {/* Audio Mute/Unmute Toggle Button */}
                   {isHovered && (
                     <button
                       type="button"
@@ -110,15 +127,24 @@ export default function YouTubeSection() {
                         setIsMuted(!isMuted);
                       }}
                       aria-label="Toggle Mute"
-                      className="absolute bottom-3 right-3 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/30 text-white backdrop-blur-md transition-colors hover:bg-black"
+                      className="absolute bottom-3 right-3 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/30 text-white backdrop-blur-md transition-all hover:scale-110 cursor-pointer"
                     >
                       {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-red-500" />}
                     </button>
                   )}
 
-                  {/* Clean Thumbnail Image Default vs Auto-Play Video on Hover */}
-                  {isHovered ? (
-                    <div className="w-full h-full relative pointer-events-none">
+                  {/* Clean Static Poster Thumbnail */}
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className={`w-full h-full object-cover transition-opacity duration-500 ${
+                      isHovered ? 'opacity-0' : 'opacity-100'
+                    }`}
+                  />
+
+                  {/* Auto-Playing Muted Video Preview (Smooth Cross-Fade on Hover) */}
+                  {isHovered && (
+                    <div className="absolute inset-0 w-full h-full pointer-events-none animate-fadeIn">
                       <iframe
                         src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
                         title={video.title}
@@ -126,65 +152,59 @@ export default function YouTubeSection() {
                         className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125"
                       />
                     </div>
-                  ) : (
-                    <img
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
-                    />
                   )}
-
                 </div>
 
-                {/* --- NETFLIX CONTROL BAR & METADATA (REVEALED EXCLUSIVELY ON HOVER) --- */}
+                {/* --- HOVER ABSOLUTE OVERLAY NETFLIX CONTROL BAR --- */}
                 {isHovered && (
-                  <div className="p-4 sm:p-5 flex flex-col gap-3 bg-[#181818] animate-fadeIn">
-                    
-                    {/* Row 1: Action Controls (Play, Plus, Like, More Info) */}
+                  <div
+                    className="absolute top-[calc(100%-8px)] left-0 right-0 z-50 bg-[#181818] border border-t-0 border-red-600 rounded-b-2xl p-4 sm:p-5 flex flex-col gap-3 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.65)] scale-108 -translate-y-2 transition-all duration-300 animate-fadeIn"
+                  >
+                    {/* Row 1: Action Controls */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        {/* Solid White Circular Play Button -> Opens YouTube Link */}
+                        {/* Play Button */}
                         <a
                           href={video.youtubeUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label="Play Video on YouTube"
-                          className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black shadow-lg hover:scale-110 transition-transform cursor-pointer"
+                          className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black shadow-lg hover:scale-110 transition-transform cursor-pointer"
                         >
-                          <Play className="w-5 h-5 fill-black ml-0.5" />
+                          <Play className="w-4 h-4 fill-black ml-0.5" />
                         </a>
 
                         {/* Plus Button */}
                         <button
                           type="button"
                           aria-label="Add to list"
-                          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-white/80 backdrop-blur-sm hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
+                          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
                         >
-                          <Plus className="w-5 h-5" />
+                          <Plus className="w-4 h-4" />
                         </button>
 
-                        {/* Thumbs Up Button */}
+                        {/* Like Button */}
                         <button
                           type="button"
                           aria-label="Like video"
-                          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-white/80 backdrop-blur-sm hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
+                          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
                         >
-                          <ThumbsUp className="w-4 h-4" />
+                          <ThumbsUp className="w-3.5 h-3.5" />
                         </button>
                       </div>
 
-                      {/* Chevron Down / More Info Button */}
+                      {/* Info Button */}
                       <button
                         type="button"
                         onClick={() => setSelectedVideo(video)}
                         aria-label="More Info"
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-white/80 backdrop-blur-sm hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
                       >
-                        <ChevronDown className="w-5 h-5" />
+                        <ChevronDown className="w-4 h-4" />
                       </button>
                     </div>
 
-                    {/* Row 2: Metadata Badges (Rating, Quality, Duration) */}
+                    {/* Row 2: Badges & Metrics */}
                     <div className="flex items-center gap-2 text-xs text-white/70 font-semibold pt-1">
                       <span className="rounded border border-white/30 px-1.5 py-0.5 text-[10px] text-white">
                         {video.rating}
@@ -200,7 +220,7 @@ export default function YouTubeSection() {
                       </span>
                     </div>
 
-                    {/* Row 3: Video Title & Categories */}
+                    {/* Row 3: Title & Tags */}
                     <div className="space-y-1">
                       <h3 className="font-bold text-xs sm:text-sm text-white line-clamp-1">
                         {video.title}
