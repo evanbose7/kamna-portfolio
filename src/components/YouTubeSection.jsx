@@ -73,16 +73,16 @@ export default function YouTubeSection() {
   };
 
   return (
-    <section id="youtube" className="bg-[#0A0A0A] scroll-mt-6 py-16 sm:py-24 md:py-28 relative">
+    <section id="youtube" className="bg-[#0A0A0A] scroll-mt-6 py-12 sm:py-20 md:py-24 relative overflow-visible">
       
       {/* Background Ambient Glows */}
       <div className="pointer-events-none absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="pointer-events-none absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#E91E8C]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 md:px-10">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8 md:px-10 overflow-visible">
         
         {/* Section Header */}
-        <div className="mb-10 sm:mb-12 text-center">
+        <div className="mb-6 sm:mb-8 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3.5 py-1 text-xs font-bold text-red-500 uppercase tracking-widest mb-4">
             <YoutubeIcon className="w-4 h-4 text-red-500" />
             Netflix Style Showcase
@@ -98,8 +98,8 @@ export default function YouTubeSection() {
           </p>
         </div>
 
-        {/* Netflix Horizontal Touch Swipe Row on Mobile & 3-Column Grid on Desktop (pb-36 prevents any bottom clipping) */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 md:grid md:grid-cols-3 md:gap-8 relative z-10 pb-36 pt-6 px-4 sm:px-0 -mx-4 sm:mx-0">
+        {/* Netflix Horizontal Touch Swipe Row on Mobile & 3-Column Grid on Desktop (Generous pt-16 & pb-40 prevents top and bottom clipping) */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-14 pb-44 px-4 sm:px-0 -mx-4 sm:mx-0 overflow-visible">
           {videos.map((video) => {
             const isHovered = hoveredVideoId === video.id;
 
@@ -110,7 +110,7 @@ export default function YouTubeSection() {
                 onClick={() => handleCardClick(video)}
                 onMouseEnter={() => handleMouseEnter(video.id)}
                 onMouseLeave={handleMouseLeave}
-                className="relative aspect-video w-[82vw] max-w-[340px] shrink-0 snap-center md:w-auto md:max-w-none md:shrink cursor-pointer select-none"
+                className="relative aspect-video w-[82vw] max-w-[340px] shrink-0 snap-center md:w-auto md:max-w-none md:shrink cursor-pointer select-none overflow-visible"
               >
                 {/* 1. Default Clean Static Thumbnail (Fixed in grid/carousel flow) */}
                 <div className="w-full h-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg relative group">
@@ -134,11 +134,11 @@ export default function YouTubeSection() {
                   />
                 </div>
 
-                {/* 2. Desktop Floating Netflix Hover Overlay (Shifted -translate-y-10 so 100% of card & metadata is visible) */}
+                {/* 2. Desktop Floating Netflix Hover Overlay (100% Unclipped Top & Bottom) */}
                 <div
-                  className={`hidden md:block absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_70px_rgba(229,9,20,0.7)] transform-gpu will-change-transform transition-all duration-450 ease-[cubic-bezier(0.25,1,0.5,1)] origin-center ${
+                  className={`hidden md:block absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_70px_rgba(229,9,20,0.75)] transform-gpu will-change-transform transition-all duration-450 ease-[cubic-bezier(0.25,1,0.5,1)] origin-center ${
                     isHovered
-                      ? 'opacity-100 scale-110 -translate-y-10 pointer-events-auto'
+                      ? 'opacity-100 scale-108 -translate-y-4 pointer-events-auto'
                       : 'opacity-0 scale-100 translate-y-0 pointer-events-none'
                   }`}
                   style={{ minWidth: '100%' }}
@@ -187,10 +187,10 @@ export default function YouTubeSection() {
                     )}
                   </div>
 
-                  {/* Netflix Action Controls & Metadata (100% Fully Visible, Zero Clipping) */}
+                  {/* Netflix Action Controls & Metadata */}
                   <div className="p-4 flex flex-col gap-3 bg-[#181818]">
                     
-                    {/* Row 1: Action Controls (Play, Plus, Like, Info) */}
+                    {/* Row 1: Action Controls */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <a
@@ -233,7 +233,7 @@ export default function YouTubeSection() {
                       </button>
                     </div>
 
-                    {/* Row 2: Metadata Badges (Rating, Quality, Duration, Views) */}
+                    {/* Row 2: Metadata Badges */}
                     <div className="flex items-center gap-2 text-xs text-white/80 font-semibold pt-1">
                       <span className="rounded border border-white/40 px-1.5 py-0.5 text-[10px] text-white font-bold">
                         {video.rating}
