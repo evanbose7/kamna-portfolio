@@ -60,7 +60,7 @@ export default function Hero({ onOpenPdfModal }) {
               <span className="inline-block mr-[0.25em]">Hi,</span>
               <span className="inline-block mr-[0.25em]">I'm</span>
               <span className="inline-block bg-gradient-to-r from-[#F5F0EB] via-[#FFB3CB] to-[#E91E8C] bg-clip-text text-transparent">
-                Kamna
+                Arnav
               </span>
             </h1>
           </div>
@@ -162,7 +162,7 @@ export default function Hero({ onOpenPdfModal }) {
                 ) : (
                   <img
                     src={mediaSrc}
-                    alt="Content Strategist Portrait"
+                    alt="Arnav — Content Strategist"
                     className="w-full h-full object-cover object-center select-none"
                   />
                 )}

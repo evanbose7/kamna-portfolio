@@ -13,7 +13,7 @@ export default function Footer() {
               href="#"
               className="font-black uppercase tracking-tight text-[#F5F0EB]/90 hover:text-[#E91E8C] transition-colors text-[clamp(1.5rem,4vw,2.5rem)]"
             >
-              Kamna
+              ARNAV
             </a>
             <p className="max-w-xs font-light text-[#F5F0EB]/40 leading-relaxed text-[clamp(0.8rem,1.3vw,0.95rem)]">
               Building my brand while teaching you to build yours.
@@ -86,7 +86,7 @@ export default function Footer() {
 
       <div className="border-t border-[#F5F0EB]/5 px-5 py-6 sm:px-8 md:px-10">
         <p className="text-center font-light text-[#F5F0EB]/30 uppercase tracking-widest text-[clamp(0.6rem,1vw,0.75rem)]">
-          © {new Date().getFullYear()} Kamna Bhardwaj. All rights reserved.
+          © {new Date().getFullYear()} ARNAV. All rights reserved.
         </p>
       </div>
     </footer>

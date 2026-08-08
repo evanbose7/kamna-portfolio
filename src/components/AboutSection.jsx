@@ -5,7 +5,7 @@ export default function AboutSection() {
   const containerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  const aboutText = `Hi, I'm Kamna, 21 year old creator, storyteller, and personal branding strategist. I've built a community of LinkedIn upto 17K+ people and Instagram 1k+ — also worked with brands like OPPO, MARS, and Minimalist, and helped founders, coaches, and creators grow their presence online. Everything I share comes from building in public, experimenting, and learning firsthand — not theory. If you're looking for content that sounds like you and actually connects with people, you're in the right place.`;
+  const aboutText = `Hi, I'm Arnav, 21 year old creator, storyteller, and personal branding strategist. I've built a community of LinkedIn upto 17K+ people and Instagram 1k+ — also worked with brands like OPPO, MARS, and Minimalist, and helped founders, coaches, and creators grow their presence online. Everything I share comes from building in public, experimenting, and learning firsthand — not theory. If you're looking for content that sounds like you and actually connects with people, you're in the right place.`;
 
   const words = aboutText.split(' ');
   const highlightWords = ['OPPO,', 'MARS,', 'Minimalist,', '17K+', '1k+', 'LinkedIn', 'Instagram', 'storyteller,', 'strategist.'];

@@ -28,7 +28,7 @@ export default function SplashLoader() {
       }`}
     >
       <div className="font-black uppercase tracking-tight text-[#F5F0EB]/90 text-[clamp(3rem,12vw,8rem)] animate-pulse">
-        Kamna
+        ARNAV
       </div>
     </div>
   );
