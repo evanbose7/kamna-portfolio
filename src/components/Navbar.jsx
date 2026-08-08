@@ -106,15 +106,6 @@ export default function Navbar({ onOpenPdfModal }) {
               {link.name}
             </a>
           ))}
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenPdfModal();
-            }}
-            className="w-full rounded-full bg-gradient-to-r from-[#E91E8C] to-[#FFB3CB] py-3 text-center text-xs font-bold uppercase tracking-widest text-white shadow-lg"
-          >
-            Get Free PDF
-          </button>
         </div>
       )}
     </nav>

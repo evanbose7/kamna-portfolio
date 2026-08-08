@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Sparkles, ArrowRight } from 'lucide-react';
+import { Volume2, VolumeX, ArrowRight } from 'lucide-react';
 
 export default function Hero({ onOpenPdfModal }) {
   const [isMuted, setIsMuted] = useState(true);
@@ -82,23 +82,8 @@ export default function Hero({ onOpenPdfModal }) {
 
           {/* Action CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start justify-center lg:justify-start pt-2">
-            <button
-              type="button"
-              onClick={onOpenPdfModal}
-              className="group relative cursor-pointer overflow-hidden rounded-full border border-[#F5F0EB]/40 px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#F5F0EB] transition-all duration-300 hover:border-[#E91E8C]/80 hover:text-[#E91E8C] hover:shadow-[0_0_20px_rgba(255,107,174,0.4)] sm:px-10 sm:py-4 sm:text-sm min-w-[14rem] text-center"
-            >
-              <span
-                className="pointer-events-none absolute inset-0 -translate-x-full rounded-full bg-[#E91E8C]/15 transition-transform duration-300 group-hover:translate-x-0"
-                aria-hidden="true"
-              />
-              <span className="relative flex items-center justify-center gap-2">
-                Get Free PDF
-                <Sparkles className="w-4 h-4 text-[#FFB3CB]" />
-              </span>
-            </button>
-
             <a
-              href="https://www.linkedin.com/in/kamna-bharadwaj/"
+              href="https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gradient group relative inline-flex items-center justify-center whitespace-nowrap rounded-full px-8 py-3.5 text-center text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 hover:scale-[1.04] hover:brightness-110 hover:shadow-[0_4px_30px_rgba(212,0,108,0.6)] active:scale-[0.97] sm:px-11 sm:py-4 sm:text-sm cursor-pointer overflow-hidden min-w-[14rem]"
