@@ -214,7 +214,7 @@ export default function YouTubeSection() {
                   {isPreviewActive && (
                     <div className="absolute inset-0 w-full h-full z-10 overflow-hidden rounded-xl bg-black animate-fadeIn">
                       <iframe
-                        src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&mute=1&playsinline=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
+                        src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&mute=1&playsinline=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
                         title={video.title}
                         onLoad={() => setIsVideoLoaded(true)}
                         allow="autoplay; encrypted-media; picture-in-picture"
@@ -234,7 +234,7 @@ export default function YouTubeSection() {
                   <div className="flex items-center justify-between text-[11px] text-white/40 pt-1">
                     <span>{video.views}</span>
                     <span className="flex items-center gap-1 text-red-500 font-bold">
-                      {isPreviewActive ? '10s Previewing...' : 'Watch Video'} <ExternalLink className="w-3 h-3" />
+                      Watch on YouTube <ExternalLink className="w-3 h-3" />
                     </span>
                   </div>
                 </div>
