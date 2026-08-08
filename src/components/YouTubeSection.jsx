@@ -7,7 +7,7 @@ export default function YouTubeSection() {
   const [hoveredVideoId, setHoveredVideoId] = useState(null);
   const [isMuted, setIsMuted] = useState(true);
 
-  // Hover timeout ref to prevent rapid flicker sweeps
+  // Hover timeout ref for smooth 300ms hover intent
   const hoverTimeoutRef = useRef(null);
 
   const videos = [
@@ -54,10 +54,9 @@ export default function YouTubeSection() {
 
   const handleMouseEnter = (id) => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    // Smooth 300ms Netflix hover intent delay
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredVideoId(id);
-    }, 300);
+    }, 250);
   };
 
   const handleMouseLeave = () => {
@@ -91,7 +90,7 @@ export default function YouTubeSection() {
           </p>
         </div>
 
-        {/* Netflix 3-Column Video Row (Fixed Grid Height to Prevent Page Jitter) */}
+        {/* Netflix 3-Column Video Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative z-10">
           {videos.map((video) => {
             const isHovered = hoveredVideoId === video.id;
@@ -104,7 +103,7 @@ export default function YouTubeSection() {
                 onMouseLeave={handleMouseLeave}
                 className="relative aspect-video w-full cursor-pointer select-none"
               >
-                {/* 1. Default Clean Static Thumbnail (Always fixed in grid flow) */}
+                {/* 1. Default Clean Static Thumbnail (Fixed in grid flow) */}
                 <div className="w-full h-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg">
                   {video.top10 && (
                     <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
@@ -114,120 +113,124 @@ export default function YouTubeSection() {
                   <img
                     src={video.thumbnail}
                     alt={video.title}
-                    className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover rounded-2xl transition-transform duration-700 ease-out"
                   />
                 </div>
 
-                {/* 2. Absolute Floating Hover Overlay Card (Slow Netflix Easing Curve: 450ms cubic-bezier) */}
-                {isHovered && (
-                  <div
-                    className="absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.65)] scale-110 -translate-y-4 transition-all duration-450 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                    style={{ minWidth: '100%' }}
-                  >
-                    {/* Top Video Preview Container */}
-                    <div className="relative aspect-video w-full overflow-hidden bg-black">
-                      {video.top10 && (
-                        <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
-                          TOP 10
-                        </div>
-                      )}
+                {/* 2. Absolute Floating Netflix Hover Overlay (Always rendered, smooth 600ms slow scale-120 pop-up) */}
+                <div
+                  className={`absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_35px_70px_-10px_rgba(229,9,20,0.75)] transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] origin-center ${
+                    isHovered
+                      ? 'opacity-100 scale-120 -translate-y-6 pointer-events-auto'
+                      : 'opacity-0 scale-95 translate-y-0 pointer-events-none'
+                  }`}
+                  style={{ minWidth: '100%' }}
+                >
+                  {/* Top Video Preview Container */}
+                  <div className="relative aspect-video w-full overflow-hidden bg-black">
+                    {video.top10 && (
+                      <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
+                        TOP 10
+                      </div>
+                    )}
 
-                      {/* Mute Button */}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsMuted(!isMuted);
-                        }}
-                        aria-label="Toggle Mute"
-                        className="absolute bottom-3 right-3 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/30 text-white backdrop-blur-md transition-all hover:scale-110 cursor-pointer"
-                      >
-                        {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-red-500" />}
-                      </button>
+                    {/* Mute Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsMuted(!isMuted);
+                      }}
+                      aria-label="Toggle Mute"
+                      className="absolute bottom-3 right-3 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/30 text-white backdrop-blur-md transition-transform hover:scale-110 cursor-pointer"
+                    >
+                      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-red-500" />}
+                    </button>
 
-                      {/* Auto-Playing Muted Video Preview */}
+                    {/* Auto-Playing Muted Video Preview */}
+                    {isHovered && (
                       <div className="w-full h-full relative pointer-events-none">
                         <iframe
                           src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
                           title={video.title}
                           allow="autoplay; encrypted-media"
-                          className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125 transition-opacity duration-500"
+                          className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125"
                         />
                       </div>
-                    </div>
+                    )}
+                  </div>
 
-                    {/* Netflix Action Controls & Metadata (Slow 450ms Ease-Out Reveal) */}
-                    <div className="p-4 sm:p-5 flex flex-col gap-3 bg-[#181818] transition-all duration-450 ease-[cubic-bezier(0.25,1,0.5,1)]">
-                      
-                      {/* Row 1: Action Controls */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <a
-                            href={video.youtubeUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Play Video on YouTube"
-                            className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black shadow-lg hover:scale-110 transition-transform cursor-pointer"
-                          >
-                            <Play className="w-4 h-4 fill-black ml-0.5" />
-                          </a>
-
-                          <button
-                            type="button"
-                            aria-label="Add to list"
-                            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
-                          >
-                            <Plus className="w-4 h-4" />
-                          </button>
-
-                          <button
-                            type="button"
-                            aria-label="Like video"
-                            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
-                          >
-                            <ThumbsUp className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
+                  {/* Netflix Action Controls & Metadata */}
+                  <div className="p-4 sm:p-5 flex flex-col gap-3 bg-[#181818]">
+                    
+                    {/* Row 1: Action Controls */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={video.youtubeUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Play Video on YouTube"
+                          className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black shadow-lg hover:scale-110 transition-transform cursor-pointer"
+                        >
+                          <Play className="w-4 h-4 fill-black ml-0.5" />
+                        </a>
 
                         <button
                           type="button"
-                          onClick={() => setSelectedVideo(video)}
-                          aria-label="More Info"
+                          aria-label="Add to list"
                           className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
                         >
-                          <ChevronDown className="w-4 h-4" />
+                          <Plus className="w-4 h-4" />
+                        </button>
+
+                        <button
+                          type="button"
+                          aria-label="Like video"
+                          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
+                        >
+                          <ThumbsUp className="w-3.5 h-3.5" />
                         </button>
                       </div>
 
-                      {/* Row 2: Metadata Badges */}
-                      <div className="flex items-center gap-2 text-xs text-white/70 font-semibold pt-1">
-                        <span className="rounded border border-white/30 px-1.5 py-0.5 text-[10px] text-white">
-                          {video.rating}
-                        </span>
-                        <span className="rounded border border-white/30 px-1 py-0.5 text-[10px] text-white">
-                          {video.quality}
-                        </span>
-                        <span className="text-[#F5F0EB]/60 text-[11px]">
-                          {video.duration}
-                        </span>
-                        <span className="text-[#F5F0EB]/40 text-[11px] ml-auto">
-                          {video.views}
-                        </span>
-                      </div>
-
-                      {/* Row 3: Title & Tags */}
-                      <div className="space-y-1">
-                        <h3 className="font-bold text-xs sm:text-sm text-white line-clamp-1">
-                          {video.title}
-                        </h3>
-                        <p className="text-[11px] text-white/50 font-medium">
-                          {video.tags.join(' • ')}
-                        </p>
-                      </div>
-
+                      <button
+                        type="button"
+                        onClick={() => setSelectedVideo(video)}
+                        aria-label="More Info"
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
+                      >
+                        <ChevronDown className="w-4 h-4" />
+                      </button>
                     </div>
+
+                    {/* Row 2: Metadata Badges */}
+                    <div className="flex items-center gap-2 text-xs text-white/70 font-semibold pt-1">
+                      <span className="rounded border border-white/30 px-1.5 py-0.5 text-[10px] text-white">
+                        {video.rating}
+                      </span>
+                      <span className="rounded border border-white/30 px-1 py-0.5 text-[10px] text-white">
+                        {video.quality}
+                      </span>
+                      <span className="text-[#F5F0EB]/60 text-[11px]">
+                        {video.duration}
+                      </span>
+                      <span className="text-[#F5F0EB]/40 text-[11px] ml-auto">
+                        {video.views}
+                      </span>
+                    </div>
+
+                    {/* Row 3: Title & Tags */}
+                    <div className="space-y-1">
+                      <h3 className="font-bold text-xs sm:text-sm text-white line-clamp-1">
+                        {video.title}
+                      </h3>
+                      <p className="text-[11px] text-white/50 font-medium">
+                        {video.tags.join(' • ')}
+                      </p>
+                    </div>
+
                   </div>
-                )}
+                </div>
 
               </div>
             );
