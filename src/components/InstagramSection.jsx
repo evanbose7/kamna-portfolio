@@ -10,7 +10,7 @@ export default function InstagramSection() {
 
   const instagramProfileUrl = 'https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr';
 
-  // 4 Reels with exact matched thumbnail covers & Instagram links requested by user
+  // 4 Reels with exact matched thumbnail covers & Instagram links
   const reels = [
     {
       id: 'DTS2wbWk2Nk',
@@ -50,7 +50,7 @@ export default function InstagramSection() {
   const scrollToMobileIndex = (index) => {
     setActiveReelIndex(index);
     if (scrollContainerRef.current) {
-      const cardWidth = 270; // 260px width + 10px gap
+      const cardWidth = 270;
       scrollContainerRef.current.scrollTo({
         left: index * cardWidth,
         behavior: 'smooth',
@@ -58,30 +58,46 @@ export default function InstagramSection() {
     }
   };
 
-  // Card click: opens exact matched Reel link on Instagram
+  // Card click: opens exact Reel link on Instagram
   const handleCardClick = (url) => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  // Desktop 4-Card Deck style calculation
+  // Desktop 3-Card Carousel positioning (Reverted back to exact desktop design)
   const getDesktopReelStyle = (index) => {
+    let diff = index - activeReelIndex;
+    const half = reels.length / 2;
+
+    if (diff > half) {
+      diff -= reels.length;
+    } else if (diff < -half) {
+      diff += reels.length;
+    }
+
+    const offset = diff;
+    const absOffset = Math.abs(offset);
     const isHovered = hoveredIndex === index;
     const isAnyHovered = hoveredIndex !== null;
 
-    let baseTranslateX = (index - 1.5) * 175;
+    let baseTranslateX = 0;
+    if (absOffset < 2) {
+      baseTranslateX = offset * 260;
+    } else {
+      baseTranslateX = (offset < 0 ? -1 : 1) * 320;
+    }
 
-    if (isAnyHovered) {
+    if (isAnyHovered && absOffset < 2) {
       if (index < hoveredIndex) {
-        baseTranslateX -= (hoveredIndex - index) * 25 + 55;
+        baseTranslateX -= 25;
       } else if (index > hoveredIndex) {
-        baseTranslateX += (index - hoveredIndex) * 25 + 55;
+        baseTranslateX += 25;
       }
     }
 
-    let scale = isHovered ? 1.05 : isAnyHovered ? 0.94 : 0.97;
-    let opacity = isAnyHovered && !isHovered ? 0.8 : 1;
-    const zIndex = isHovered ? 50 : 20 + index;
-    const translateY = isHovered ? -24 : 0;
+    let scale = isHovered ? 1.05 : absOffset >= 2 ? 0.75 : 0.95;
+    let opacity = absOffset >= 2 ? 0 : absOffset === 1 ? 0.88 : 1;
+    const zIndex = isHovered ? 50 : absOffset >= 2 ? 5 : 30 - absOffset * 10;
+    const translateY = isHovered ? -16 : 0;
 
     return {
       transform: `translateX(${baseTranslateX}px) translateY(${translateY}px) scale(${scale})`,
@@ -100,7 +116,7 @@ export default function InstagramSection() {
       {/* Background radial glow */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#E91E8C]/10 blur-[120px] rounded-full" />
 
-      <div className="mb-8 px-5 sm:px-8 md:px-10 text-center relative z-10">
+      <div className="mb-10 px-5 sm:px-8 md:px-10 text-center relative z-10">
         <h2
           className="font-black uppercase leading-none tracking-tight text-[#F5F0EB]"
           style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
@@ -112,7 +128,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 📱 MOBILE VIEW: Silky Smooth Native Hardware-Accelerated 60FPS Snap Track (No gap movement artifacts!) */}
+      {/* 📱 MOBILE VIEW: Silky Smooth Native 60FPS Snap Track */}
       <div className="md:hidden relative w-full overflow-hidden px-4">
         <div
           ref={scrollContainerRef}
@@ -127,13 +143,13 @@ export default function InstagramSection() {
           className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-[calc(50vw-130px)] touch-pan-x transform-gpu will-change-transform"
           style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
         >
-          {reels.map((reel, index) => (
+          {reels.map((reel) => (
             <div
               key={reel.id}
               onClick={() => handleCardClick(reel.url)}
               className="snap-center shrink-0 w-[260px] h-[440px] rounded-3xl overflow-hidden border border-white/20 bg-[#121212] cursor-pointer select-none relative group transform-gpu shadow-2xl transition-transform duration-300"
             >
-              {/* Crisp Bright & Ultra-Clean Thumbnail Image Cover */}
+              {/* Crisp Bright & Ultra-Clean Thumbnail Cover */}
               <img
                 src={reel.thumbnail}
                 alt={reel.title}
@@ -164,21 +180,21 @@ export default function InstagramSection() {
         </div>
       </div>
 
-      {/* 💻 DESKTOP VIEW: All 4 Cards Visible at Once with Hover Distance Push Effect */}
-      <div className="hidden md:flex relative mx-auto h-[500px] max-w-6xl items-center justify-center perspective-[1200px] transform-gpu">
+      {/* 💻 DESKTOP VIEW: Reverted to Exact Original 3-Card Carousel with Side Chevron Buttons */}
+      <div className="hidden md:flex relative mx-auto h-[460px] sm:h-[500px] max-w-6xl items-center justify-center relative z-10">
         
         {/* Left Navigation Chevron Button */}
         <button
           type="button"
           onClick={handlePrev}
           aria-label="Previous Reel"
-          className="absolute left-10 md:left-14 z-40 h-11 w-11 flex items-center justify-center rounded-full bg-white/90 text-black shadow-2xl transition-all hover:scale-110 hover:bg-white active:scale-95 cursor-pointer"
+          className="absolute left-10 md:left-14 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-black shadow-2xl transition-all hover:scale-110 hover:bg-white active:scale-95 cursor-pointer"
         >
-          <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
+          <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
         </button>
 
         {/* Card Stage */}
-        <div className="relative w-full h-full flex items-center justify-center">
+        <div className="relative w-full h-full flex items-center justify-center perspective-[1200px] transform-gpu will-change-transform">
           {reels.map((reel, index) => {
             const isHovered = hoveredIndex === index;
 
@@ -189,9 +205,9 @@ export default function InstagramSection() {
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 style={getDesktopReelStyle(index)}
-                className="absolute w-[260px] h-[450px] rounded-3xl overflow-hidden border border-white/20 bg-[#121212] cursor-pointer select-none group transform-gpu shadow-2xl"
+                className="absolute w-[240px] sm:w-[270px] h-[420px] sm:h-[460px] rounded-3xl overflow-hidden border border-white/20 bg-[#121212] cursor-pointer select-none group transform-gpu shadow-2xl"
               >
-                {/* Thumbnail Image Cover */}
+                {/* Crisp Bright & Ultra-Clean Thumbnail Image Cover */}
                 <img
                   src={reel.thumbnail}
                   alt={reel.title}
@@ -206,7 +222,7 @@ export default function InstagramSection() {
                 </div>
 
                 {/* Sleek Small Dark Circular Play Button */}
-                <div className="absolute inset-0 m-auto w-11 h-11 rounded-full bg-black/60 border border-white/30 backdrop-blur-md flex items-center justify-center text-white z-20 transition-all duration-300 group-hover:scale-115 group-hover:bg-[#E91E8C] group-hover:border-none group-hover:shadow-[0_0_25px_rgba(233,30,140,0.8)]">
+                <div className="absolute inset-0 m-auto w-11 h-11 rounded-full bg-black/60 border border-white/30 backdrop-blur-md flex items-center justify-center text-white z-20 transition-all duration-300 group-hover:scale-115 group-hover:bg-[#E91E8C] group-hover:border-none group-hover:shadow-[0_0_30px_rgba(233,30,140,0.8)]">
                   <Play className="w-4.5 h-4.5 fill-white ml-0.5" />
                 </div>
 
@@ -228,15 +244,15 @@ export default function InstagramSection() {
           type="button"
           onClick={handleNext}
           aria-label="Next Reel"
-          className="absolute right-10 md:right-14 z-40 h-11 w-11 flex items-center justify-center rounded-full bg-white/90 text-black shadow-2xl transition-all hover:scale-110 hover:bg-white active:scale-95 cursor-pointer"
+          className="absolute right-10 md:right-14 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-black shadow-2xl transition-all hover:scale-110 hover:bg-white active:scale-95 cursor-pointer"
         >
-          <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+          <ChevronRight className="w-6 h-6 stroke-[2.5]" />
         </button>
 
       </div>
 
       {/* Pagination Indicators */}
-      <div className="flex items-center justify-center gap-2 mt-4 relative z-10">
+      <div className="flex items-center justify-center gap-2 mt-6 relative z-10">
         {reels.map((_, idx) => (
           <button
             key={idx}
