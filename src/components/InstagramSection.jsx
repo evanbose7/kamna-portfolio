@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Play, Heart, Eye, ExternalLink } from 'lucide-react';
+import { Play, Heart, Eye, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
 export default function InstagramSection() {
   const [activeReelIndex, setActiveReelIndex] = useState(1);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
+  // 60FPS Touch Drag Tracking State
   const [touchStartX, setTouchStartX] = useState(0);
-  const [touchEndX, setTouchEndX] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   const instagramProfileUrl = 'https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr';
 
@@ -52,36 +54,38 @@ export default function InstagramSection() {
 
   // Card click / tap toggle
   const handleCardClick = (index) => {
+    if (Math.abs(dragOffset) > 10) return; // Ignore click if user was dragging
     setActiveReelIndex(index);
     if (hoveredIndex === index) {
-      setHoveredIndex(null); // Tap again -> unpop back to normal
+      setHoveredIndex(null);
     } else {
-      setHoveredIndex(index); // Tap -> pop up
+      setHoveredIndex(index);
     }
   };
 
-  // Touch Swipe Handlers for Mobile
+  // 60FPS Continuous Finger Drag Handlers
   const handleTouchStart = (e) => {
     setTouchStartX(e.targetTouches[0].clientX);
-    setTouchEndX(e.targetTouches[0].clientX);
+    setIsDragging(true);
   };
 
   const handleTouchMove = (e) => {
-    setTouchEndX(e.targetTouches[0].clientX);
+    if (!isDragging) return;
+    const currentX = e.targetTouches[0].clientX;
+    const delta = currentX - touchStartX;
+    setDragOffset(delta);
   };
 
   const handleTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return;
-    const distance = touchStartX - touchEndX;
-    const minSwipeDistance = 50;
-
-    if (Math.abs(distance) > minSwipeDistance) {
-      if (distance > minSwipeDistance) {
-        handleNext(); // Swiped left -> next reel
-      } else if (distance < -minSwipeDistance) {
-        handlePrev(); // Swiped right -> prev reel
+    setIsDragging(false);
+    if (Math.abs(dragOffset) > 40) {
+      if (dragOffset < 0) {
+        handleNext();
+      } else {
+        handlePrev();
       }
     }
+    setDragOffset(0);
   };
 
   const getReelStyle = (index) => {
@@ -89,9 +93,10 @@ export default function InstagramSection() {
     const isHovered = hoveredIndex === index;
     const isAnyHovered = hoveredIndex !== null;
 
-    let baseTranslateX = offset * 160;
+    // Continuous 60fps drag offset tracking
+    let baseTranslateX = offset * 160 + (isDragging ? dragOffset : 0);
 
-    if (isAnyHovered) {
+    if (isAnyHovered && !isDragging) {
       if (index < hoveredIndex) {
         baseTranslateX -= (hoveredIndex - index) * 30 + 45;
       } else if (index > hoveredIndex) {
@@ -101,9 +106,7 @@ export default function InstagramSection() {
 
     const absOffset = Math.abs(offset);
     let scale = isHovered ? 1.08 : 1 - absOffset * 0.12;
-    
-    // Set 0deg rotation so first and last cards face flat forward like the center card
-    let rotateY = 0;
+    let rotateY = 0; // Completely flat facing forward
 
     let opacity = 1;
     if (absOffset > 2) {
@@ -121,6 +124,9 @@ export default function InstagramSection() {
       transform: `translateX(${baseTranslateX}px) translateY(${translateY}px) scale(${scale}) rotateY(${rotateY}deg)`,
       opacity,
       zIndex,
+      transition: isDragging
+        ? 'none'
+        : 'transform 450ms cubic-bezier(0.16, 1, 0.3, 1), opacity 450ms ease, box-shadow 450ms ease',
       boxShadow: isHovered
         ? '0 30px 60px -12px rgba(233, 30, 140, 0.55), 0 0 20px rgba(255, 179, 203, 0.3)'
         : '0 12px 35px rgba(0, 0, 0, 0.85)',
@@ -129,7 +135,7 @@ export default function InstagramSection() {
 
   return (
     <section id="insta" className="bg-[#0A0A0A] scroll-mt-6 pb-16 pt-20 sm:pt-28 md:pt-32 relative overflow-hidden">
-      <div className="mb-10 px-5 sm:px-8 md:px-10 text-center">
+      <div className="mb-8 px-5 sm:px-8 md:px-10 text-center">
         <h2
           className="font-black uppercase leading-none tracking-tight text-[#F5F0EB]"
           style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
@@ -141,9 +147,9 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 3D Fan Deck Container with Flat Facing Cards */}
+      {/* 60FPS Hardware Accelerated Drag Deck Container */}
       <div
-        className="relative mx-auto h-[480px] sm:h-[520px] max-w-5xl flex items-center justify-center perspective-[1200px] touch-pan-y"
+        className="relative mx-auto h-[480px] sm:h-[520px] max-w-5xl flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -158,7 +164,7 @@ export default function InstagramSection() {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               style={getReelStyle(index)}
-              className="absolute w-[240px] sm:w-[270px] h-[400px] sm:h-[450px] rounded-3xl overflow-hidden border border-white/10 bg-[#121212] transition-all duration-500 ease-out cursor-pointer select-none group"
+              className="absolute w-[240px] sm:w-[270px] h-[400px] sm:h-[450px] rounded-3xl overflow-hidden border border-white/10 bg-[#121212] cursor-pointer select-none group transform-gpu"
             >
               {/* Animated Gradient Background */}
               <div className={`absolute inset-0 bg-gradient-to-b ${reel.bgGradient} opacity-90 group-hover:opacity-100 transition-opacity duration-300`} />
@@ -186,7 +192,7 @@ export default function InstagramSection() {
                     <Play className="w-6 h-6 fill-white ml-0.5" />
                   </div>
                   <span className="text-[10px] uppercase font-bold text-white/60 tracking-wider">
-                    {isHovered ? 'Click to Open Reel' : 'Tap to View'}
+                    {isHovered ? 'Click to Open Reel' : 'Swipe or Tap'}
                   </span>
                 </div>
 
@@ -221,6 +227,39 @@ export default function InstagramSection() {
             </div>
           );
         })}
+      </div>
+
+      {/* Swipe Navigation Buttons for Quick 60fps Card Switching */}
+      <div className="flex items-center justify-center gap-4 mt-2">
+        <button
+          type="button"
+          onClick={handlePrev}
+          aria-label="Previous Reel"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white backdrop-blur-md transition-all hover:scale-110 hover:border-[#E91E8C] hover:bg-[#E91E8C]/20 active:scale-95 cursor-pointer"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <div className="flex items-center gap-1.5">
+          {reels.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => setActiveReelIndex(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                activeReelIndex === idx ? 'w-6 bg-[#E91E8C]' : 'w-2 bg-white/20 hover:bg-white/40'
+              }`}
+            />
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={handleNext}
+          aria-label="Next Reel"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white backdrop-blur-md transition-all hover:scale-110 hover:border-[#E91E8C] hover:bg-[#E91E8C]/20 active:scale-95 cursor-pointer"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Instagram Profile CTA */}
