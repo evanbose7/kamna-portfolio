@@ -67,6 +67,16 @@ export default function YouTubeSection() {
     setIsVideoLoaded(false);
   };
 
+  const handleCardClick = (id) => {
+    // Toggle pop state on mobile touch screens
+    if (hoveredVideoId === id) {
+      setHoveredVideoId(null);
+    } else {
+      setIsVideoLoaded(false);
+      setHoveredVideoId(id);
+    }
+  };
+
   return (
     <section id="youtube" className="bg-[#0A0A0A] scroll-mt-6 py-20 sm:py-28 md:py-32 relative overflow-hidden">
       
@@ -89,24 +99,25 @@ export default function YouTubeSection() {
             Featured Videos
           </h2>
           <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-            Hover thumbnail for video preview & controls
+            Swipe left & right on phone · Hover for video preview
           </p>
         </div>
 
-        {/* Netflix 3-Column Video Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative z-10">
+        {/* Netflix Horizontal Touch Swipe Row on Mobile & 3-Column Grid on Desktop */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 md:grid md:grid-cols-3 md:gap-8 relative z-10 pb-12 pt-6 px-4 sm:px-0 -mx-4 sm:mx-0">
           {videos.map((video) => {
             const isHovered = hoveredVideoId === video.id;
 
             return (
-              /* Fixed 16:9 Grid Slot Wrapper */
+              /* Fixed 16:9 Aspect Ratio Container (Horizontal swipe item on mobile) */
               <div
                 key={video.id}
+                onClick={() => handleCardClick(video.id)}
                 onMouseEnter={() => handleMouseEnter(video.id)}
                 onMouseLeave={handleMouseLeave}
-                className="relative aspect-video w-full cursor-pointer select-none"
+                className="relative aspect-video w-[82vw] max-w-[340px] shrink-0 snap-center md:w-auto md:max-w-none md:shrink cursor-pointer select-none"
               >
-                {/* 1. Default Clean Static Thumbnail (Fixed in grid flow) */}
+                {/* 1. Default Clean Static Thumbnail (Fixed in grid/carousel flow) */}
                 <div className="w-full h-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg">
                   {video.top10 && (
                     <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-md tracking-wider">
@@ -124,7 +135,7 @@ export default function YouTubeSection() {
                 <div
                   className={`absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.75)] transform-gpu will-change-transform transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                     isHovered
-                      ? 'opacity-100 scale-115 -translate-y-5 pointer-events-auto shadow-[0_40px_80px_rgba(229,9,20,0.5)]'
+                      ? 'opacity-100 scale-108 md:scale-115 -translate-y-4 md:-translate-y-5 pointer-events-auto shadow-[0_40px_80px_rgba(229,9,20,0.5)]'
                       : 'opacity-0 scale-100 translate-y-0 pointer-events-none'
                   }`}
                   style={{ minWidth: '100%' }}
@@ -208,7 +219,10 @@ export default function YouTubeSection() {
 
                       <button
                         type="button"
-                        onClick={() => setSelectedVideo(video)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedVideo(video);
+                        }}
                         aria-label="More Info"
                         className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/80 hover:border-white hover:text-white hover:scale-110 transition-all cursor-pointer"
                       >
@@ -251,7 +265,7 @@ export default function YouTubeSection() {
         </div>
 
         {/* Subscribe CTA */}
-        <div className="mt-14 text-center">
+        <div className="mt-8 sm:mt-14 text-center">
           <a
             href="https://www.youtube.com/@thekamnabhardwaj"
             target="_blank"
