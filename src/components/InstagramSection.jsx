@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { ExternalLink, Heart, Eye } from 'lucide-react';
+import React, { useState } from 'react';
+import { Play, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
 export default function InstagramSection() {
   const [activeReelIndex, setActiveReelIndex] = useState(1);
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [isDesktop, setIsDesktop] = useState(false);
 
   // 60FPS Touch Drag Tracking State
   const [touchStartX, setTouchStartX] = useState(0);
@@ -14,54 +13,37 @@ export default function InstagramSection() {
 
   const instagramProfileUrl = 'https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr';
 
-  // 4 Instagram Reels with updated exact Reel links & embeds
+  // Exactly 4 Reels with your exact uploaded thumbnail covers & Instagram links
   const reels = [
     {
       id: 'DTS2wbWk2Nk',
       url: 'https://www.instagram.com/reel/DTS2wbWk2Nk/?igsh=bTNtN2xvZXh2cTRq',
-      embedUrl: 'https://www.instagram.com/reel/DTS2wbWk2Nk/embed/',
-      title: 'Personal Branding & Visual Content Strategy 🔥',
-      views: '54.8K',
-      likes: '4.9K',
-      tag: 'BRAND STRATEGY',
+      thumbnail: '/assets/reel-thumb-1.jpg',
+      title: 'Earn Money Via Reels 💵',
+      tag: 'MONETIZATION',
     },
     {
       id: 'DTDD_1rDKQP',
       url: 'https://www.instagram.com/reel/DTDD_1rDKQP/?igsh=MXYya3dvaTFydGtrZw==',
-      embedUrl: 'https://www.instagram.com/reel/DTDD_1rDKQP/embed/',
-      title: 'Day in the life of a personal branding strategist 💻',
-      views: '82.1K',
-      likes: '6.4K',
-      tag: 'VLOG / STORY',
+      thumbnail: '/assets/reel-thumb-2.jpg',
+      title: 'Ep 2 Indie Filmmaker Berozgar:( Making My Film 🎥',
+      tag: 'FILMMAKING',
     },
     {
       id: 'DS4qmEQjJLn',
       url: 'https://www.instagram.com/reel/DS4qmEQjJLn/?igsh=MTl3aHI1c2g1OTE=',
-      embedUrl: 'https://www.instagram.com/reel/DS4qmEQjJLn/embed/',
-      title: 'The storytelling secret top creators charge $5,000 for 🤐',
-      views: '120.5K',
-      likes: '11.2K',
-      tag: 'STORYTELLING',
+      thumbnail: '/assets/reel-thumb-3.jpg',
+      title: 'To anyone who is scared to create content 📸',
+      tag: 'CREATOR MINDSET',
     },
     {
       id: 'DSCoQNZjCH7',
       url: 'https://www.instagram.com/reel/DSCoQNZjCH7/?igsh=Y3ZjbDA5eDBmdmtt',
-      embedUrl: 'https://www.instagram.com/reel/DSCoQNZjCH7/embed/',
-      title: 'How to write hooks that grab attention in 2 seconds 🎨',
-      views: '63.8K',
-      likes: '5.1K',
-      tag: 'CONTENT HOOKS',
+      thumbnail: '/assets/reel-thumb-4.jpg',
+      title: 'POV: Found the best side hustle (Paid per reel) 💰',
+      tag: 'SIDE HUSTLE',
     },
   ];
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const handlePrev = () => {
     setActiveReelIndex((prev) => (prev === 0 ? reels.length - 1 : prev - 1));
@@ -71,7 +53,13 @@ export default function InstagramSection() {
     setActiveReelIndex((prev) => (prev === reels.length - 1 ? 0 : prev + 1));
   };
 
-  // 60FPS Touch Drag Handlers (Mobile)
+  // Card click: opens exact Reel link on Instagram
+  const handleCardClick = (url) => {
+    if (Math.abs(dragOffset) > 10) return;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  // 60FPS Touch Drag Handlers
   const handleTouchStart = (e) => {
     setTouchStartX(e.targetTouches[0].clientX);
     setIsDragging(true);
@@ -96,79 +84,62 @@ export default function InstagramSection() {
     setDragOffset(0);
   };
 
+  // 3-Card Carousel positioning matching the layout screenshot
   const getReelStyle = (index) => {
+    let diff = index - activeReelIndex;
+    const half = reels.length / 2;
+
+    if (diff > half) {
+      diff -= reels.length;
+    } else if (diff < -half) {
+      diff += reels.length;
+    }
+
+    const offset = diff;
+    const absOffset = Math.abs(offset);
     const isHovered = hoveredIndex === index;
     const isAnyHovered = hoveredIndex !== null;
 
-    if (isDesktop) {
-      // DESKTOP: All 4 cards visible at once with hover distance push effect!
-      let baseTranslateX = (index - 1.5) * 175;
-
-      if (isAnyHovered) {
-        if (index < hoveredIndex) {
-          baseTranslateX -= (hoveredIndex - index) * 25 + 55;
-        } else if (index > hoveredIndex) {
-          baseTranslateX += (index - hoveredIndex) * 25 + 55;
-        }
-      }
-
-      let scale = isHovered ? 1.05 : isAnyHovered ? 0.94 : 0.97;
-      let opacity = isAnyHovered && !isHovered ? 0.8 : 1;
-      const zIndex = isHovered ? 50 : 20 + index;
-      const translateY = isHovered ? -24 : 0;
-
-      return {
-        transform: `translateX(${baseTranslateX}px) translateY(${translateY}px) scale(${scale})`,
-        opacity,
-        zIndex,
-        transition: 'transform 450ms cubic-bezier(0.16, 1, 0.3, 1), opacity 450ms ease, box-shadow 450ms ease',
-        boxShadow: isHovered
-          ? '0 30px 65px -12px rgba(233, 30, 140, 0.6), 0 0 25px rgba(255, 179, 203, 0.4)'
-          : '0 15px 40px rgba(0, 0, 0, 0.85)',
-      };
+    let baseTranslateX = 0;
+    if (absOffset < 2) {
+      baseTranslateX = offset * 260 + (isDragging ? dragOffset : 0);
     } else {
-      // MOBILE: Smooth 60fps cyclic swipe deck
-      let diff = index - activeReelIndex;
-      const half = reels.length / 2;
-
-      if (diff > half) {
-        diff -= reels.length;
-      } else if (diff < -half) {
-        diff += reels.length;
-      }
-
-      const offset = diff;
-      const absOffset = Math.abs(offset);
-
-      let baseTranslateX = 0;
-      if (absOffset < 2) {
-        baseTranslateX = offset * 165 + (isDragging ? dragOffset : 0);
-      } else {
-        baseTranslateX = (offset < 0 ? -1 : 1) * 200;
-      }
-
-      let scale = isHovered ? 1.05 : absOffset >= 2 ? 0.7 : 1 - absOffset * 0.12;
-      let opacity = absOffset >= 2 ? 0 : absOffset === 1 ? 0.85 : 1;
-      const zIndex = isHovered ? 50 : absOffset >= 2 ? 5 : 30 - absOffset * 10;
-      const translateY = isHovered ? -20 : absOffset * 10;
-
-      return {
-        transform: `translateX(${baseTranslateX}px) translateY(${translateY}px) scale(${scale})`,
-        opacity,
-        zIndex,
-        transition: isDragging
-          ? 'none'
-          : 'transform 450ms cubic-bezier(0.16, 1, 0.3, 1), opacity 450ms ease, box-shadow 450ms ease',
-        boxShadow: isHovered
-          ? '0 30px 60px -12px rgba(233, 30, 140, 0.55), 0 0 20px rgba(255, 179, 203, 0.3)'
-          : '0 12px 35px rgba(0, 0, 0, 0.85)',
-      };
+      baseTranslateX = (offset < 0 ? -1 : 1) * 320;
     }
+
+    if (isAnyHovered && !isDragging && absOffset < 2) {
+      if (index < hoveredIndex) {
+        baseTranslateX -= 25;
+      } else if (index > hoveredIndex) {
+        baseTranslateX += 25;
+      }
+    }
+
+    let scale = isHovered ? 1.05 : absOffset >= 2 ? 0.75 : 0.95;
+    let opacity = absOffset >= 2 ? 0 : absOffset === 1 ? 0.85 : 1;
+    const zIndex = isHovered ? 50 : absOffset >= 2 ? 5 : 30 - absOffset * 10;
+    const translateY = isHovered ? -16 : 0;
+
+    return {
+      transform: `translateX(${baseTranslateX}px) translateY(${translateY}px) scale(${scale})`,
+      opacity,
+      zIndex,
+      transition: isDragging
+        ? 'none'
+        : 'transform 450ms cubic-bezier(0.16, 1, 0.3, 1), opacity 450ms ease, box-shadow 450ms ease',
+      boxShadow: isHovered
+        ? '0 30px 65px -12px rgba(233, 30, 140, 0.6), 0 0 25px rgba(255, 179, 203, 0.4)'
+        : '0 15px 40px rgba(0, 0, 0, 0.75)',
+    };
   };
 
   return (
     <section id="insta" className="bg-[#0A0A0A] scroll-mt-6 pb-16 pt-20 sm:pt-28 md:pt-32 relative overflow-hidden">
-      <div className="mb-8 px-5 sm:px-8 md:px-10 text-center">
+      
+      {/* Background radial glow */}
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#E91E8C]/10 blur-[120px] rounded-full" />
+
+      <div className="mb-10 px-5 sm:px-8 md:px-10 text-center relative z-10">
         <h2
           className="font-black uppercase leading-none tracking-tight text-[#F5F0EB]"
           style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
@@ -180,68 +151,90 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 4 Cards Deck Container with Clean Edge-to-Edge Instagram Video Embeds */}
-      <div
-        className="relative mx-auto h-[500px] sm:h-[540px] max-w-6xl flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {reels.map((reel, index) => {
-          const isHovered = hoveredIndex === index;
+      {/* 3-Card Carousel Container with Side Chevron Arrow Buttons */}
+      <div className="relative mx-auto h-[460px] sm:h-[500px] max-w-6xl flex items-center justify-center relative z-10">
+        
+        {/* Left Navigation Chevron Button */}
+        <button
+          type="button"
+          onClick={handlePrev}
+          aria-label="Previous Reel"
+          className="absolute left-4 sm:left-10 md:left-16 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-black shadow-2xl transition-all hover:scale-110 hover:bg-white active:scale-95 cursor-pointer"
+        >
+          <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+        </button>
 
-          return (
-            <div
-              key={reel.id}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              style={getReelStyle(index)}
-              className="absolute w-[250px] sm:w-[280px] h-[440px] sm:h-[480px] rounded-3xl overflow-hidden border border-white/15 bg-[#0D0D0D] cursor-pointer select-none group transform-gpu flex flex-col justify-between"
-            >
-              {/* Card Header Tag Bar */}
-              <div className="p-3 px-4 bg-[#121212] border-b border-white/10 flex items-center justify-between z-20">
-                <span className="rounded-full bg-black/60 border border-white/20 px-2.5 py-0.5 text-[9px] font-bold text-white uppercase tracking-widest">
-                  {reel.tag}
-                </span>
-                <a
-                  href={reel.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-[10px] font-bold text-[#E91E8C] hover:text-[#FFB3CB] transition-colors uppercase tracking-wider"
-                >
-                  <InstagramIcon className="w-3.5 h-3.5" />
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </div>
+        {/* Card Stage */}
+        <div
+          className="relative w-full h-full flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {reels.map((reel, index) => {
+            const isHovered = hoveredIndex === index;
 
-              {/* Live Official Instagram Reel Video iFrame Embed (Cropped -54px to remove white header band) */}
-              <div className="relative w-full h-full overflow-hidden bg-black">
-                <iframe
-                  src={reel.embedUrl}
-                  title={reel.title}
-                  className="w-full h-[calc(100%+60px)] -mt-[54px] border-0 rounded-b-3xl pointer-events-auto"
-                  allowTransparency="true"
-                  allow="encrypted-media"
-                  scrolling="no"
+            return (
+              <div
+                key={reel.id}
+                onClick={() => handleCardClick(reel.url)}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                style={getReelStyle(index)}
+                className="absolute w-[240px] sm:w-[270px] h-[420px] sm:h-[460px] rounded-3xl overflow-hidden border border-white/20 bg-[#121212] cursor-pointer select-none group transform-gpu shadow-2xl"
+              >
+                {/* Thumbnail Image Cover */}
+                <img
+                  src={reel.thumbnail}
+                  alt={reel.title}
+                  className="w-full h-full object-cover object-center select-none transition-transform duration-500 group-hover:scale-105"
                 />
-              </div>
 
-              {/* Footer Info Bar */}
-              <div className="p-3 px-4 bg-[#121212]/95 border-t border-white/10 flex items-center justify-between text-[10px] text-white/70 font-semibold z-20">
-                <span className="flex items-center gap-1">
-                  <Eye className="w-3 h-3 text-[#FFB3CB]" /> {reel.views}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Heart className="w-3 h-3 text-[#E91E8C]" /> {reel.likes}
-                </span>
+                {/* Dark Vignette Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 group-hover:via-black/10 transition-colors" />
+
+                {/* Top Tag & Instagram Icon */}
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
+                  <span className="rounded-full bg-black/60 border border-white/20 px-3 py-1 text-[10px] font-bold text-white uppercase tracking-widest backdrop-blur-md">
+                    {reel.tag}
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#FFB3CB] to-[#E91E8C] flex items-center justify-center shadow-lg">
+                    <InstagramIcon className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+
+                {/* Center Dark Circular Play Button (Matching Screenshot 5) */}
+                <div className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-black/60 border border-white/30 backdrop-blur-md flex items-center justify-center text-white z-20 transition-all duration-300 group-hover:scale-115 group-hover:bg-[#E91E8C] group-hover:border-none group-hover:shadow-[0_0_30px_rgba(233,30,140,0.8)]">
+                  <Play className="w-6 h-6 fill-white ml-0.5" />
+                </div>
+
+                {/* Bottom Title & Action */}
+                <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between p-3 rounded-2xl bg-black/60 backdrop-blur-md border border-white/10">
+                  <h3 className="font-bold text-xs text-white leading-snug line-clamp-1">
+                    {reel.title}
+                  </h3>
+                  <ExternalLink className="w-4 h-4 text-[#FFB3CB] shrink-0 ml-2" />
+                </div>
+
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        {/* Right Navigation Chevron Button */}
+        <button
+          type="button"
+          onClick={handleNext}
+          aria-label="Next Reel"
+          className="absolute right-4 sm:left-auto sm:right-10 md:right-16 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-black shadow-2xl transition-all hover:scale-110 hover:bg-white active:scale-95 cursor-pointer"
+        >
+          <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+        </button>
+
       </div>
 
-      {/* Pagination Dots */}
-      <div className="flex items-center justify-center gap-2 mt-4">
+      {/* Pagination Indicators */}
+      <div className="flex items-center justify-center gap-2 mt-6 relative z-10">
         {reels.map((_, idx) => (
           <button
             key={idx}
@@ -256,7 +249,7 @@ export default function InstagramSection() {
       </div>
 
       {/* Instagram Profile CTA */}
-      <div className="mt-8 text-center">
+      <div className="mt-8 text-center relative z-10">
         <a
           href={instagramProfileUrl}
           target="_blank"
