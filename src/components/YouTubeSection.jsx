@@ -167,9 +167,6 @@ export default function YouTubeSection() {
           >
             Featured Videos
           </h2>
-          <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
-            Swipe left & right on phone · Shows thumbnail first then video
-          </p>
         </div>
 
         {/* --- 📱 MOBILE VIEW: SWIPE CAROUSEL (SHOWS THUMBNAIL FOR 1.5s -> THEN PLAYS VIDEO) --- */}
@@ -217,7 +214,7 @@ export default function YouTubeSection() {
                   {isPreviewActive && (
                     <div className="absolute inset-0 w-full h-full z-10 overflow-hidden rounded-xl bg-black animate-fadeIn">
                       <iframe
-                        src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&mute=1&playsinline=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
+                        src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&mute=1&playsinline=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
                         title={video.title}
                         onLoad={() => setIsVideoLoaded(true)}
                         allow="autoplay; encrypted-media; picture-in-picture"

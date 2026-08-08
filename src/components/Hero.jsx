@@ -92,14 +92,21 @@ export default function Hero({ onOpenPdfModal }) {
         </div>
 
         {/* Right Column: Polaroid Portrait Frame (Supports Image & Auto-Playing Video) */}
-        <div className="order-1 lg:order-2 flex justify-center lg:justify-end py-6">
+        <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end justify-center py-4">
+          
+          {/* Floating Surprise Hint Badge Directly Above Portrait Frame */}
+          <div className="mb-3 z-40 whitespace-nowrap">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E91E8C]/50 bg-[#E91E8C]/20 px-3.5 py-1 text-[11px] font-bold text-[#FFB3CB] shadow-lg animate-pulse uppercase tracking-wider backdrop-blur-md">
+              ✨ Tap to see surprise
+            </span>
+          </div>
+
           <div
             onClick={handlePortraitClick}
             onMouseEnter={() => setIsPortraitHovered(true)}
             onMouseLeave={() => setIsPortraitHovered(false)}
-            className="relative w-[min(75vw,340px)] sm:w-[360px] my-6 cursor-pointer select-none"
+            className="relative w-[min(75vw,340px)] sm:w-[360px] my-2 cursor-pointer select-none"
           >
-            
             {/* Polaroid Radial Glow */}
             <div
               className={`pointer-events-none absolute inset-0 m-auto h-[85%] w-[85%] rounded-full blur-3xl bg-gradient-to-r from-[#FFB3CB]/40 via-[#E91E8C]/30 to-transparent transition-opacity duration-500 ${
@@ -232,7 +239,7 @@ export default function Hero({ onOpenPdfModal }) {
             <div
               className={`pointer-events-none absolute -bottom-9 -right-6 z-30 transform -rotate-3 transition-all duration-300 ease-back-out ${
                 isPortraitHovered
-                  ? 'opacity-100 scale-100 translate-y-0 delay-350'
+                  ? 'opacity-100 scale-108 translate-y-0 delay-350'
                   : 'opacity-0 scale-75 -translate-y-4'
               }`}
             >
