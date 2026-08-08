@@ -63,7 +63,7 @@ export default function InstagramSection() {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  // Desktop 3-Card Carousel positioning (Reverted back to exact desktop design)
+  // Desktop 3-Card Carousel positioning
   const getDesktopReelStyle = (index) => {
     let diff = index - activeReelIndex;
     const half = reels.length / 2;
@@ -128,7 +128,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 📱 MOBILE VIEW: Silky Smooth Native 60FPS Snap Track */}
+      {/* 📱 MOBILE VIEW: Smooth 60FPS Snap Track with Unblocked Vertical Page Scroll (touch-pan-y) */}
       <div className="md:hidden relative w-full overflow-hidden px-4">
         <div
           ref={scrollContainerRef}
@@ -140,8 +140,8 @@ export default function InstagramSection() {
               setActiveReelIndex(newIndex);
             }
           }}
-          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-[calc(50vw-130px)] touch-pan-x transform-gpu will-change-transform"
-          style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
+          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-[calc(50vw-130px)] touch-pan-y transform-gpu will-change-transform"
+          style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
         >
           {reels.map((reel) => (
             <div
@@ -180,7 +180,7 @@ export default function InstagramSection() {
         </div>
       </div>
 
-      {/* 💻 DESKTOP VIEW: Reverted to Exact Original 3-Card Carousel with Side Chevron Buttons */}
+      {/* 💻 DESKTOP VIEW: 3-Card Carousel with Side Chevron Buttons */}
       <div className="hidden md:flex relative mx-auto h-[460px] sm:h-[500px] max-w-6xl items-center justify-center relative z-10">
         
         {/* Left Navigation Chevron Button */}
@@ -222,7 +222,7 @@ export default function InstagramSection() {
                 </div>
 
                 {/* Sleek Small Dark Circular Play Button */}
-                <div className="absolute inset-0 m-auto w-11 h-11 rounded-full bg-black/60 border border-white/30 backdrop-blur-md flex items-center justify-center text-white z-20 transition-all duration-300 group-hover:scale-115 group-hover:bg-[#E91E8C] group-hover:border-none group-hover:shadow-[0_0_30px_rgba(233,30,140,0.8)]">
+                <div className="absolute inset-0 m-auto w-11 h-11 rounded-full bg-black/60 border border-white/30 backdrop-blur-md flex items-center justify-center text-white z-20 transition-all duration-300 group-hover:scale-115 group-hover:bg-[#E91E8C] group-hover:border-none group-hover:shadow-[0_0_25px_rgba(233,30,140,0.8)]">
                   <Play className="w-4.5 h-4.5 fill-white ml-0.5" />
                 </div>
 
