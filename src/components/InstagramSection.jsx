@@ -63,7 +63,7 @@ export default function InstagramSection() {
     setActiveReelIndex((prev) => (prev === reels.length - 1 ? 0 : prev + 1));
   };
 
-  // Card click: Quick tap centers/selects card without sticky pop
+  // Card click: Quick tap centers/selects card
   const handleCardClick = (index) => {
     if (Math.abs(dragOffset) > 10) return;
     setActiveReelIndex(index);
@@ -126,7 +126,7 @@ export default function InstagramSection() {
     }
   };
 
-  // Cyclic distance math to keep 4th card hidden between/behind the 3 visible cards
+  // Circular 3-Card Visible Deck: 4th card tucked cleanly behind center card (opacity 0, scale 0.7)
   const getReelStyle = (index) => {
     let diff = index - activeReelIndex;
     const half = reels.length / 2;
@@ -138,13 +138,19 @@ export default function InstagramSection() {
     }
 
     const offset = diff;
+    const absOffset = Math.abs(offset);
     const isHovered = hoveredIndex === index;
     const isAnyHovered = hoveredIndex !== null;
 
-    // Continuous 60fps drag offset tracking
-    let baseTranslateX = offset * 160 + (isDragging ? dragOffset : 0);
+    // Position: 0 for center, -160px for left, +160px for right, 0 for hidden behind center!
+    let baseTranslateX = 0;
+    if (absOffset < 2) {
+      baseTranslateX = offset * 160 + (isDragging ? dragOffset : 0);
+    } else {
+      baseTranslateX = (offset < 0 ? -1 : 1) * 200; // Tucked slightly behind edge for smooth fade transition
+    }
 
-    if (isAnyHovered && !isDragging) {
+    if (isAnyHovered && !isDragging && absOffset < 2) {
       if (index < hoveredIndex) {
         baseTranslateX -= (hoveredIndex - index) * 30 + 45;
       } else if (index > hoveredIndex) {
@@ -152,11 +158,10 @@ export default function InstagramSection() {
       }
     }
 
-    const absOffset = Math.abs(offset);
-    let scale = isHovered ? 1.08 : 1 - absOffset * 0.12;
+    let scale = isHovered ? 1.08 : absOffset >= 2 ? 0.7 : 1 - absOffset * 0.12;
     let rotateY = 0; // Flat facing forward
 
-    // Exactly 3 visible cards (offset -1, 0, 1). Offset >= 2 or <= -2 stays hidden with opacity 0!
+    // Exactly 3 visible cards (offset -1, 0, 1). Offset >= 2 is completely hidden (opacity 0)
     let opacity = 1;
     if (absOffset >= 2) {
       opacity = 0;
@@ -164,7 +169,7 @@ export default function InstagramSection() {
       opacity = 0.85;
     }
 
-    const zIndex = isHovered ? 50 : 30 - absOffset * 10;
+    const zIndex = isHovered ? 50 : absOffset >= 2 ? 5 : 30 - absOffset * 10;
     const translateY = isHovered ? -20 : absOffset * 10;
 
     return {
@@ -194,7 +199,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 60FPS Cyclic Drag Deck Container with Long Press Pop on Mobile */}
+      {/* 60FPS Circular 3-Card Deck Container (4th Card Hidden Behind Circle) */}
       <div className="relative mx-auto h-[480px] sm:h-[520px] max-w-5xl flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform">
         {reels.map((reel, index) => {
           const isHovered = hoveredIndex === index;
