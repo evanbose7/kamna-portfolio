@@ -147,17 +147,17 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 3-Card Carousel Container with Side Chevron Arrow Buttons */}
+      {/* 3-Card Carousel Container (Chevron Buttons Hidden on Phone / Mobile) */}
       <div className="relative mx-auto h-[460px] sm:h-[500px] max-w-6xl flex items-center justify-center relative z-10">
         
-        {/* Left Navigation Chevron Button */}
+        {/* Left Navigation Chevron Button (Hidden on Mobile) */}
         <button
           type="button"
           onClick={handlePrev}
           aria-label="Previous Reel"
-          className="absolute left-4 sm:left-10 md:left-16 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-black shadow-2xl transition-all hover:scale-110 hover:bg-white active:scale-95 cursor-pointer"
+          className="hidden sm:flex absolute left-6 md:left-14 z-40 h-11 w-11 items-center justify-center rounded-full bg-white/90 text-black shadow-2xl transition-all hover:scale-110 hover:bg-white active:scale-95 cursor-pointer"
         >
-          <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+          <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
         </button>
 
         {/* Card Stage */}
@@ -186,16 +186,16 @@ export default function InstagramSection() {
                   className="w-full h-full object-cover object-center select-none brightness-[1.05] contrast-[1.05] saturate-[1.05] transition-transform duration-500 group-hover:scale-105"
                 />
 
-                {/* Top Right Instagram Icon (Black label removed) */}
+                {/* Top Right Instagram Icon */}
                 <div className="absolute top-4 right-4 z-20">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#FFB3CB] to-[#E91E8C] flex items-center justify-center shadow-lg">
                     <InstagramIcon className="w-4 h-4 text-white" />
                   </div>
                 </div>
 
-                {/* Center Dark Circular Play Button */}
-                <div className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-black/60 border border-white/30 backdrop-blur-md flex items-center justify-center text-white z-20 transition-all duration-300 group-hover:scale-115 group-hover:bg-[#E91E8C] group-hover:border-none group-hover:shadow-[0_0_30px_rgba(233,30,140,0.8)]">
-                  <Play className="w-6 h-6 fill-white ml-0.5" />
+                {/* Sleek Small Dark Circular Play Button */}
+                <div className="absolute inset-0 m-auto w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/60 border border-white/30 backdrop-blur-md flex items-center justify-center text-white z-20 transition-all duration-300 group-hover:scale-115 group-hover:bg-[#E91E8C] group-hover:border-none group-hover:shadow-[0_0_25px_rgba(233,30,140,0.8)]">
+                  <Play className="w-4 h-4 fill-white ml-0.5" />
                 </div>
 
                 {/* Bottom Title & Action */}
@@ -211,14 +211,14 @@ export default function InstagramSection() {
           })}
         </div>
 
-        {/* Right Navigation Chevron Button */}
+        {/* Right Navigation Chevron Button (Hidden on Mobile) */}
         <button
           type="button"
           onClick={handleNext}
           aria-label="Next Reel"
-          className="absolute right-4 sm:left-auto sm:right-10 md:right-16 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-black shadow-2xl transition-all hover:scale-110 hover:bg-white active:scale-95 cursor-pointer"
+          className="hidden sm:flex absolute right-6 md:right-14 z-40 h-11 w-11 items-center justify-center rounded-full bg-white/90 text-black shadow-2xl transition-all hover:scale-110 hover:bg-white active:scale-95 cursor-pointer"
         >
-          <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+          <ChevronRight className="w-5 h-5 stroke-[2.5]" />
         </button>
 
       </div>
