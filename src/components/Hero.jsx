@@ -4,14 +4,16 @@ import { Volume2, VolumeX, Sparkles, ArrowRight } from 'lucide-react';
 export default function Hero({ onOpenPdfModal }) {
   const [isMuted, setIsMuted] = useState(true);
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
+  const [hasTappedPortrait, setHasTappedPortrait] = useState(false);
 
   // Video media configuration (change to true if using video file in public/assets/)
   const isVideoMedia = false; 
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
 
-  // Toggle portrait pop & tilt state on tap (mobile friendly)
+  // Toggle portrait pop & tilt state on tap (mobile friendly) and hide hint badge
   const handlePortraitClick = () => {
     setIsPortraitHovered((prev) => !prev);
+    setHasTappedPortrait(true);
   };
 
   return (
@@ -94,12 +96,14 @@ export default function Hero({ onOpenPdfModal }) {
         {/* Right Column: Polaroid Portrait Frame (Supports Image & Auto-Playing Video) */}
         <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end justify-center py-4">
           
-          {/* Floating Surprise Hint Badge Directly Above Portrait Frame */}
-          <div className="mb-3 z-40 whitespace-nowrap">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E91E8C]/50 bg-[#E91E8C]/20 px-3.5 py-1 text-[11px] font-bold text-[#FFB3CB] shadow-lg animate-pulse uppercase tracking-wider backdrop-blur-md">
-              ✨ Tap to see surprise
-            </span>
-          </div>
+          {/* Subtle Grey-White Surprise Hint Badge (Mobile ONLY, disappears when photo is tapped) */}
+          {!hasTappedPortrait && !isPortraitHovered && (
+            <div className="lg:hidden mb-2 z-40 whitespace-nowrap transition-opacity duration-300">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#F5F0EB]/15 bg-[#F5F0EB]/5 px-3.5 py-1 text-[10px] font-medium text-[#F5F0EB]/60 shadow-sm uppercase tracking-widest backdrop-blur-sm">
+                ✨ tap to see surprise
+              </span>
+            </div>
+          )}
 
           <div
             onClick={handlePortraitClick}
