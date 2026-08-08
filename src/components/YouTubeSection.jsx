@@ -54,9 +54,10 @@ export default function YouTubeSection() {
 
   const handleMouseEnter = (id) => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    // Smooth 300ms Netflix hover intent delay
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredVideoId(id);
-    }, 200);
+    }, 300);
   };
 
   const handleMouseLeave = () => {
@@ -96,7 +97,7 @@ export default function YouTubeSection() {
             const isHovered = hoveredVideoId === video.id;
 
             return (
-              /* Fixed 16:9 Grid Slot Wrapper (Never resizes on hover) */
+              /* Fixed 16:9 Grid Slot Wrapper */
               <div
                 key={video.id}
                 onMouseEnter={() => handleMouseEnter(video.id)}
@@ -117,10 +118,10 @@ export default function YouTubeSection() {
                   />
                 </div>
 
-                {/* 2. Absolute Floating Hover Overlay Card (Floats ABOVE grid, 0 page movement) */}
+                {/* 2. Absolute Floating Hover Overlay Card (Slow Netflix Easing Curve: 450ms cubic-bezier) */}
                 {isHovered && (
                   <div
-                    className="absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.7)] scale-108 -translate-y-3 transition-all duration-300 animate-fadeIn"
+                    className="absolute top-0 left-0 right-0 z-50 rounded-2xl overflow-hidden bg-[#181818] border border-red-600 shadow-[0_30px_60px_-10px_rgba(229,9,20,0.65)] scale-110 -translate-y-4 transition-all duration-450 ease-[cubic-bezier(0.25,1,0.5,1)]"
                     style={{ minWidth: '100%' }}
                   >
                     {/* Top Video Preview Container */}
@@ -150,13 +151,13 @@ export default function YouTubeSection() {
                           src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&showinfo=0&rel=0&loop=1&playlist=${video.youtubeId}&start=10`}
                           title={video.title}
                           allow="autoplay; encrypted-media"
-                          className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125"
+                          className="w-full h-[140%] -translate-y-[15%] border-0 object-cover scale-125 transition-opacity duration-500"
                         />
                       </div>
                     </div>
 
-                    {/* Netflix Action Controls & Metadata */}
-                    <div className="p-4 sm:p-5 flex flex-col gap-3 bg-[#181818]">
+                    {/* Netflix Action Controls & Metadata (Slow 450ms Ease-Out Reveal) */}
+                    <div className="p-4 sm:p-5 flex flex-col gap-3 bg-[#181818] transition-all duration-450 ease-[cubic-bezier(0.25,1,0.5,1)]">
                       
                       {/* Row 1: Action Controls */}
                       <div className="flex items-center justify-between">
