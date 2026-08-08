@@ -128,7 +128,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 📱 MOBILE VIEW: Full 2D Dual Swipe (Up/Down page scroll + Left/Right 60FPS card swiping) */}
+      {/* 📱 MOBILE VIEW: Full 2D Dual Swipe */}
       <div className="md:hidden relative w-full overflow-hidden px-4">
         <div
           ref={scrollContainerRef}
@@ -144,7 +144,7 @@ export default function InstagramSection() {
           style={{
             scrollBehavior: 'smooth',
             WebkitOverflowScrolling: 'touch',
-            touchAction: 'pan-x pan-y', // Dual 2D touch permission: Up/Down scrolls page, Left/Right swipes cards!
+            touchAction: 'pan-x pan-y',
           }}
         >
           {reels.map((reel) => (
@@ -153,10 +153,12 @@ export default function InstagramSection() {
               onClick={() => handleCardClick(reel.url)}
               className="snap-center shrink-0 w-[260px] h-[440px] rounded-3xl overflow-hidden border border-white/20 bg-[#121212] cursor-pointer select-none relative group transform-gpu shadow-2xl transition-transform duration-300"
             >
-              {/* Crisp Bright & Ultra-Clean Thumbnail Cover */}
+              {/* Crisp Bright & Ultra-Clean Thumbnail Image Cover */}
               <img
                 src={reel.thumbnail}
                 alt={reel.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-center select-none brightness-[1.05] contrast-[1.05] saturate-[1.05]"
               />
 
@@ -184,7 +186,7 @@ export default function InstagramSection() {
         </div>
       </div>
 
-      {/* 💻 DESKTOP VIEW: Unchanged 3-Card Carousel with Side Chevron Buttons */}
+      {/* 💻 DESKTOP VIEW: 3-Card Carousel with Side Chevron Buttons */}
       <div className="hidden md:flex relative mx-auto h-[460px] sm:h-[500px] max-w-6xl items-center justify-center relative z-10">
         
         {/* Left Navigation Chevron Button */}
@@ -215,6 +217,8 @@ export default function InstagramSection() {
                 <img
                   src={reel.thumbnail}
                   alt={reel.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center select-none brightness-[1.05] contrast-[1.05] saturate-[1.05] transition-transform duration-500 group-hover:scale-105"
                 />
 

@@ -51,7 +51,7 @@ export default function Footer() {
                 <InstagramIcon className="w-5 h-5" />
               </a>
               <a
-                href="https://www.youtube.com/@Thekamnabhardwajj"
+                href="https://www.youtube.com/@Kidwithcrayons"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"

@@ -19,6 +19,8 @@ export default function YouTubeSection() {
   const hoverTimeoutRef = useRef(null);
   const mobileTimerRef = useRef(null);
 
+  const youtubeChannelUrl = 'https://www.youtube.com/@Kidwithcrayons';
+
   const videos = [
     {
       id: 'video-1',
@@ -209,6 +211,7 @@ export default function YouTubeSection() {
                           loop
                           muted
                           playsInline
+                          preload="metadata"
                           className="w-full h-full object-cover rounded-xl"
                         />
                       ) : (
@@ -314,6 +317,7 @@ export default function YouTubeSection() {
                             loop
                             muted={isMuted}
                             playsInline
+                            preload="metadata"
                             className="w-full h-full object-cover"
                           />
                         ) : (
@@ -409,7 +413,7 @@ export default function YouTubeSection() {
         {/* Subscribe CTA */}
         <div className="mt-4 sm:mt-10 text-center">
           <a
-            href="https://www.youtube.com/@thekamnabhardwaj"
+            href={youtubeChannelUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-red-500/40 bg-red-600/10 px-8 py-3.5 text-xs font-bold uppercase tracking-widest text-red-500 transition-all duration-300 hover:bg-red-600 hover:text-white hover:shadow-[0_0_25px_rgba(229,9,20,0.5)] cursor-pointer"
