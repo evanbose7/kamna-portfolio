@@ -97,40 +97,62 @@ export default function InstagramSection() {
     setDragOffset(0);
   };
 
-  // Straight Horizontal Deck Style Calculation (0deg rotation for all cards)
+  // Circular 3-Card Visible Deck: 4th card tucked cleanly behind center card (opacity 0, scale 0.7)
   const getReelStyle = (index) => {
+    let diff = index - activeReelIndex;
+    const half = reels.length / 2;
+
+    if (diff > half) {
+      diff -= reels.length;
+    } else if (diff < -half) {
+      diff += reels.length;
+    }
+
+    const offset = diff;
+    const absOffset = Math.abs(offset);
     const isHovered = hoveredIndex === index;
     const isAnyHovered = hoveredIndex !== null;
 
-    // Horizontal offset spacing between cards
-    let baseTranslateX = (index - 1.5) * 110 + (isDragging ? dragOffset : 0);
+    // Position: 0 for center, -160px for left, +160px for right, 0 for hidden behind center!
+    let baseTranslateX = 0;
+    if (absOffset < 2) {
+      baseTranslateX = offset * 160 + (isDragging ? dragOffset : 0);
+    } else {
+      baseTranslateX = (offset < 0 ? -1 : 1) * 200; // Tucked slightly behind edge for smooth fade transition
+    }
 
-    if (isAnyHovered && !isDragging) {
+    if (isAnyHovered && !isDragging && absOffset < 2) {
       if (index < hoveredIndex) {
-        baseTranslateX -= 35;
+        baseTranslateX -= (hoveredIndex - index) * 30 + 45;
       } else if (index > hoveredIndex) {
-        baseTranslateX += 35;
+        baseTranslateX += (index - hoveredIndex) * 30 + 45;
       }
     }
 
-    // Straight 0deg rotation for all cards!
-    let rotationAngle = 0;
-    
-    // Scale & Depth
-    let scale = isHovered ? 1.08 : 0.94;
-    const zIndex = isHovered ? 50 : index === activeReelIndex ? 35 : 10 + index * 5;
-    const translateY = isHovered ? -28 : 0;
+    let scale = isHovered ? 1.08 : absOffset >= 2 ? 0.7 : 1 - absOffset * 0.12;
+    let rotateY = 0; // Flat facing forward
+
+    // Exactly 3 visible cards (offset -1, 0, 1). Offset >= 2 is completely hidden (opacity 0)
+    let opacity = 1;
+    if (absOffset >= 2) {
+      opacity = 0;
+    } else if (absOffset === 1) {
+      opacity = 0.85;
+    }
+
+    const zIndex = isHovered ? 50 : absOffset >= 2 ? 5 : 30 - absOffset * 10;
+    const translateY = isHovered ? -20 : absOffset * 10;
 
     return {
-      transform: `translateX(${baseTranslateX}px) translateY(${translateY}px) scale(${scale}) rotate(${rotationAngle}deg)`,
-      opacity: 1,
+      transform: `translateX(${baseTranslateX}px) translateY(${translateY}px) scale(${scale}) rotateY(${rotateY}deg)`,
+      opacity,
       zIndex,
       transition: isDragging
         ? 'none'
-        : 'transform 450ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 450ms ease',
+        : 'transform 450ms cubic-bezier(0.16, 1, 0.3, 1), opacity 450ms ease, box-shadow 450ms ease',
       boxShadow: isHovered
-        ? '0 30px 65px -12px rgba(233, 30, 140, 0.6), 0 0 25px rgba(255, 179, 203, 0.4)'
-        : '0 15px 40px rgba(0, 0, 0, 0.85)',
+        ? '0 30px 60px -12px rgba(233, 30, 140, 0.55), 0 0 20px rgba(255, 179, 203, 0.3)'
+        : '0 12px 35px rgba(0, 0, 0, 0.85)',
     };
   };
 
@@ -148,7 +170,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* Straight Horizontal Deck Container (0deg Rotation) */}
+      {/* 60FPS Circular 3-Card Deck Container (4th Card Hidden Behind Circle) */}
       <div
         className="relative mx-auto h-[480px] sm:h-[520px] max-w-5xl flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform"
         onTouchStart={handleTouchStart}
@@ -165,7 +187,7 @@ export default function InstagramSection() {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               style={getReelStyle(index)}
-              className="absolute w-[230px] sm:w-[260px] h-[390px] sm:h-[440px] rounded-3xl overflow-hidden border border-white/15 bg-[#121212] cursor-pointer select-none group transform-gpu"
+              className="absolute w-[240px] sm:w-[270px] h-[400px] sm:h-[450px] rounded-3xl overflow-hidden border border-white/10 bg-[#121212] cursor-pointer select-none group transform-gpu"
             >
               {/* Animated Gradient Background */}
               <div className={`absolute inset-0 bg-gradient-to-b ${reel.bgGradient} opacity-90 group-hover:opacity-100 transition-opacity duration-300`} />
@@ -193,7 +215,7 @@ export default function InstagramSection() {
                     <Play className="w-6 h-6 fill-white ml-0.5" />
                   </div>
                   <span className="text-[10px] uppercase font-bold text-white/60 tracking-wider">
-                    {isHovered ? 'Click to Open Reel' : 'Tap to Inspect'}
+                    {isHovered ? 'Click to Open Reel' : 'Swipe or Tap'}
                   </span>
                 </div>
 
@@ -230,7 +252,7 @@ export default function InstagramSection() {
         })}
       </div>
 
-      {/* Swipe Controls */}
+      {/* Swipe Navigation Buttons for Quick 60fps Card Switching */}
       <div className="flex items-center justify-center gap-4 mt-2">
         <button
           type="button"
