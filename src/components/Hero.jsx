@@ -101,7 +101,7 @@ export default function Hero({ onOpenPdfModal }) {
               href="https://www.linkedin.com/in/kamna-bharadwaj/"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-gradient group relative inline-flex items-center justify-center whitespace-nowrap rounded-full px-8 py-3.5 text-center text-xs font-bold uppercase tracking-widest text-[#F5F0EB] transition-all duration-300 hover:scale-[1.04] hover:brightness-110 hover:shadow-[0_4px_30px_rgba(212,0,108,0.6)] active:scale-[0.97] sm:px-11 sm:py-4 sm:text-sm cursor-pointer overflow-hidden min-w-[14rem]"
+              className="btn-gradient group relative inline-flex items-center justify-center whitespace-nowrap rounded-full px-8 py-3.5 text-center text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 hover:scale-[1.04] hover:brightness-110 hover:shadow-[0_4px_30px_rgba(212,0,108,0.6)] active:scale-[0.97] sm:px-11 sm:py-4 sm:text-sm cursor-pointer overflow-hidden min-w-[14rem]"
             >
               <span
                 className="pointer-events-none absolute inset-0 -translate-x-full skew-x-12 bg-white/20 transition-transform duration-700 group-hover:translate-x-full"
@@ -162,7 +162,7 @@ export default function Hero({ onOpenPdfModal }) {
                 ) : (
                   <img
                     src={mediaSrc}
-                    alt="Kamna Bhardwaj — Content Strategist"
+                    alt="Content Strategist Portrait"
                     className="w-full h-full object-cover object-center select-none"
                   />
                 )}
@@ -183,7 +183,7 @@ export default function Hero({ onOpenPdfModal }) {
 
               {/* Handwritten Polaroid Caption */}
               <p className="text-center text-[#0A0A0A]/70 font-caveat text-xl pt-3 pb-1 tracking-wide font-semibold">
-                @thekamnabhardwaj
+                @ariimakesflims
               </p>
             </div>
 
