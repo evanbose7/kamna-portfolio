@@ -14,11 +14,12 @@ export default function InstagramSection() {
 
   const instagramProfileUrl = 'https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr';
 
-  // Exactly 4 Instagram Reels Cards
+  // 4 Instagram Reels Cards with exact Reel links provided by user
   const reels = [
     {
-      id: 'DZzn3h3M9Jp',
-      url: instagramProfileUrl,
+      id: 'DSCoQNZjCH7',
+      url: 'https://www.instagram.com/reel/DSCoQNZjCH7/?igsh=Y3ZjbDA5eDBmdmtt',
+      embedUrl: 'https://www.instagram.com/reel/DSCoQNZjCH7/embed/',
       title: 'How to write hooks that grab attention in 2 seconds 🔥',
       views: '45.2K',
       likes: '3.8K',
@@ -26,8 +27,9 @@ export default function InstagramSection() {
       bgGradient: 'from-pink-900/60 to-purple-950/80',
     },
     {
-      id: 'DXvzWqTMfIp',
-      url: instagramProfileUrl,
+      id: 'DTDD_1rDKQP',
+      url: 'https://www.instagram.com/reel/DTDD_1rDKQP/?igsh=MXYya3dvaTFydGtrZw==',
+      embedUrl: 'https://www.instagram.com/reel/DTDD_1rDKQP/embed/',
       title: 'Day in the life of a personal branding strategist 💻',
       views: '82.1K',
       likes: '6.4K',
@@ -35,8 +37,9 @@ export default function InstagramSection() {
       bgGradient: 'from-rose-950/70 to-zinc-950',
     },
     {
-      id: 'DZ10LkGNC-0',
-      url: instagramProfileUrl,
+      id: 'DS4qmEQjJLn',
+      url: 'https://www.instagram.com/reel/DS4qmEQjJLn/?igsh=MTl3aHI1c2g1OTE=',
+      embedUrl: 'https://www.instagram.com/reel/DS4qmEQjJLn/embed/',
       title: 'The storytelling secret top creators charge $5,000 for 🤐',
       views: '120.5K',
       likes: '11.2K',
@@ -44,8 +47,9 @@ export default function InstagramSection() {
       bgGradient: 'from-fuchsia-950/80 to-stone-950',
     },
     {
-      id: 'DYpMyXuNiTF',
-      url: instagramProfileUrl,
+      id: 'DSCoQNZjCH7_2',
+      url: 'https://www.instagram.com/reel/DSCoQNZjCH7/?igsh=Y3ZjbDA5eDBmdmtt',
+      embedUrl: 'https://www.instagram.com/reel/DSCoQNZjCH7/embed/',
       title: 'Stop making boring posts — try this visual layout framework 🎨',
       views: '63.8K',
       likes: '5.1K',
@@ -71,10 +75,10 @@ export default function InstagramSection() {
     setActiveReelIndex((prev) => (prev === reels.length - 1 ? 0 : prev + 1));
   };
 
-  // Card click / tap
-  const handleCardClick = (index) => {
+  // Card click / tap opens exact Reel link
+  const handleCardClick = (reelUrl) => {
     if (Math.abs(dragOffset) > 10) return;
-    setActiveReelIndex(index);
+    window.open(reelUrl, '_blank', 'noopener,noreferrer');
   };
 
   // 60FPS Touch Drag Handlers (Mobile)
@@ -107,16 +111,14 @@ export default function InstagramSection() {
     const isAnyHovered = hoveredIndex !== null;
 
     if (isDesktop) {
-      // DESKTOP: All 4 cards visible at once!
-      // Base center positioning for 4 cards: -225px, -75px, +75px, +225px
+      // DESKTOP: All 4 cards visible at once with hover distance push effect!
       let baseTranslateX = (index - 1.5) * 165;
 
-      // Distance push effect when hovering a card:
       if (isAnyHovered) {
         if (index < hoveredIndex) {
-          baseTranslateX -= (hoveredIndex - index) * 30 + 65; // Push left cards further left
+          baseTranslateX -= (hoveredIndex - index) * 30 + 65;
         } else if (index > hoveredIndex) {
-          baseTranslateX += (index - hoveredIndex) * 30 + 65; // Push right cards further right
+          baseTranslateX += (index - hoveredIndex) * 30 + 65;
         }
       }
 
@@ -188,7 +190,7 @@ export default function InstagramSection() {
         </p>
       </div>
 
-      {/* 4 Cards Deck Container with Distance Push on Hover */}
+      {/* 4 Cards Deck Container */}
       <div
         className="relative mx-auto h-[480px] sm:h-[520px] max-w-6xl flex items-center justify-center perspective-[1200px] touch-pan-y transform-gpu will-change-transform"
         onTouchStart={handleTouchStart}
@@ -201,7 +203,7 @@ export default function InstagramSection() {
           return (
             <div
               key={reel.id}
-              onClick={() => handleCardClick(index)}
+              onClick={() => handleCardClick(reel.url)}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               style={getReelStyle(index)}
@@ -210,7 +212,7 @@ export default function InstagramSection() {
               {/* Animated Gradient Background */}
               <div className={`absolute inset-0 bg-gradient-to-b ${reel.bgGradient} opacity-90 group-hover:opacity-100 transition-opacity duration-300`} />
 
-              {/* Instagram Embed Cover Mockup */}
+              {/* Cover & Overlay */}
               <div className="relative h-full flex flex-col justify-between p-5 z-10">
                 
                 {/* Top Bar: Tag & Instagram Badge */}
@@ -233,7 +235,7 @@ export default function InstagramSection() {
                     <Play className="w-6 h-6 fill-white ml-0.5" />
                   </div>
                   <span className="text-[10px] uppercase font-bold text-white/60 tracking-wider">
-                    {isHovered ? 'Click to Open Reel' : 'Hover to Expand'}
+                    {isHovered ? 'Click to Open Reel' : 'Tap to Watch'}
                   </span>
                 </div>
 
@@ -270,7 +272,7 @@ export default function InstagramSection() {
         })}
       </div>
 
-      {/* Pagination Dots (Left & Right Chevron buttons completely removed) */}
+      {/* Pagination Dots */}
       <div className="flex items-center justify-center gap-2 mt-2">
         {reels.map((_, idx) => (
           <button
