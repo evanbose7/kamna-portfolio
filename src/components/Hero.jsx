@@ -11,14 +11,32 @@ export default function Hero({ onOpenPdfModal }) {
   const isVideoMedia = false; 
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
 
-  // Toggle portrait pop & tilt state on tap (mobile friendly) and hide hint badge permanently after first tap
+  // Toggle portrait tilt & stickers state on mobile tap, clearing hover residue
   const handlePortraitClick = () => {
-    setIsTapped((prev) => !prev);
+    setIsTapped((prev) => {
+      const next = !prev;
+      if (!next) {
+        setIsPortraitHovered(false);
+      }
+      return next;
+    });
     setHasTappedOnce(true);
   };
 
+  const handleMouseEnter = () => {
+    if (window.innerWidth >= 1024) {
+      setIsPortraitHovered(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (window.innerWidth >= 1024) {
+      setIsPortraitHovered(false);
+    }
+  };
+
   // Card is active if hovered on desktop or tapped on mobile
-  const isCardActive = isPortraitHovered || isTapped;
+  const isCardActive = (window.innerWidth >= 1024 ? isPortraitHovered : false) || isTapped;
 
   return (
     <section className="relative flex flex-col bg-[#0A0A0A] min-h-[92vh] justify-center px-6 sm:px-14 md:px-24 py-10 overflow-hidden">
@@ -83,7 +101,7 @@ export default function Hero({ onOpenPdfModal }) {
               href="https://www.linkedin.com/in/kamna-bharadwaj/"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-gradient group relative inline-flex items-center justify-center whitespace-nowrap rounded-full px-8 py-3.5 text-center text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 hover:scale-[1.04] hover:brightness-110 hover:shadow-[0_4px_30px_rgba(212,0,108,0.6)] active:scale-[0.97] sm:px-11 sm:py-4 sm:text-sm cursor-pointer overflow-hidden min-w-[14rem]"
+              className="btn-gradient group relative inline-flex items-center justify-center whitespace-nowrap rounded-full px-8 py-3.5 text-center text-xs font-bold uppercase tracking-widest text-[#F5F0EB] transition-all duration-300 hover:scale-[1.04] hover:brightness-110 hover:shadow-[0_4px_30px_rgba(212,0,108,0.6)] active:scale-[0.97] sm:px-11 sm:py-4 sm:text-sm cursor-pointer overflow-hidden min-w-[14rem]"
             >
               <span
                 className="pointer-events-none absolute inset-0 -translate-x-full skew-x-12 bg-white/20 transition-transform duration-700 group-hover:translate-x-full"
@@ -111,8 +129,8 @@ export default function Hero({ onOpenPdfModal }) {
 
           <div
             onClick={handlePortraitClick}
-            onMouseEnter={() => setIsPortraitHovered(true)}
-            onMouseLeave={() => setIsPortraitHovered(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             className="relative w-[min(75vw,340px)] sm:w-[360px] my-2 cursor-pointer select-none"
           >
             {/* Polaroid Radial Glow */}
