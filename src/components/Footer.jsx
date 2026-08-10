@@ -24,7 +24,7 @@ export default function Footer() {
             <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/30 mb-1 font-bold">
               Navigate
             </p>
-            {['Instagram', 'About', 'YouTube', 'Connect'].map((item) => (
+            {['Instagram', 'About', 'YouTube'].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase() === 'instagram' ? 'insta' : item.toLowerCase()}`}

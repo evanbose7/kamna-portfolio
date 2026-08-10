@@ -8,7 +8,6 @@ export default function Navbar() {
     { name: 'Instagram', href: '#insta' },
     { name: 'About', href: '#about' },
     { name: 'YouTube', href: '#youtube' },
-    { name: 'Connect', href: '#connect' },
   ];
 
   return (

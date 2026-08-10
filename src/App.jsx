@@ -11,8 +11,6 @@ import AboutSection from './components/AboutSection';
 import BrandCollaborationsSection from './components/BrandCollaborationsSection';
 import YouTubeSection from './components/YouTubeSection';
 import PdfModal from './components/PdfModal';
-import TestimonialsSection from './components/TestimonialsSection';
-import ConnectSection from './components/ConnectSection';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -71,12 +69,6 @@ export default function App() {
 
       {/* 🍿 Netflix-Style YouTube Video Showcase Section */}
       <YouTubeSection />
-
-      {/* Testimonials Carousel Section */}
-      <TestimonialsSection />
-
-      {/* Connect & Service Offerings Section */}
-      <ConnectSection />
 
       {/* Footer */}
       <Footer />
