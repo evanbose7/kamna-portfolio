@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 
-export default function Hero() {
+export default function Hero({ onOpenConnectModal }) {
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
   const [isTapped, setIsTapped] = useState(false);
   const [hasTappedOnce, setHasTappedOnce] = useState(false);
@@ -81,10 +81,9 @@ export default function Hero() {
 
           {/* Action CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start justify-center lg:justify-start pt-2">
-            <a
-              href="https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={onOpenConnectModal}
               className="btn-gradient group relative inline-flex items-center justify-center whitespace-nowrap rounded-full px-8 py-3.5 text-center text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 hover:scale-[1.04] hover:brightness-110 hover:shadow-[0_4px_30px_rgba(212,0,108,0.6)] active:scale-[0.97] sm:px-11 sm:py-4 sm:text-sm cursor-pointer overflow-hidden min-w-[14rem]"
             >
               <span
@@ -95,14 +94,14 @@ export default function Hero() {
                 Connect With Me
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </span>
-            </a>
+            </button>
           </div>
         </div>
 
         {/* Right Column: Polaroid Portrait Frame */}
         <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end justify-center py-4">
           
-          {/* Subtle Grey-White Surprise Hint Badge (Preserves layout height to prevent "Hi I'm Arnav" shift) */}
+          {/* Subtle Grey-White Surprise Hint Badge */}
           <div className={`lg:hidden mb-2 z-40 whitespace-nowrap transition-opacity duration-300 ${
             hasTappedOnce ? 'opacity-0 pointer-events-none' : 'opacity-100'
           }`}>

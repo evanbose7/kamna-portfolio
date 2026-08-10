@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
-export default function Navbar() {
+export default function Navbar({ onOpenConnectModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { name: 'Instagram', href: '#insta' },
     { name: 'About', href: '#about' },
     { name: 'YouTube', href: '#youtube' },
+    { name: 'Connect', action: 'connectModal' },
   ];
 
   return (
@@ -22,14 +23,26 @@ export default function Navbar() {
       {/* Desktop Links */}
       <div className="hidden sm:flex items-center gap-6 md:gap-10">
         {navLinks.map((link) => (
-          <a
-            key={link.name}
-            href={link.href}
-            className="group relative inline-flex w-fit items-center text-xs font-semibold uppercase tracking-widest text-[#F5F0EB]/80 hover:text-[#F5F0EB] transition-colors duration-200 md:text-sm lg:text-base cursor-pointer"
-          >
-            {link.name}
-            <span className="absolute left-0 top-[1.5em] h-[2px] w-full bg-[#E91E8C] transition-transform duration-300 origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100" />
-          </a>
+          link.action === 'connectModal' ? (
+            <button
+              key={link.name}
+              type="button"
+              onClick={onOpenConnectModal}
+              className="group relative inline-flex w-fit items-center text-xs font-semibold uppercase tracking-widest text-[#F5F0EB]/80 hover:text-[#E91E8C] transition-colors duration-200 md:text-sm lg:text-base cursor-pointer"
+            >
+              {link.name}
+              <span className="absolute left-0 top-[1.5em] h-[2px] w-full bg-[#E91E8C] transition-transform duration-300 origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100" />
+            </button>
+          ) : (
+            <a
+              key={link.name}
+              href={link.href}
+              className="group relative inline-flex w-fit items-center text-xs font-semibold uppercase tracking-widest text-[#F5F0EB]/80 hover:text-[#F5F0EB] transition-colors duration-200 md:text-sm lg:text-base cursor-pointer"
+            >
+              {link.name}
+              <span className="absolute left-0 top-[1.5em] h-[2px] w-full bg-[#E91E8C] transition-transform duration-300 origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100" />
+            </a>
+          )
         ))}
       </div>
 
@@ -49,14 +62,28 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="fixed inset-x-0 top-[60px] bg-[#0A0A0A] border-b border-[#F5F0EB]/10 p-6 flex flex-col gap-5 sm:hidden z-50 shadow-2xl animate-in slide-in-from-top duration-200">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-base font-bold uppercase tracking-wider text-[#F5F0EB] hover:text-[#E91E8C]"
-            >
-              {link.name}
-            </a>
+            link.action === 'connectModal' ? (
+              <button
+                key={link.name}
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (onOpenConnectModal) onOpenConnectModal();
+                }}
+                className="text-left text-base font-bold uppercase tracking-wider text-[#E91E8C]"
+              >
+                {link.name}
+              </button>
+            ) : (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-base font-bold uppercase tracking-wider text-[#F5F0EB] hover:text-[#E91E8C]"
+              >
+                {link.name}
+              </a>
+            )
           ))}
         </div>
       )}

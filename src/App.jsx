@@ -11,10 +11,12 @@ import AboutSection from './components/AboutSection';
 import BrandCollaborationsSection from './components/BrandCollaborationsSection';
 import YouTubeSection from './components/YouTubeSection';
 import PdfModal from './components/PdfModal';
+import ConnectModal from './components/ConnectModal';
 import Footer from './components/Footer';
 
 export default function App() {
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
+  const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
 
   // Initialize 60 FPS Lenis Inertia Smooth Scroll & attach to window
   useEffect(() => {
@@ -53,10 +55,10 @@ export default function App() {
       <SplashLoader />
 
       {/* Navigation Header */}
-      <Navbar onOpenPdfModal={() => setIsPdfModalOpen(true)} />
+      <Navbar onOpenConnectModal={() => setIsConnectModalOpen(true)} />
 
       {/* Hero Section */}
-      <Hero />
+      <Hero onOpenConnectModal={() => setIsConnectModalOpen(true)} />
 
       {/* Instagram 3D Fan Deck Section */}
       <InstagramSection />
@@ -77,6 +79,12 @@ export default function App() {
       <PdfModal
         isOpen={isPdfModalOpen}
         onClose={() => setIsPdfModalOpen(false)}
+      />
+
+      {/* Interactive Connect Modal (Instagram DM & WhatsApp Direct Options) */}
+      <ConnectModal
+        isOpen={isConnectModalOpen}
+        onClose={() => setIsConnectModalOpen(false)}
       />
     </main>
   );
