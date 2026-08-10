@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import Lenis from 'lenis';
+import React, { useState } from 'react';
 
 import Cursor from './components/Cursor';
 import ProgressBar from './components/ProgressBar';
@@ -17,31 +16,6 @@ import Footer from './components/Footer';
 export default function App() {
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
-
-  // Initialize 60 FPS Lenis Inertia Smooth Scroll & attach to window
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
-    });
-
-    window.lenis = lenis;
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-      delete window.lenis;
-    };
-  }, []);
 
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F5F0EB] relative selection:bg-[#E91E8C] selection:text-white">

@@ -1,38 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
 export default function AboutSection({ onOpenConnectModal }) {
-  const containerRef = useRef(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-
   const aboutText = `Hi, I'm Arnav, 21 year old creator, storyteller, and personal branding strategist. I've built a community of LinkedIn upto 17K+ people and Instagram 1k+ — also worked with brands like OPPO, MARS, and Minimalist, and helped founders, coaches, and creators grow their presence online. Everything I share comes from building in public, experimenting, and learning firsthand — not theory. If you're looking for content that sounds like you and actually connects with people, you're in the right place.`;
 
   const words = aboutText.split(' ');
   const highlightWords = ['OPPO,', 'MARS,', 'Minimalist,', '17K+', '1k+', 'LinkedIn', 'Instagram', 'storyteller,', 'strategist.'];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-
-      const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // Start revealing slowly as section enters screen (65% viewport height)
-      // Progress smoothly until user is just about to reach Free Resources (-10% viewport height)
-      const start = windowHeight * 0.65;
-      const end = -windowHeight * 0.1;
-
-      let progress = (start - rect.top) / (start - end);
-      progress = Math.min(Math.max(progress, 0), 1);
-
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <section
@@ -57,8 +30,8 @@ export default function AboutSection({ onOpenConnectModal }) {
           </h2>
         </div>
 
-        {/* Stationary Introduction Box with Light Pink Shader Glow */}
-        <div ref={containerRef} className="relative w-full max-w-[700px]">
+        {/* Introduction Box with Light Pink Shader Glow (Static, Crisp & Fully Legible) */}
+        <div className="relative w-full max-w-[700px]">
           
           {/* Light Pink Radial Spotlight Halo */}
           <div
@@ -71,38 +44,18 @@ export default function AboutSection({ onOpenConnectModal }) {
           {/* Highlighted Card Container */}
           <div className="relative rounded-3xl border border-[#FFB3CB]/30 bg-gradient-to-b from-[#121212]/90 via-[#181014]/80 to-[#121212]/90 p-7 sm:p-10 md:p-12 shadow-[0_0_50px_rgba(255,179,203,0.18)] backdrop-blur-xl text-left sm:text-center min-h-[220px]">
             
-            <p className="font-medium leading-relaxed tracking-wide text-[clamp(1.05rem,2.1vw,1.4rem)] relative z-10">
+            <p className="font-medium leading-relaxed tracking-wide text-[clamp(1.05rem,2.1vw,1.4rem)] relative z-10 text-white">
               {words.map((word, index) => {
-                const wordCenter = index / (words.length - 1);
-                
-                // Continuous smooth word weight (0 to 1)
-                let wordWeight = 0;
-                if (index === 0) {
-                  wordWeight = 1;
-                } else {
-                  const localProgress = (scrollProgress - (wordCenter - 0.25)) / 0.35;
-                  wordWeight = Math.min(Math.max(localProgress, 0), 1);
-                }
-
                 const isSpecial = highlightWords.includes(word);
-                const opacity = 0.18 + wordWeight * 0.82;
 
                 return (
                   <span
                     key={index}
-                    className="inline-block mr-[0.28em] transition-colors duration-400 ease-out select-none"
-                    style={{
-                      color: wordWeight > 0.6
-                        ? isSpecial
-                          ? '#E91E8C'
-                          : '#FFFFFF'
-                        : `rgba(245, 240, 235, ${opacity})`,
-                      opacity,
-                      fontWeight: isSpecial ? '700' : '500',
-                      textShadow: isSpecial && wordWeight > 0.6
-                        ? '0 0 16px rgba(233,30,140,0.85)'
-                        : 'none',
-                    }}
+                    className={`inline-block mr-[0.28em] select-none ${
+                      isSpecial
+                        ? 'text-[#E91E8C] font-bold [text-shadow:0_0_16px_rgba(233,30,140,0.85)]'
+                        : 'text-white font-medium'
+                    }`}
                   >
                     {word}
                   </span>
