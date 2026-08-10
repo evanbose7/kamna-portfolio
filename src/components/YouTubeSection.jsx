@@ -144,7 +144,7 @@ export default function YouTubeSection() {
   };
 
   return (
-    <section ref={sectionRef} id="youtube" className="bg-[#0A0A0A] scroll-mt-6 py-12 sm:py-20 md:py-24 relative overflow-hidden">
+    <section ref={sectionRef} id="youtube" className="bg-[#0A0A0A] scroll-mt-6 pt-12 sm:pt-20 md:pt-24 pb-12 sm:pb-16 relative overflow-hidden">
       
       {/* Background Ambient Glows */}
       <div className="pointer-events-none absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -153,7 +153,7 @@ export default function YouTubeSection() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8 md:px-10">
         
         {/* Section Header */}
-        <div className="mb-8 sm:mb-12 text-center">
+        <div className="mb-8 sm:mb-10 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3.5 py-1 text-xs font-bold text-red-500 uppercase tracking-widest mb-4">
             <YoutubeIcon className="w-4 h-4 text-red-500" />
             YouTube
@@ -170,7 +170,7 @@ export default function YouTubeSection() {
         <div
           ref={mobileScrollRef}
           onScroll={handleMobileScroll}
-          className="md:hidden flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-1 -mx-5 px-5"
+          className="md:hidden flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-4 pt-2 px-1 -mx-5 px-5"
         >
           {videos.map((video) => {
             const isPreviewActive = activePreviewVideoId === video.id;
@@ -246,7 +246,7 @@ export default function YouTubeSection() {
         </div>
 
         {/* --- 🖥 DESKTOP VIEW: NETFLIX HOVER SHOWCASE --- */}
-        <div className="hidden md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-14 pb-44 overflow-visible">
+        <div className="hidden md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-8 pb-14 overflow-visible">
           {videos.map((video, index) => {
             const isHovered = hoveredVideoId === video.id;
 
@@ -411,7 +411,7 @@ export default function YouTubeSection() {
         </div>
 
         {/* Subscribe CTA */}
-        <div className="mt-4 sm:mt-10 text-center">
+        <div className="mt-4 sm:mt-6 text-center relative z-20">
           <a
             href={youtubeChannelUrl}
             target="_blank"
@@ -455,7 +455,7 @@ export default function YouTubeSection() {
                   <span className="rounded border border-red-500/50 bg-red-500/10 px-2 py-0.5 text-[10px] font-bold text-red-500 uppercase tracking-widest">
                     {selectedVideo.rating}
                   </span>
-                  <span className="text-xs font-bold text-red-400 uppercase tracking-widest">
+                  <span className="text-xs font-bold text-[#FFB3CB] uppercase tracking-widest">
                     {selectedVideo.tags.join(' • ')}
                   </span>
                 </div>
