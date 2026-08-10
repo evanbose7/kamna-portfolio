@@ -144,7 +144,7 @@ export default function YouTubeSection() {
   };
 
   return (
-    <section ref={sectionRef} id="youtube" className="bg-[#0A0A0A] scroll-mt-6 pt-12 sm:pt-20 md:pt-24 pb-12 sm:pb-16 relative overflow-hidden">
+    <section ref={sectionRef} id="youtube" className="bg-[#0A0A0A] scroll-mt-6 pt-12 sm:pt-20 md:pt-24 pb-16 sm:pb-20 relative overflow-hidden">
       
       {/* Background Ambient Glows */}
       <div className="pointer-events-none absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -170,7 +170,7 @@ export default function YouTubeSection() {
         <div
           ref={mobileScrollRef}
           onScroll={handleMobileScroll}
-          className="md:hidden flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-4 pt-2 px-1 -mx-5 px-5"
+          className="md:hidden flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-1 -mx-5 px-5"
         >
           {videos.map((video) => {
             const isPreviewActive = activePreviewVideoId === video.id;
@@ -245,8 +245,8 @@ export default function YouTubeSection() {
           })}
         </div>
 
-        {/* --- 🖥 DESKTOP VIEW: NETFLIX HOVER SHOWCASE --- */}
-        <div className="hidden md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-8 pb-14 overflow-visible">
+        {/* --- 🖥 DESKTOP VIEW: NETFLIX HOVER SHOWCASE (pb-32 ensures hovering expanded card never collides with Subscribe CTA) --- */}
+        <div className="hidden md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-8 pb-32 overflow-visible">
           {videos.map((video, index) => {
             const isHovered = hoveredVideoId === video.id;
 
@@ -411,7 +411,7 @@ export default function YouTubeSection() {
         </div>
 
         {/* Subscribe CTA */}
-        <div className="mt-4 sm:mt-6 text-center relative z-20">
+        <div className="mt-2 sm:mt-4 text-center relative z-20">
           <a
             href={youtubeChannelUrl}
             target="_blank"
