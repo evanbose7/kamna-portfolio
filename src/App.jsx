@@ -64,7 +64,7 @@ export default function App() {
       <InstagramSection />
 
       {/* About Section */}
-      <AboutSection />
+      <AboutSection onOpenConnectModal={() => setIsConnectModalOpen(true)} />
 
       {/* Brand Collaborations Section */}
       <BrandCollaborationsSection />

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 
-export default function AboutSection() {
+export default function AboutSection({ onOpenConnectModal }) {
   const containerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -98,7 +98,7 @@ export default function AboutSection() {
                           : '#FFFFFF'
                         : `rgba(245, 240, 235, ${opacity})`,
                       opacity,
-                      fontWeight: isSpecial ? '700' : '500', // Constant font-weight so layout NEVER shifts horizontally!
+                      fontWeight: isSpecial ? '700' : '500',
                       textShadow: isSpecial && wordWeight > 0.6
                         ? '0 0 16px rgba(233,30,140,0.85)'
                         : 'none',
@@ -115,10 +115,9 @@ export default function AboutSection() {
 
         {/* Connect Button */}
         <div>
-          <a
-            href="https://www.linkedin.com/in/kamna-bharadwaj/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={onOpenConnectModal}
             className="btn-gradient group relative inline-flex items-center gap-2 rounded-full px-8 py-4 text-center text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 hover:scale-[1.04] hover:shadow-[0_4px_28px_rgba(212,0,108,0.55)] cursor-pointer overflow-hidden sm:px-11 sm:text-sm"
           >
             <span
@@ -129,7 +128,7 @@ export default function AboutSection() {
               Connect With Me
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
-          </a>
+          </button>
         </div>
 
       </div>
