@@ -30,8 +30,8 @@ export default function SplashLoader() {
       <div className="relative flex flex-col items-center justify-center">
         {/* Handwritten Signature Script ARII */}
         <span
-          className="font-caveat font-semibold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#F5F0EB] via-[#FFB3CB] to-[#E91E8C] text-[clamp(5rem,20vw,12rem)] drop-shadow-[0_0_40px_rgba(233,30,140,0.7)] select-none animate-pulse leading-none"
-          style={{ fontFamily: "'Caveat', cursive" }}
+          className="font-semibold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#F5F0EB] via-[#FFB3CB] to-[#E91E8C] text-[clamp(6rem,24vw,14rem)] drop-shadow-[0_0_40px_rgba(233,30,140,0.7)] select-none animate-pulse leading-none py-4"
+          style={{ fontFamily: "'Alex Brush', 'Great Vibes', 'Allura', 'Sacramento', cursive" }}
         >
           Arii
         </span>
