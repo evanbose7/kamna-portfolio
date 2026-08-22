@@ -23,10 +23,10 @@ export default function Footer() {
             <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/30 mb-1 font-bold">
               Navigate
             </p>
-            {['Instagram', 'About', 'YouTube'].map((item) => (
+            {['Instagram', 'About', 'MY WORKS'].map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase() === 'instagram' ? 'insta' : item.toLowerCase()}`}
+                href={item === 'MY WORKS' ? '#works' : `#${item.toLowerCase() === 'instagram' ? 'insta' : item.toLowerCase()}`}
                 className="group relative inline-flex w-fit items-center text-xs font-semibold uppercase tracking-widest text-[#F5F0EB]/60 hover:text-[#F5F0EB] transition-colors"
               >
                 {item}

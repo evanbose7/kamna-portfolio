@@ -272,7 +272,7 @@ export default function BrandCollaborationsSection() {
   };
 
   return (
-    <section id="brands" className="bg-[#0A0A0A] scroll-mt-6 py-12 sm:py-24 md:py-28 relative overflow-x-hidden w-full max-w-full">
+    <section id="works" className="bg-[#0A0A0A] scroll-mt-6 py-12 sm:py-24 md:py-28 relative overflow-x-hidden w-full max-w-full">
       
       {/* Background ambient glowing halos */}
       <div className="pointer-events-none absolute top-1/3 left-0 w-96 h-96 bg-[#E91E8C]/10 rounded-full blur-3xl pointer-events-none" />
@@ -284,7 +284,7 @@ export default function BrandCollaborationsSection() {
           className="font-black uppercase leading-none tracking-tight text-[#F5F0EB]"
           style={{ fontSize: 'clamp(2.5rem, 10vw, 130px)' }}
         >
-          Brands & Impact
+          MY WORKS
         </h2>
         <p className="hidden md:block text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
           Collaborations · Campaigns · Proven Results

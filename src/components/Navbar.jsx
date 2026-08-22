@@ -7,7 +7,7 @@ export default function Navbar({ onOpenConnectModal }) {
   const navLinks = [
     { name: 'Instagram', href: '#insta' },
     { name: 'About', href: '#about' },
-    { name: 'YouTube', href: '#youtube' },
+    { name: 'MY WORKS', href: '#works' },
     { name: 'Connect', action: 'connectModal' },
   ];
 
