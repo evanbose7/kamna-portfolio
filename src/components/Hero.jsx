@@ -249,7 +249,7 @@ export default function Hero({ onOpenConnectModal }) {
               </div>
             </div>
 
-            {/* 6. Sticker Bottom-Right: "content partner" */}
+            {/* 6. Sticker Bottom-Right: "content creator" */}
             <div
               className={`pointer-events-none absolute -bottom-8 -right-4 sm:-right-8 z-30 transform -rotate-3 transition-all duration-300 ease-back-out ${
                 isCardActive
@@ -259,7 +259,7 @@ export default function Hero({ onOpenConnectModal }) {
             >
               <div className="relative">
                 <div className="bg-[#E91E8C] text-[#F5F0EB] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
-                  content partner
+                  content creator
                 </div>
                 <svg className="w-12 h-12 sm:w-16 sm:h-16 absolute bottom-[85%] right-2 overflow-visible" viewBox="0 0 64 72" fill="none">
                   <path d="M56 66 C 56 50, 52 32, 48 18 Q 46 10, 44 6" stroke="#E91E8C" strokeWidth="2.5" strokeLinecap="round" fill="none" />
