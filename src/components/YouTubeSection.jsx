@@ -133,7 +133,7 @@ export default function YouTubeSection() {
   };
 
   return (
-    <section ref={sectionRef} id="youtube" className="bg-[#0A0A0A] scroll-mt-6 pt-12 sm:pt-20 md:pt-24 pb-16 sm:pb-20 relative overflow-hidden md:hidden">
+    <section ref={sectionRef} id="youtube" className="bg-[#0A0A0A] scroll-mt-6 pt-12 sm:pt-20 md:pt-24 pb-16 sm:pb-20 relative overflow-hidden">
       
       {/* Background Ambient Glows */}
       <div className="pointer-events-none absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -234,8 +234,8 @@ export default function YouTubeSection() {
           })}
         </div>
 
-        {/* --- 🖥 DESKTOP VIEW: NETFLIX HOVER SHOWCASE (pb-32 ensures hovering expanded card never collides with Subscribe CTA) --- */}
-        <div className="hidden md:grid md:grid-cols-3 md:gap-8 relative z-10 pt-8 pb-32 overflow-visible">
+        {/* --- 🖥 DESKTOP VIEW: NETFLIX HOVER SHOWCASE --- */}
+        <div className="hidden md:grid md:grid-cols-2 md:gap-8 max-w-4xl mx-auto relative z-10 pt-8 pb-32 overflow-visible">
           {videos.map((video, index) => {
             const isHovered = hoveredVideoId === video.id;
 

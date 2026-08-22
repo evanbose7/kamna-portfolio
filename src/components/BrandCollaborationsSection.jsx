@@ -292,215 +292,15 @@ export default function BrandCollaborationsSection() {
       </div>
 
       {/* ========================================================================= */}
-      {/* 💻 1. DESKTOP ONLY: ASYMMETRIC BENTO GRID (EXACTLY FROM ARII WEBSITE) */}
+      {/* 💻 1. DESKTOP ONLY: BENTO GRID CATEGORIES */}
       {/* ========================================================================= */}
       <div className="hidden lg:grid w-full max-w-[1440px] mx-auto grid-cols-12 gap-6 relative z-20 px-6 mb-16">
         
-        {/* CARD 01 — SOCIAL CONTENT */}
-        <div
-          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[0])}
-          className="
-            col-span-4 row-span-2 min-h-[620px] lg:min-h-[835px] rounded-[28px] overflow-hidden
-            border border-white/15 bg-[#12071B]
-            backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
-            hover:border-[#FF9BD2]/70 hover:shadow-[0_0_35px_rgba(255,155,210,0.35)] hover:-translate-y-1 hover:scale-[1.005]
-            transition-all duration-300 relative group gpu-layer cursor-pointer
-          "
-        >
-          <div className="absolute inset-0 z-0 w-full h-full">
-            <img
-              key={desktopReelIndex}
-              src={desktopReelThumbnails[desktopReelIndex]}
-              alt="Social Reel Preview"
-              className="w-full h-full object-cover select-none brightness-[1.05] contrast-[1.05] group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#0F0718]/90 via-[#0F0718]/45 to-transparent pointer-events-none z-10" />
-            <div className="absolute bottom-0 inset-x-0 h-36 bg-gradient-to-t from-[#0F0718]/95 via-[#0F0718]/50 to-transparent pointer-events-none z-10" />
-          </div>
-
-          <div className="absolute top-0 inset-x-0 z-20 p-5 sm:p-6 flex items-center justify-between pointer-events-auto">
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
-              <Film className="w-3.5 h-3.5 text-[#FF9BD2]" />
-              <span className="text-[10px] font-mono font-bold tracking-widest text-[#FFF7FF] uppercase">
-                SOCIAL CONTENT
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-mono font-bold text-[#FF9BD2]">
-                0{desktopReelIndex + 1} / 04
-              </span>
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDesktopReelIndex((prev) => (prev === 0 ? 3 : prev - 1));
-                  }}
-                  className="w-6.5 h-6.5 rounded-full bg-black/60 border border-white/20 hover:border-[#FF9BD2] hover:bg-[#FF9BD2] hover:text-[#100719] text-[#FFF7FF] flex items-center justify-center transition-all cursor-pointer"
-                >
-                  <ChevronLeft className="w-3 h-3" />
-                </button>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDesktopReelIndex((prev) => (prev === 3 ? 0 : prev + 1));
-                  }}
-                  className="w-6.5 h-6.5 rounded-full bg-black/60 border border-white/20 hover:border-[#FF9BD2] hover:bg-[#FF9BD2] hover:text-[#100719] text-[#FFF7FF] flex items-center justify-center transition-all cursor-pointer"
-                >
-                  <ChevronRight className="w-3 h-3" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-black/65 border border-white/30 backdrop-blur-md flex items-center justify-center text-white z-20 group-hover:scale-110 transition-transform pointer-events-none">
-            <Play className="w-5 h-5 fill-white ml-0.5" />
-          </div>
-
-          <div className="absolute top-16 right-5 sm:right-6 z-20 pointer-events-none">
-            <div className="w-7.5 h-7.5 rounded-full bg-gradient-to-tr from-[#FFB3CB] to-[#E91E8C] flex items-center justify-center shadow-lg border border-white/20">
-              <InstagramIcon className="w-4 h-4 text-white" />
-            </div>
-          </div>
-
-          <div className="absolute bottom-0 inset-x-0 z-20 p-5 sm:p-6 flex flex-col gap-2 pointer-events-none">
-            <div className="flex items-center justify-between">
-              <span className="font-display font-bold text-sm sm:text-base text-white leading-snug line-clamp-1 drop-shadow-md">
-                {desktopReelTitles[desktopReelIndex]}
-              </span>
-              <ExternalLink className="w-4 h-4 text-[#FFB3CB] shrink-0 ml-2" />
-            </div>
-            <div className="flex items-center justify-between pt-2 border-t border-white/15">
-              <span className="text-[11px] font-mono font-bold text-[#FF9BD2]">
-                SHORT-FORM VIRAL REELS
-              </span>
-              <span className="text-[11px] font-mono text-white/70">4 REELS SHOWCASE</span>
-            </div>
-          </div>
-        </div>
-
-        {/* CARD 02 — YOUTUBE VIDEOS */}
-        <div
-          onMouseEnter={handleYtMouseEnter}
-          onMouseLeave={handleYtMouseLeave}
-          className="
-            col-span-8 row-span-1 min-h-[380px] lg:min-h-[535px] rounded-[28px] overflow-hidden
-            border border-white/15 bg-[#120822]
-            backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
-            hover:border-[#B388FF]/70 hover:shadow-[0_0_35px_rgba(179,136,255,0.35)] hover:-translate-y-1 hover:scale-[1.005]
-            transition-all duration-300 relative group gpu-layer cursor-pointer
-          "
-        >
-          <a
-            href={desktopYtUrls[desktopYtIndex]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute inset-0 z-0 w-full h-full block overflow-hidden"
-          >
-            {isYtHovered ? (
-              <video
-                key={`yt-prev-${desktopYtIndex}`}
-                src={desktopYtMp4Previews[desktopYtIndex]}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-700"
-              />
-            ) : (
-              <img
-                key={desktopYtIndex}
-                src={desktopYtThumbnails[desktopYtIndex]}
-                alt="YouTube Video Preview"
-                className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-700"
-              />
-            )}
-            <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-[#0F0718]/90 via-[#0F0718]/40 to-transparent pointer-events-none z-10" />
-            <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#0F0718]/95 via-[#0F0718]/45 to-transparent pointer-events-none z-10" />
-          </a>
-
-          <div className="absolute top-0 inset-x-0 z-20 p-5 sm:p-6 flex items-center justify-between pointer-events-auto">
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
-              <Tv className="w-3.5 h-3.5 text-red-500" />
-              <span className="text-[10px] font-mono font-bold tracking-widest text-[#FFF7FF] uppercase">
-                YOUTUBE VIDEOS
-              </span>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <span className="text-[11px] font-mono font-bold text-red-400">
-                0{desktopYtIndex + 1} / 02
-              </span>
-              <div className="flex items-center gap-1.5">
-                {[0, 1].map((dotIdx) => (
-                  <button
-                    key={dotIdx}
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setDesktopYtIndex(dotIdx);
-                    }}
-                    className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                      desktopYtIndex === dotIdx ? 'w-4 bg-red-500 shadow-[0_0_6px_#EF4444]' : 'w-1.5 bg-white/30'
-                    }`}
-                  />
-                ))}
-              </div>
-              <div className="flex items-center gap-1 ml-1">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDesktopYtIndex((prev) => (prev === 0 ? 1 : prev - 1));
-                  }}
-                  className="w-6.5 h-6.5 rounded-full bg-black/60 border border-white/20 hover:border-red-500 hover:bg-red-600 hover:text-white text-[#FFF7FF] flex items-center justify-center transition-all cursor-pointer"
-                >
-                  <ChevronLeft className="w-3 h-3" />
-                </button>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDesktopYtIndex((prev) => (prev === 1 ? 0 : prev + 1));
-                  }}
-                  className="w-6.5 h-6.5 rounded-full bg-black/60 border border-white/20 hover:border-red-500 hover:bg-red-600 hover:text-white text-[#FFF7FF] flex items-center justify-center transition-all cursor-pointer"
-                >
-                  <ChevronRight className="w-3 h-3" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <a
-            href={desktopYtUrls[desktopYtIndex]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-red-600/90 border border-white/30 text-white flex items-center justify-center shadow-xl z-20 group-hover:scale-110 transition-transform cursor-pointer"
-          >
-            <Play className="w-5 h-5 fill-white ml-0.5" />
-          </a>
-
-          <a
-            href={desktopYtUrls[desktopYtIndex]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute bottom-0 inset-x-0 z-20 p-5 sm:p-6 flex items-center justify-between cursor-pointer"
-          >
-            <span className="font-display font-bold text-sm sm:text-base text-white leading-snug line-clamp-1 drop-shadow-md">
-              {desktopYtTitles[desktopYtIndex]}
-            </span>
-            <span className="flex items-center gap-1 text-xs font-bold text-red-400 shrink-0 ml-3 bg-black/60 px-3 py-1 rounded-full border border-red-500/30 backdrop-blur-md">
-              Watch ↗
-            </span>
-          </a>
-        </div>
-
-        {/* CARD 03 — FOOD */}
+        {/* CARD 01 — FOOD */}
         <div
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[2])}
           className="
-            relative col-span-4 row-span-1 min-h-[210px] lg:min-h-[276px] rounded-[28px] overflow-hidden p-5
+            relative col-span-6 row-span-1 min-h-[250px] lg:min-h-[320px] rounded-[28px] overflow-hidden p-6
             border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#FF9BD2]/70 hover:shadow-[0_0_35px_rgba(255,155,210,0.35)] hover:-translate-y-1 hover:scale-[1.005]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
@@ -522,26 +322,26 @@ export default function BrandCollaborationsSection() {
                 GOURMET & CULINARY
               </span>
             </div>
-            <div className="w-7 h-7 rounded-full bg-white/15 border border-white/25 text-[#FFF7FF] backdrop-blur-md group-hover:bg-[#FF9BD2] group-hover:text-[#100719] flex items-center justify-center transition-colors">
-              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <div className="w-8 h-8 rounded-full bg-white/15 border border-white/25 text-[#FFF7FF] backdrop-blur-md group-hover:bg-[#FF9BD2] group-hover:text-[#100719] flex items-center justify-center transition-colors">
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </div>
 
-          <div className="relative space-y-0.5 z-30 pt-4">
-            <h3 className="font-display font-black text-xl text-[#FFF7FF] tracking-tight uppercase group-hover:text-[#FF9BD2] transition-colors drop-shadow-md">
+          <div className="relative space-y-1 z-30 pt-4">
+            <h3 className="font-display font-black text-2xl text-[#FFF7FF] tracking-tight uppercase group-hover:text-[#FF9BD2] transition-colors drop-shadow-md">
               FOOD
             </h3>
-            <p className="text-[11px] text-[#FFF7FF]/90 line-clamp-2 drop-shadow-md">
+            <p className="text-xs text-[#FFF7FF]/90 line-clamp-2 drop-shadow-md">
               Artisanal food, luxury desserts & culinary stories.
             </p>
           </div>
         </div>
 
-        {/* CARD 04 — ARCHITECTURE & INTERIOR DESIGN */}
+        {/* CARD 02 — ARCHITECTURE & INTERIOR DESIGN */}
         <div
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[3])}
           className="
-            relative col-span-4 row-span-1 min-h-[210px] lg:min-h-[276px] rounded-[28px] overflow-hidden p-5
+            relative col-span-6 row-span-1 min-h-[250px] lg:min-h-[320px] rounded-[28px] overflow-hidden p-6
             border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#C4A1FF]/70 hover:shadow-[0_0_35px_rgba(196,161,255,0.35)] hover:-translate-y-1 hover:scale-[1.005]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
@@ -563,26 +363,26 @@ export default function BrandCollaborationsSection() {
                 SPATIAL & EDITORIAL
               </span>
             </div>
-            <div className="w-7 h-7 rounded-full bg-white/15 border border-white/25 text-[#FFF7FF] backdrop-blur-md group-hover:bg-[#C4A1FF] group-hover:text-[#100719] flex items-center justify-center transition-colors">
-              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <div className="w-8 h-8 rounded-full bg-white/15 border border-white/25 text-[#FFF7FF] backdrop-blur-md group-hover:bg-[#C4A1FF] group-hover:text-[#100719] flex items-center justify-center transition-colors">
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </div>
 
-          <div className="relative space-y-0.5 z-30 pt-4">
-            <h3 className="font-display font-black text-xl text-[#FFF7FF] tracking-tight uppercase group-hover:text-[#C4A1FF] transition-colors drop-shadow-md">
+          <div className="relative space-y-1 z-30 pt-4">
+            <h3 className="font-display font-black text-2xl text-[#FFF7FF] tracking-tight uppercase group-hover:text-[#C4A1FF] transition-colors drop-shadow-md">
               ARCHITECTURE & INTERIOR DESIGN
             </h3>
-            <p className="text-[11px] text-[#FFF7FF]/90 line-clamp-2 drop-shadow-md">
+            <p className="text-xs text-[#FFF7FF]/90 line-clamp-2 drop-shadow-md">
               Spatial storytelling, architectural tours & luxury interiors.
             </p>
           </div>
         </div>
 
-        {/* CARD 05 — JEWELRY */}
+        {/* CARD 03 — JEWELRY */}
         <div
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[4])}
           className="
-            relative col-span-4 row-span-1 min-h-[170px] lg:min-h-[204px] rounded-[28px] overflow-hidden p-5
+            relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
             border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#FF9BD2]/70 hover:shadow-[0_0_35px_rgba(255,155,210,0.35)] hover:-translate-y-1 hover:scale-[1.005]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
@@ -619,11 +419,11 @@ export default function BrandCollaborationsSection() {
           </div>
         </div>
 
-        {/* CARD 06 — WELLBEING & ESSENTIAL OILS */}
+        {/* CARD 04 — WELLBEING & ESSENTIAL OILS */}
         <div
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[5])}
           className="
-            relative col-span-4 row-span-1 min-h-[170px] lg:min-h-[204px] rounded-[28px] overflow-hidden p-5
+            relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
             border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#B388FF]/70 hover:shadow-[0_0_35px_rgba(179,136,255,0.35)] hover:-translate-y-1 hover:scale-[1.005]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
@@ -660,11 +460,11 @@ export default function BrandCollaborationsSection() {
           </div>
         </div>
 
-        {/* CARD 07 — ANIMATION */}
+        {/* CARD 05 — ANIMATION */}
         <div
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[6])}
           className="
-            relative col-span-4 row-span-1 min-h-[170px] lg:min-h-[204px] rounded-[28px] overflow-hidden p-5
+            relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
             border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#FFB6E6]/70 hover:shadow-[0_0_35px_rgba(255,182,230,0.35)] hover:-translate-y-1 hover:scale-[1.005]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
