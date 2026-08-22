@@ -213,14 +213,8 @@ export default function YouTubeSection() {
                 {/* Ambient Light Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/5 z-10" />
 
-                {/* Top Badges */}
-                <div className="relative z-20 flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600 text-white font-mono text-[10px] font-black uppercase tracking-wider backdrop-blur-md shadow-md">
-                    <YoutubeIcon className="w-3.5 h-3.5 text-white" />
-                    <span>SHORTS</span>
-                  </div>
-
-                  {/* Views Badge */}
+                {/* Top Badge: View Count Pill on Top Left */}
+                <div className="relative z-20 flex items-center justify-start">
                   <div className="px-3 py-1 rounded-full bg-red-600 border border-red-500/30 text-white font-mono text-[11px] font-bold backdrop-blur-md shadow-md">
                     {short.views}
                   </div>
