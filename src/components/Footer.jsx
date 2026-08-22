@@ -1,6 +1,5 @@
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
-import { LinkedinIcon, InstagramIcon, YoutubeIcon, MediumIcon } from './Icons';
+import { InstagramIcon, YoutubeIcon } from './Icons';
 
 export default function Footer() {
   return (
@@ -13,10 +12,10 @@ export default function Footer() {
               href="#"
               className="font-black uppercase tracking-tight text-[#F5F0EB]/90 hover:text-[#E91E8C] transition-colors text-[clamp(1.5rem,4vw,2.5rem)]"
             >
-              ARNAV
+              ARII
             </a>
             <p className="max-w-xs font-light text-[#F5F0EB]/40 leading-relaxed text-[clamp(0.8rem,1.3vw,0.95rem)]">
-              Building my brand while teaching you to build yours.
+              Visuals & Storytelling. Bringing ideas to life through high quality content.
             </p>
           </div>
 
@@ -50,19 +49,16 @@ export default function Footer() {
               >
                 <InstagramIcon className="w-5 h-5" />
               </a>
-              <a>
+              <a
                 href="https://www.youtube.com/@Kidwithcrayons"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
                 className="text-[#F5F0EB]/40 hover:text-[#E91E8C] transition-colors"
-              </a>
+              >
                 <YoutubeIcon className="w-5 h-5" />
-              
+              </a>
             </div>
-
-            
-          
           </div>
 
         </div>
@@ -70,7 +66,7 @@ export default function Footer() {
 
       <div className="border-t border-[#F5F0EB]/5 px-5 py-6 sm:px-8 md:px-10">
         <p className="text-center font-light text-[#F5F0EB]/30 uppercase tracking-widest text-[clamp(0.6rem,1vw,0.75rem)]">
-          © {new Date().getFullYear()} ARNAV. All rights reserved.
+          © {new Date().getFullYear()} ARII. All rights reserved.
         </p>
       </div>
     </footer>

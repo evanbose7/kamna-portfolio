@@ -17,7 +17,7 @@ export default function Navbar({ onOpenConnectModal }) {
         href="#"
         className="font-black uppercase tracking-tight text-[#F5F0EB] hover:text-[#E91E8C] transition-colors duration-200 text-[clamp(1.2rem,2.8vw,2rem)]"
       >
-        ARNAV
+        ARII
       </a>
 
       {/* Desktop Links */}

@@ -59,7 +59,7 @@ export default function Hero({ onOpenConnectModal }) {
               <span className="inline-block mr-[0.25em]">Hi,</span>
               <span className="inline-block mr-[0.25em]">I'm</span>
               <span className="inline-block bg-gradient-to-r from-[#F5F0EB] via-[#FFB3CB] to-[#E91E8C] bg-clip-text text-transparent">
-                Arnav
+                ARII
               </span>
             </h1>
           </div>
@@ -125,13 +125,13 @@ export default function Hero({ onOpenConnectModal }) {
 
             {/* White Polaroid Card with Tilt & Pop Toggle Animation */}
             <div
-              className={`relative bg-white p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform transition-all duration-500 ease-out ${
+              className={`relative bg-[#121212] border border-white/20 p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform transition-all duration-500 ease-out ${
                 isCardActive
                   ? 'rotate-3 scale-[1.04] translate-y-0 shadow-[0_35px_70px_-15px_rgba(233,30,140,0.4)]'
                   : 'rotate-0 scale-100 translate-y-0'
               }`}
             >
-              <div className="relative overflow-hidden aspect-[2/3] bg-[#F5F0EB]">
+              <div className="relative overflow-hidden aspect-[2/3] bg-[#0A0A0A]">
                 {isVideoMedia ? (
                   <video
                     src={mediaSrc}
@@ -145,15 +145,15 @@ export default function Hero({ onOpenConnectModal }) {
                 ) : (
                   <img
                     src={mediaSrc}
-                    alt="Arnav — Content Strategist"
+                    alt="ARII — Visuals & Storytelling"
                     className="w-full h-full object-cover object-center select-none"
                   />
                 )}
               </div>
 
               {/* Handwritten Polaroid Caption */}
-              <p className="text-center text-[#0A0A0A]/70 font-caveat text-xl pt-3 pb-1 tracking-wide font-semibold">
-                @ariimakesflims
+              <p className="text-center text-white/80 font-caveat text-xl pt-3 pb-1 tracking-wide font-semibold">
+                @ariimakesfilms
               </p>
             </div>
 

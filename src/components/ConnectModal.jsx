@@ -6,7 +6,7 @@ export default function ConnectModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const instagramUrl = 'https://www.instagram.com/ariimakesfilms?igsh=a3JmMWJsM3duczEy&utm_source=qr';
-  const whatsappUrl = 'https://wa.me/917666837735?text=Hi%20Arnav!%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20connect.';
+  const whatsappUrl = 'https://wa.me/917666837735?text=Hi%20ARII!%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20connect.';
 
   return (
     <div className="fixed inset-0 z-[99999] flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-md p-0 sm:p-6 animate-fadeIn">
