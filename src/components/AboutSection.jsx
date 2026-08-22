@@ -61,7 +61,7 @@ export default function AboutSection({ onOpenConnectModal }) {
         </div>
 
         {/* Stationary Introduction Box with Light Pink Shader Glow */}
-        <div ref={containerRef} className="relative w-full max-w-[760px]">
+        <div ref={containerRef} className="relative w-full max-w-[840px]">
           
           {/* Light Pink Radial Spotlight Halo */}
           <div
@@ -80,7 +80,7 @@ export default function AboutSection({ onOpenConnectModal }) {
               const prevWordsCount = paragraphs.slice(0, pIdx).join(' ').split(' ').length;
 
               return (
-                <p key={pIdx} className="font-medium leading-relaxed tracking-wide text-[clamp(1rem,2vw,1.3rem)] relative z-10">
+                <p key={pIdx} className="font-medium leading-relaxed sm:leading-[1.7] tracking-wide text-[clamp(1.15rem,2.4vw,1.55rem)] relative z-10">
                   {words.map((word, wIdx) => {
                     const globalWordIdx = (pIdx === 0 ? 0 : prevWordsCount) + wIdx;
                     const wordCenter = globalWordIdx / (totalWordsCount - 1);
