@@ -517,11 +517,8 @@ export default function BrandCollaborationsSection() {
               
               {/* SUBSECTION HEADER */}
               <div className="w-full flex flex-col justify-between gap-1 border-b border-white/10 pb-3">
-                <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-widest text-[#FF9BD2] uppercase">
-                  <Icon className="w-3.5 h-3.5" style={{ color: section.accentColor }} />
-                  <span>{section.eyebrowLabel}</span>
-                </div>
-                <h4 className="font-black text-xl text-[#FFF7FF] tracking-tight uppercase">
+                <h4 className="font-black text-xl text-[#FFF7FF] tracking-tight uppercase flex items-center gap-2">
+                  <Icon className="w-4.5 h-4.5" style={{ color: section.accentColor }} />
                   {section.title}
                 </h4>
                 <p className="text-xs font-serif italic text-white/60">
