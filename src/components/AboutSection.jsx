@@ -5,10 +5,16 @@ export default function AboutSection({ onOpenConnectModal }) {
   const containerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  const aboutText = `Hi, I'm ARII, I bring ideas to life through visuals and storytelling. From shooting content and writing scripts to editing videos and creating AI generated visuals, I help brands turn ideas into engaging, high quality content.`;
+  const paragraph1 = `Hello, I am Ari 👀 I’m a 25-year-old content creator, video editor, and creative who loves bringing ideas to life. I shoot, script, edit, and experiment with AI to create visuals and stories that feel fresh, engaging, and impossible to scroll past.`;
+  const paragraph2 = `I’ve worked with 10+ brands through freelancing, creating and handling content across industries like wellness, beauty, food and beverage, lifestyle, and more. From ideation to the final piece of content, I love being involved in the entire creative process.`;
+  const paragraph3 = `And yeah, I’d love to help bring your ideas to life too 👉🏻👈🏻`;
 
-  const words = aboutText.split(' ');
-  const highlightWords = ['ARII,', 'visuals', 'storytelling.', 'scripts', 'editing', 'AI', 'content.'];
+  const paragraphs = [paragraph1, paragraph2, paragraph3];
+  
+  const highlightWords = [
+    'Ari', '👀', 'content', 'creator,', 'video', 'editor,', 'creative', 'AI', 'visuals', 'stories',
+    '10+', 'brands', 'wellness,', 'beauty,', 'food', 'beverage,', 'lifestyle,', 'process.', '👉🏻👈🏻'
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,7 +23,6 @@ export default function AboutSection({ onOpenConnectModal }) {
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      // Start revealing slowly as section enters screen (65% viewport height)
       const start = windowHeight * 0.65;
       const end = -windowHeight * 0.1;
 
@@ -36,7 +41,7 @@ export default function AboutSection({ onOpenConnectModal }) {
   return (
     <section
       id="about"
-      className="relative flex min-h-screen flex-col items-center justify-center px-5 py-24 scroll-mt-6 sm:px-8 md:px-10 overflow-hidden bg-[#0A0A0A]"
+      className="relative flex min-h-screen flex-col items-center justify-center px-5 py-20 sm:py-24 scroll-mt-6 sm:px-8 md:px-10 overflow-hidden bg-[#0A0A0A]"
     >
       {/* Background ambient glowing circles */}
       <div className="pointer-events-none absolute top-[10%] left-[2%] w-[200px] h-[200px] rounded-full blur-3xl opacity-30 bg-[#FFB3CB]" />
@@ -44,7 +49,7 @@ export default function AboutSection({ onOpenConnectModal }) {
       <div className="pointer-events-none absolute top-[10%] right-[2%] w-[200px] h-[200px] rounded-full blur-3xl opacity-30 bg-[#E91E8C]" />
       <div className="pointer-events-none absolute bottom-[8%] right-[8%] w-[220px] h-[220px] rounded-full blur-3xl opacity-30 bg-[#FFB3CB]" />
 
-      <div className="flex flex-col items-center gap-12 sm:gap-14 max-w-4xl text-center relative z-10">
+      <div className="flex flex-col items-center gap-10 sm:gap-14 max-w-4xl text-center relative z-10">
         
         {/* Giant Section Title */}
         <div>
@@ -57,7 +62,7 @@ export default function AboutSection({ onOpenConnectModal }) {
         </div>
 
         {/* Stationary Introduction Box with Light Pink Shader Glow */}
-        <div ref={containerRef} className="relative w-full max-w-[700px]">
+        <div ref={containerRef} className="relative w-full max-w-[760px]">
           
           {/* Light Pink Radial Spotlight Halo */}
           <div
@@ -68,46 +73,54 @@ export default function AboutSection({ onOpenConnectModal }) {
           />
 
           {/* Highlighted Card Container */}
-          <div className="relative rounded-3xl border border-[#FFB3CB]/30 bg-gradient-to-b from-[#121212]/90 via-[#181014]/80 to-[#121212]/90 p-7 sm:p-10 md:p-12 shadow-[0_0_50px_rgba(255,179,203,0.18)] backdrop-blur-xl text-left sm:text-center min-h-[220px]">
+          <div className="relative rounded-3xl border border-[#FFB3CB]/30 bg-gradient-to-b from-[#121212]/90 via-[#181014]/80 to-[#121212]/90 p-6 sm:p-10 md:p-12 shadow-[0_0_50px_rgba(255,179,203,0.18)] backdrop-blur-xl text-left sm:text-center space-y-6">
             
-            <p className="font-medium leading-relaxed tracking-wide text-[clamp(1.05rem,2.1vw,1.4rem)] relative z-10">
-              {words.map((word, index) => {
-                const wordCenter = index / (words.length - 1);
-                
-                // Continuous smooth word weight (0 to 1)
-                let wordWeight = 0;
-                if (index === 0) {
-                  wordWeight = 1;
-                } else {
-                  const localProgress = (scrollProgress - (wordCenter - 0.25)) / 0.35;
-                  wordWeight = Math.min(Math.max(localProgress, 0), 1);
-                }
+            {paragraphs.map((pText, pIdx) => {
+              const words = pText.split(' ');
+              const totalWordsCount = paragraphs.join(' ').split(' ').length;
+              const prevWordsCount = paragraphs.slice(0, pIdx).join(' ').split(' ').length;
 
-                const isSpecial = highlightWords.includes(word);
-                const opacity = 0.18 + wordWeight * 0.82;
+              return (
+                <p key={pIdx} className="font-medium leading-relaxed tracking-wide text-[clamp(1rem,2vw,1.3rem)] relative z-10">
+                  {words.map((word, wIdx) => {
+                    const globalWordIdx = (pIdx === 0 ? 0 : prevWordsCount) + wIdx;
+                    const wordCenter = globalWordIdx / (totalWordsCount - 1);
+                    
+                    let wordWeight = 0;
+                    if (globalWordIdx === 0) {
+                      wordWeight = 1;
+                    } else {
+                      const localProgress = (scrollProgress - (wordCenter - 0.25)) / 0.35;
+                      wordWeight = Math.min(Math.max(localProgress, 0), 1);
+                    }
 
-                return (
-                  <span
-                    key={index}
-                    className="inline-block mr-[0.28em] transition-colors duration-400 ease-out select-none"
-                    style={{
-                      color: wordWeight > 0.6
-                        ? isSpecial
-                          ? '#E91E8C'
-                          : '#FFFFFF'
-                        : `rgba(245, 240, 235, ${opacity})`,
-                      opacity,
-                      fontWeight: isSpecial ? '700' : '500',
-                      textShadow: isSpecial && wordWeight > 0.6
-                        ? '0 0 16px rgba(233,30,140,0.85)'
-                        : 'none',
-                    }}
-                  >
-                    {word}
-                  </span>
-                );
-              })}
-            </p>
+                    const isSpecial = highlightWords.includes(word);
+                    const opacity = 0.22 + wordWeight * 0.78;
+
+                    return (
+                      <span
+                        key={wIdx}
+                        className="inline-block mr-[0.28em] transition-colors duration-400 ease-out select-none"
+                        style={{
+                          color: wordWeight > 0.6
+                            ? isSpecial
+                              ? '#E91E8C'
+                              : '#FFFFFF'
+                            : `rgba(245, 240, 235, ${opacity})`,
+                          opacity,
+                          fontWeight: isSpecial ? '700' : '500',
+                          textShadow: isSpecial && wordWeight > 0.6
+                            ? '0 0 16px rgba(233,30,140,0.85)'
+                            : 'none',
+                        }}
+                      >
+                        {word}
+                      </span>
+                    );
+                  })}
+                </p>
+              );
+            })}
 
           </div>
         </div>
