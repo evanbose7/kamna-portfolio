@@ -46,17 +46,6 @@ export default function YouTubeSection() {
       quality: 'HD',
       tags: ['Storytelling', 'Comedy', 'Arnav Films'],
     },
-    {
-      id: 'video-3',
-      title: 'Day in the Life of a 21-Year-Old Personal Branding Strategist',
-      thumbnail: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
-      youtubeId: '3JZ_D3ELwOQ',
-      youtubeUrl: 'https://www.youtube.com/watch?v=3JZ_D3ELwOQ',
-      duration: '18:45',
-      rating: 'U/A 16+',
-      quality: 'HD',
-      tags: ['Vlog', 'Workflow', 'Daily Routine'],
-    },
   ];
 
   // Desktop Hover Handlers
