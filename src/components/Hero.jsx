@@ -65,16 +65,17 @@ export default function Hero({ onOpenConnectModal }) {
           </div>
 
           <div className="flex flex-col gap-3 max-w-xl mx-auto lg:mx-0">
-            <p
-              className="font-semibold uppercase tracking-widest text-[#E91E8C] text-xs sm:text-sm"
-            >
+            <p className="font-semibold uppercase tracking-widest text-[#E91E8C] text-xs sm:text-sm">
               CONTENT CREATOR · VIDEO EDITOR · SCRIPTWRITER · AI FOR BRANDS
+            </p>
+            <p className="font-bold uppercase tracking-wider text-white text-xs sm:text-sm">
+              I SHOOT · I SCRIPT · I EDIT · I CREATE WITH AI
             </p>
             <p
               className="font-normal leading-relaxed tracking-wide text-[#F5F0EB]/85 pt-1"
               style={{ fontSize: 'clamp(0.95rem, 1.2vw, 1.2rem)' }}
             >
-              I bring ideas to life through <span className="font-bold text-white underline decoration-[#E91E8C]/60 underline-offset-4">visuals and storytelling</span>. From <span className="text-[#FF9BD2] font-semibold">shooting content</span> and <span className="text-[#FF9BD2] font-semibold">writing scripts</span> to <span className="text-white font-semibold">editing videos</span> and creating <span className="text-[#FF9BD2] font-semibold">AI generated visuals</span>, I help brands turn ideas into <span className="text-white font-bold">engaging, high-quality content</span>.
+              I create <span className="font-bold text-white underline decoration-[#E91E8C]/60 underline-offset-4">visually compelling content</span> and bring ideas to life for brands.
             </p>
           </div>
 
