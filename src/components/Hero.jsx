@@ -159,7 +159,7 @@ export default function Hero({ onOpenConnectModal }) {
 
             {/* --- TAP / HOVER POPUP HANDWRITTEN STICKERS --- */}
 
-            {/* 1. Sticker Top-Left: "21 years old" */}
+            {/* 1. Sticker Top-Left: "ai video creator" */}
             <div
               className={`pointer-events-none absolute -top-6 -left-6 sm:-left-10 z-30 transform -rotate-6 transition-all duration-300 ease-back-out ${
                 isCardActive
@@ -169,7 +169,7 @@ export default function Hero({ onOpenConnectModal }) {
             >
               <div className="relative">
                 <div className="bg-[#FFB3CB] text-[#0A0A0A] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
-                  21 years old
+                  ai video creator
                 </div>
                 <svg className="w-12 h-10 sm:w-16 sm:h-14 absolute top-[80%] left-[80%] overflow-visible" viewBox="0 0 72 64" fill="none">
                   <path d="M5 5 C 22 0, 26 10, 18 14 C 8 18, 8 26, 22 26 C 32 26, 40 30, 46 38" stroke="#FFB3CB" strokeWidth="2.5" strokeLinecap="round" fill="none" />
@@ -177,7 +177,7 @@ export default function Hero({ onOpenConnectModal }) {
               </div>
             </div>
 
-            {/* 2. Sticker Top-Right: "social media strategist" */}
+            {/* 2. Sticker Top-Right: "content strategist" */}
             <div
               className={`pointer-events-none absolute -top-6 -right-6 sm:-right-12 z-30 transform rotate-6 transition-all duration-300 ease-back-out ${
                 isCardActive
@@ -187,7 +187,7 @@ export default function Hero({ onOpenConnectModal }) {
             >
               <div className="relative">
                 <div className="bg-[#E91E8C] text-[#F5F0EB] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
-                  social media strategist
+                  content strategist
                 </div>
                 <svg className="w-12 h-10 sm:w-16 sm:h-14 absolute top-[80%] right-[80%] overflow-visible" viewBox="0 0 72 64" fill="none">
                   <path d="M67 5 C 50 0, 46 10, 54 14 C 64 18, 64 26, 50 26 C 40 26, 32 30, 26 38" stroke="#E91E8C" strokeWidth="2.5" strokeLinecap="round" fill="none" />
@@ -195,9 +195,9 @@ export default function Hero({ onOpenConnectModal }) {
               </div>
             </div>
 
-            {/* 3. Sticker Middle-Left: "ghostwriter" */}
+            {/* 3. Sticker Middle-Left: "video editor" */}
             <div
-              className={`pointer-events-none absolute top-1/2 -left-12 sm:-left-20 transform -translate-y-1/2 -rotate-12 z-30 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute top-[35%] -left-10 sm:-left-16 transform -translate-y-1/2 -rotate-12 z-30 transition-all duration-300 ease-back-out ${
                 isCardActive
                   ? 'opacity-100 scale-100 translate-x-0 delay-220'
                   : 'opacity-0 scale-75 -translate-x-4'
@@ -205,7 +205,7 @@ export default function Hero({ onOpenConnectModal }) {
             >
               <div className="relative">
                 <div className="bg-[#FFB3CB] text-[#0A0A0A] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
-                  ghostwriter
+                  video editor
                 </div>
                 <svg className="w-14 h-6 sm:w-20 sm:h-8 absolute top-1/2 left-full -translate-y-1/2 overflow-visible ml-1" viewBox="0 0 84 28" fill="none">
                   <path d="M2 14 Q 22 4, 42 14 T 78 14" stroke="#FFB3CB" strokeWidth="2.5" strokeLinecap="round" fill="none" />
@@ -213,17 +213,35 @@ export default function Hero({ onOpenConnectModal }) {
               </div>
             </div>
 
-            {/* 4. Sticker Bottom-Left: "content creator" */}
+            {/* 4. Sticker Middle-Right: "ugc creator" */}
             <div
-              className={`pointer-events-none absolute -bottom-9 -left-4 sm:-left-6 z-30 transform rotate-3 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute top-[48%] -right-10 sm:-right-16 transform -translate-y-1/2 rotate-12 z-30 transition-all duration-300 ease-back-out ${
                 isCardActive
-                  ? 'opacity-100 scale-100 translate-y-0 delay-300'
+                  ? 'opacity-100 scale-100 translate-x-0 delay-280'
+                  : 'opacity-0 scale-75 translate-x-4'
+              }`}
+            >
+              <div className="relative">
+                <div className="bg-[#E91E8C] text-[#F5F0EB] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
+                  ugc creator
+                </div>
+                <svg className="w-14 h-6 sm:w-20 sm:h-8 absolute top-1/2 right-full -translate-y-1/2 overflow-visible mr-1" viewBox="0 0 84 28" fill="none">
+                  <path d="M82 14 Q 62 4, 42 14 T 6 14" stroke="#E91E8C" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                </svg>
+              </div>
+            </div>
+
+            {/* 5. Sticker Bottom-Left: "storyteller" */}
+            <div
+              className={`pointer-events-none absolute -bottom-8 -left-4 sm:-left-8 z-30 transform rotate-3 transition-all duration-300 ease-back-out ${
+                isCardActive
+                  ? 'opacity-100 scale-100 translate-y-0 delay-340'
                   : 'opacity-0 scale-75 -translate-y-4'
               }`}
             >
               <div className="relative">
                 <div className="bg-[#FFB3CB] text-[#0A0A0A] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
-                  content creator
+                  storyteller
                 </div>
                 <svg className="w-12 h-12 sm:w-16 sm:h-16 absolute bottom-[85%] left-2 overflow-visible" viewBox="0 0 64 72" fill="none">
                   <path d="M8 66 C 8 50, 12 32, 16 18 Q 18 10, 20 6" stroke="#FFB3CB" strokeWidth="2.5" strokeLinecap="round" fill="none" />
@@ -231,17 +249,17 @@ export default function Hero({ onOpenConnectModal }) {
               </div>
             </div>
 
-            {/* 5. Sticker Bottom-Right: "storyteller" */}
+            {/* 6. Sticker Bottom-Right: "content partner" */}
             <div
-              className={`pointer-events-none absolute -bottom-9 -right-4 sm:-right-6 z-30 transform -rotate-3 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute -bottom-8 -right-4 sm:-right-8 z-30 transform -rotate-3 transition-all duration-300 ease-back-out ${
                 isCardActive
-                  ? 'opacity-100 scale-108 translate-y-0 delay-350'
+                  ? 'opacity-100 scale-108 translate-y-0 delay-400'
                   : 'opacity-0 scale-75 -translate-y-4'
               }`}
             >
               <div className="relative">
                 <div className="bg-[#E91E8C] text-[#F5F0EB] font-caveat text-base sm:text-xl font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-[4px_6px_0_rgba(0,0,0,0.35)] whitespace-nowrap">
-                  storyteller
+                  content partner
                 </div>
                 <svg className="w-12 h-12 sm:w-16 sm:h-16 absolute bottom-[85%] right-2 overflow-visible" viewBox="0 0 64 72" fill="none">
                   <path d="M56 66 C 56 50, 52 32, 48 18 Q 46 10, 44 6" stroke="#E91E8C" strokeWidth="2.5" strokeLinecap="round" fill="none" />
