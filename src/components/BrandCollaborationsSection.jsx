@@ -65,7 +65,7 @@ export const CATEGORY_CARDS = [
     description: 'Spatial storytelling, architectural tours & luxury interiors.',
     icon: Compass,
     projects: [
-      { id: 'arch-1', title: 'ARTSIGNIA 5 YEARS ANNIVERSARY', description: 'Cinematic architectural documentary celebrating 5 years of spatial innovation.', aspectRatio: '9/16', videoUrl: '/assets/architecture-1.mp4' },
+      { id: 'arch-1', title: 'ARTSIGNIA ARCHITECTURAL STORY 01', description: 'Cinematic architectural documentary showcasing spatial innovation, refined lighting, and design excellence.', aspectRatio: '9/16', videoUrl: '/assets/architecture-1.mp4' },
       { id: 'arch-2', title: 'MODERN INTERIOR FEATURE 02', description: 'Elegant spatial camera movements showcasing light, luxury textures, and design.', aspectRatio: '9/16', videoUrl: '/assets/architecture-2.mp4' },
       { id: 'arch-3', title: 'CREATIVE DESIGN TOUR 03', description: 'Editorial tour exploring architectural rhythm, material harmony, and atmosphere.', aspectRatio: '9/16', videoUrl: '/assets/architecture-3.mp4' },
       { id: 'arch-4', title: 'GURU GOBIND MUSEUM ARCHITECTURE', description: 'Monumental architectural storytelling preserving heritage through modern lens.', aspectRatio: '9/16', videoUrl: '/assets/architecture-4.mp4' },
@@ -236,7 +236,7 @@ export default function BrandCollaborationsSection() {
       icon: Compass,
       accentColor: '#FFB6E6',
       projects: [
-        { id: 'arch-1', numberLabel: '01 / 04', title: 'ARTSIGNIA 5 YEARS ANNIVERSARY', description: 'Cinematic architectural documentary celebrating 5 years of spatial innovation.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/architecture-1.mp4' },
+        { id: 'arch-1', numberLabel: '01 / 04', title: 'ARTSIGNIA ARCHITECTURAL STORY 01', description: 'Cinematic architectural documentary showcasing spatial innovation, refined lighting, and design excellence.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/architecture-1.mp4' },
         { id: 'arch-2', numberLabel: '02 / 04', title: 'MODERN INTERIOR FEATURE 02', description: 'Elegant spatial camera movements showcasing light, luxury textures, and design.', gradientBg: 'from-[#B388FF]/40 via-[#1A0A2E] to-[#FF9BD2]/30', videoUrl: '/assets/architecture-2.mp4' },
         { id: 'arch-3', numberLabel: '03 / 04', title: 'CREATIVE DESIGN TOUR 03', description: 'Editorial tour exploring architectural rhythm, material harmony, and atmosphere.', gradientBg: 'from-[#FFB6E6]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/architecture-3.mp4' },
         { id: 'arch-4', numberLabel: '04 / 04', title: 'GURU GOBIND MUSEUM ARCHITECTURE', description: 'Monumental architectural storytelling preserving heritage through modern lens.', gradientBg: 'from-[#6D4AFF]/40 via-[#1A0A2E] to-[#FF9BD2]/30', videoUrl: '/assets/architecture-4.mp4' },
