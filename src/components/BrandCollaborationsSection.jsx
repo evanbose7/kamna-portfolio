@@ -12,6 +12,16 @@ const InstagramIcon = ({ className = 'w-4 h-4 text-white' }) => (
 
 export const CATEGORY_CARDS = [
   {
+    id: 'problem-solving',
+    title: 'PROBLEM SOLVING AND CAMPAIGN VIDEOS',
+    subtitle: 'STRATEGIC BRAND NARRATIVES',
+    description: 'Playful editorial narratives, bold imagery & graphic campaign storytelling.',
+    icon: Film,
+    projects: [
+      { id: 'ps-1', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', aspectRatio: '9/16', videoUrl: '/assets/memoire-reel.mp4' },
+    ],
+  },
+  {
     id: 'social-content',
     title: 'SOCIAL CONTENT',
     subtitle: 'SHORT-FORM VIRAL REELS',
@@ -194,6 +204,17 @@ export default function BrandCollaborationsSection() {
   // Mobile Portfolio Video Categories (Extracted from ARII WEBSITE)
   const mobilePortfolioSections = [
     {
+      id: 'problem-solving',
+      eyebrowLabel: '01 / 06 ✦ STRATEGIC BRAND NARRATIVES',
+      title: 'PROBLEM SOLVING AND CAMPAIGN VIDEOS',
+      subhead: 'Playful editorial narratives, bold imagery & graphic campaign storytelling.',
+      icon: Film,
+      accentColor: '#E91E8C',
+      projects: [
+        { id: 'ps-1', numberLabel: '01 / 01', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/memoire-reel.mp4' },
+      ],
+    },
+    {
       id: 'food',
       eyebrowLabel: '01 / 05 ✦ GOURMET & CULINARY',
       title: 'FOOD',
@@ -302,9 +323,57 @@ export default function BrandCollaborationsSection() {
       {/* ========================================================================= */}
       <div className="hidden lg:grid w-full max-w-[1440px] mx-auto grid-cols-12 gap-6 relative z-20 px-6 mb-16">
         
-        {/* CARD 01 — FOOD */}
+        {/* CARD 01 — PROBLEM SOLVING AND CAMPAIGN VIDEOS */}
         <div
-          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[2])}
+          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[0])}
+          className="
+            relative col-span-12 row-span-1 min-h-[300px] lg:min-h-[360px] rounded-[28px] overflow-hidden p-6 sm:p-8
+            border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
+            hover:border-[#E91E8C]/70 hover:shadow-[0_0_40px_rgba(233,30,140,0.4)] hover:-translate-y-1 hover:scale-[1.002]
+            transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
+          "
+        >
+          <div className="absolute inset-0 z-0">
+            <video
+              src="/assets/memoire-reel.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-65 group-hover:opacity-85 brightness-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#12071B]/95 via-[#12071B]/60 to-black/30 z-10" />
+          </div>
+
+          <div className="relative flex items-center justify-between z-30">
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-white/20 backdrop-blur-md">
+              <Film className="w-3.5 h-3.5 text-[#E91E8C]" />
+              <span className="text-[10px] font-mono font-bold tracking-widest text-[#FFF7FF] uppercase">
+                FEATURED CAMPAIGN
+              </span>
+            </div>
+            <div className="w-9 h-9 rounded-full bg-white/15 border border-white/25 text-[#FFF7FF] backdrop-blur-md group-hover:bg-[#E91E8C] group-hover:text-[#100719] flex items-center justify-center transition-colors shadow-lg">
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="relative space-y-1.5 z-30 max-w-3xl pt-8">
+            <span className="text-xs font-mono font-bold text-[#E91E8C] uppercase tracking-widest block">
+              NEW ✦ STRATEGIC NARRATIVE
+            </span>
+            <h3 className="font-display font-black text-2xl lg:text-3xl text-[#FFF7FF] tracking-tight uppercase group-hover:text-[#FFB3CB] transition-colors drop-shadow-md">
+              PROBLEM SOLVING AND CAMPAIGN VIDEOS
+            </h3>
+            <p className="text-xs sm:text-sm text-[#FFF7FF]/90 line-clamp-2 leading-relaxed drop-shadow-md">
+              A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.
+            </p>
+          </div>
+        </div>
+
+        {/* CARD 02 — FOOD */}
+        <div
+          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[3])}
           className="
             relative col-span-6 row-span-1 min-h-[250px] lg:min-h-[320px] rounded-[28px] overflow-hidden p-6
             border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
@@ -343,9 +412,9 @@ export default function BrandCollaborationsSection() {
           </div>
         </div>
 
-        {/* CARD 02 — ARCHITECTURE & INTERIOR DESIGN */}
+        {/* CARD 03 — ARCHITECTURE & INTERIOR DESIGN */}
         <div
-          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[3])}
+          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[4])}
           className="
             relative col-span-6 row-span-1 min-h-[250px] lg:min-h-[320px] rounded-[28px] overflow-hidden p-6
             border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
@@ -384,9 +453,9 @@ export default function BrandCollaborationsSection() {
           </div>
         </div>
 
-        {/* CARD 03 — JEWELRY */}
+        {/* CARD 04 — JEWELRY */}
         <div
-          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[4])}
+          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[5])}
           className="
             relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
             border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
@@ -425,9 +494,9 @@ export default function BrandCollaborationsSection() {
           </div>
         </div>
 
-        {/* CARD 04 — WELLBEING & ESSENTIAL OILS */}
+        {/* CARD 05 — WELLBEING & ESSENTIAL OILS */}
         <div
-          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[5])}
+          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[6])}
           className="
             relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
             border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
@@ -466,9 +535,9 @@ export default function BrandCollaborationsSection() {
           </div>
         </div>
 
-        {/* CARD 05 — ANIMATION */}
+        {/* CARD 06 — ANIMATION */}
         <div
-          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[6])}
+          onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[7])}
           className="
             relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
             border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
