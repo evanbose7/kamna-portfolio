@@ -19,6 +19,7 @@ export const CATEGORY_CARDS = [
     icon: Film,
     projects: [
       { id: 'ps-1', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', aspectRatio: '9/16', videoUrl: '/assets/memoire-reel.mp4' },
+      { id: 'ps-2', title: 'QUIRKY EDITORIAL BRAND FILM 02', description: 'Cinematic close-ups, quick cuts, playful camera movement, and expressive text overlays give the video a quirky, entertaining feel.', aspectRatio: '9/16', videoUrl: '/assets/brand-campaign-2.mp4' },
     ],
   },
   {
@@ -211,7 +212,8 @@ export default function BrandCollaborationsSection() {
       icon: Film,
       accentColor: '#E91E8C',
       projects: [
-        { id: 'ps-1', numberLabel: '01 / 01', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/memoire-reel.mp4' },
+        { id: 'ps-1', numberLabel: '01 / 02', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/memoire-reel.mp4' },
+        { id: 'ps-2', numberLabel: '02 / 02', title: 'QUIRKY EDITORIAL BRAND FILM 02', description: 'Cinematic close-ups, quick cuts, playful camera movement, and expressive text overlays give the video a quirky, entertaining feel.', gradientBg: 'from-[#FFB3CB]/40 via-[#1A0A2E] to-[#E91E8C]/30', videoUrl: '/assets/brand-campaign-2.mp4' },
       ],
     },
     {
@@ -663,10 +665,6 @@ export default function BrandCollaborationsSection() {
                           <span className="px-2.5 py-0.5 rounded-full bg-black/70 border border-white/20 font-mono text-[11px] font-bold text-[#FF9BD2]">
                             {proj.numberLabel}
                           </span>
-                        </div>
-
-                        <div className="absolute top-3 right-3 z-20 pointer-events-none px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#E91E8C] to-[#FFB3CB] text-white font-mono text-[10px] font-black tracking-widest shadow-lg">
-                          AI
                         </div>
 
                         <div className="absolute bottom-3 left-3 right-3 z-20 pointer-events-none p-2.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between">
