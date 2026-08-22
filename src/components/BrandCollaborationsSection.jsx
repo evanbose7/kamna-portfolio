@@ -86,8 +86,8 @@ export default function BrandCollaborationsSection() {
   const handleCarouselScroll = (sectionId, e) => {
     const target = e.currentTarget;
     const scrollLeft = target.scrollLeft;
-    const cardWidth = target.firstElementChild?.clientWidth || 300;
-    const newIdx = Math.max(0, Math.round(scrollLeft / (cardWidth + 16)));
+    const cardWidth = target.clientWidth;
+    const newIdx = Math.max(0, Math.round(scrollLeft / cardWidth));
 
     if (activeCardIds[sectionId] !== newIdx) {
       setActiveCardIds((prev) => ({
@@ -139,12 +139,11 @@ export default function BrandCollaborationsSection() {
       </div>
 
       {/* ========================================================================= */}
-      {/* 📱 2. MOBILE PHONE ONLY: CATEGORY WORK VIDEO CAROUSELS */}
+      {/* 📱 2. MOBILE PHONE ONLY: SINGLE CARD PER SWIPE VIDEO CAROUSELS */}
       {/* ========================================================================= */}
       <div className="block md:hidden w-full max-w-full overflow-x-hidden px-4 space-y-10 mb-6">
         {mobilePortfolioSections.map((section) => {
           const Icon = section.icon;
-          const activeIdx = activeCardIds[section.id] || 0;
 
           return (
             <div key={section.id} className="w-full space-y-4">
@@ -163,19 +162,17 @@ export default function BrandCollaborationsSection() {
                 </p>
               </div>
 
-              {/* HORIZONTAL SWIPE CAROUSEL (CLEAN 100% CONTAINER FIT) */}
+              {/* HORIZONTAL SWIPE CAROUSEL (EXACTLY 1 CARD PER SWIPE) */}
               <div
                 onScroll={(e) => handleCarouselScroll(section.id, e)}
-                className="w-full flex flex-row flex-nowrap items-stretch gap-4 overflow-x-auto scroll-snap-type-x-mandatory scrollbar-none py-2 px-1"
+                className="w-full flex flex-row flex-nowrap items-stretch overflow-x-auto snap-x snap-mandatory scrollbar-none py-2 px-0"
                 style={{
                   scrollSnapType: 'x mandatory',
                   WebkitOverflowScrolling: 'touch',
                   touchAction: 'pan-x pan-y',
                 }}
               >
-                {section.projects.map((proj, pIdx) => {
-                  const isActive = pIdx === activeIdx;
-
+                {section.projects.map((proj) => {
                   return (
                     <div
                       key={proj.id}
@@ -204,20 +201,15 @@ export default function BrandCollaborationsSection() {
                           }
                         }
                       }}
-                      className={`
-                        w-[78vw] max-w-[290px] shrink-0 flex flex-col justify-between space-y-3
-                        snap-center transition-all duration-300 cursor-pointer
-                        ${isActive ? 'scale-100 opacity-100' : 'scale-[0.96] opacity-75'}
-                      `}
+                      className="w-full shrink-0 snap-center flex flex-col justify-between space-y-3 px-1 cursor-pointer"
                       style={{ scrollSnapAlign: 'center' }}
                     >
                       <div
                         className={`
-                          relative w-full rounded-[24px] overflow-hidden
+                          relative w-full max-w-[310px] mx-auto rounded-[24px] overflow-hidden
                           border border-white/15 bg-gradient-to-br ${proj.gradientBg}
                           shadow-[0_16px_45px_rgba(0,0,0,0.6)]
                           aspect-[9/16] transition-all duration-300
-                          ${isActive ? 'shadow-[0_0_25px_rgba(233,30,140,0.35)] border-[#E91E8C]/60' : ''}
                         `}
                       >
                         <video
@@ -232,7 +224,7 @@ export default function BrandCollaborationsSection() {
 
                         {/* Top Number Badge */}
                         <div className="absolute top-3 left-3 z-20 pointer-events-none">
-                          <span className={`px-2.5 py-0.5 rounded-full bg-black/70 border border-white/20 font-mono text-[11px] font-bold ${isActive ? 'text-[#FF9BD2]' : 'text-white/70'}`}>
+                          <span className="px-2.5 py-0.5 rounded-full bg-black/70 border border-white/20 font-mono text-[11px] font-bold text-[#FF9BD2]">
                             {proj.numberLabel}
                           </span>
                         </div>
@@ -253,7 +245,7 @@ export default function BrandCollaborationsSection() {
                       </div>
 
                       {/* Card Info Below */}
-                      <div className="space-y-1 px-1 text-left">
+                      <div className="space-y-1 px-1 text-center max-w-[310px] mx-auto">
                         <h4 className="font-bold text-sm text-white tracking-tight uppercase">
                           {proj.title}
                         </h4>
