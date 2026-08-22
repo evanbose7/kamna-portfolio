@@ -98,8 +98,8 @@ export default function Hero({ onOpenConnectModal }) {
             >
               <span className="inline-block mr-[0.25em]">Hi,</span>
               <span className="inline-block mr-[0.25em]">I'm</span>
-              <span className="inline-block bg-gradient-to-r from-[#F5F0EB] via-[#FFB3CB] to-[#E91E8C] bg-clip-text text-transparent font-signature capitalize tracking-normal text-[1.12em] font-semibold" style={{ fontFamily: "'Alex Brush', 'Great Vibes', 'Allura', cursive" }}>
-                Arii
+              <span className="inline-block bg-gradient-to-r from-[#F5F0EB] via-[#FFB3CB] to-[#E91E8C] bg-clip-text text-transparent">
+                ARII
               </span>
             </h1>
           </div>
