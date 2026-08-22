@@ -33,7 +33,6 @@ export const CATEGORY_CARDS = [
     projects: [
       { id: 'yt-1', title: '10th BOARD RESULT | Tears, Celebration & Heartbreaks', description: 'Complete YouTube production: strategy, hook design, and narrative flow.', aspectRatio: '16/9', thumbnail: '/assets/yt-thumb-1.jpg', url: 'https://youtu.be/UN3Nqzh-nrQ?si=glKRxw3dFc2vYPqM' },
       { id: 'yt-2', title: 'Messi Aur Billu Ki Kahani (PART 1)', description: 'Documentary-style YouTube episode following an idea from first thought to final execution.', aspectRatio: '16/9', thumbnail: '/assets/yt-thumb-2.jpg', url: 'https://www.youtube.com/watch?v=A-OdwRbfPNA' },
-      { id: 'yt-3', title: 'Day in the Life of a 21-Year-Old Personal Branding Strategist', description: 'Deep-dive visual essay exploring branding and digital culture.', aspectRatio: '16/9', thumbnail: '/assets/yt-thumb-1.jpg', url: 'https://www.youtube.com/watch?v=3JZ_D3ELwOQ' },
     ],
   },
   {
@@ -149,13 +148,6 @@ export default function BrandCollaborationsSection() {
     '/assets/reel-thumb-4.jpg',
   ];
 
-  const desktopReelMp4Previews = [
-    '/assets/food-1.mp4',
-    '/assets/architecture-1.mp4',
-    '/assets/jewellery-1.mp4',
-    '/assets/wellbeing-1.mp4',
-  ];
-
   const desktopReelTitles = [
     'POV: Found the best side hustle (Paid per reel) 💰',
     'Earn Money Via Reels 💵',
@@ -166,13 +158,9 @@ export default function BrandCollaborationsSection() {
   const desktopYtThumbnails = [
     '/assets/yt-thumb-1.jpg',
     '/assets/yt-thumb-2.jpg',
-    '/assets/yt-thumb-1.jpg',
-    '/assets/yt-thumb-2.jpg',
   ];
 
   const desktopYtMp4Previews = [
-    '/assets/yt-preview-1.mp4',
-    '/assets/yt-preview-2.mp4',
     '/assets/yt-preview-1.mp4',
     '/assets/yt-preview-2.mp4',
   ];
@@ -180,15 +168,11 @@ export default function BrandCollaborationsSection() {
   const desktopYtTitles = [
     '10th BOARD RESULT | Tears, Celebration & Heartbreaks | Official Film',
     'Messi Aur Billu Ki Kahani (PART 1)',
-    'Day in the Life of a 21-Year-Old Personal Branding Strategist',
-    'BRANDED YOUTUBE SPECIAL 04',
   ];
 
   const desktopYtUrls = [
     'https://youtu.be/UN3Nqzh-nrQ?si=glKRxw3dFc2vYPqM',
     'https://www.youtube.com/watch?v=A-OdwRbfPNA',
-    'https://www.youtube.com/watch?v=3JZ_D3ELwOQ',
-    'https://www.youtube.com/@Kidwithcrayons',
   ];
 
   // Mobile Portfolio Video Categories (Extracted from ARII WEBSITE)
@@ -302,8 +286,6 @@ export default function BrandCollaborationsSection() {
         {/* CARD 01 — SOCIAL CONTENT */}
         <div
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[0])}
-          onMouseEnter={() => setHoveredCardId('social-content')}
-          onMouseLeave={() => setHoveredCardId(null)}
           className="
             col-span-4 row-span-2 min-h-[620px] lg:min-h-[835px] rounded-[28px] overflow-hidden
             border border-white/15 bg-[#12071B]
@@ -313,25 +295,12 @@ export default function BrandCollaborationsSection() {
           "
         >
           <div className="absolute inset-0 z-0 w-full h-full">
-            {hoveredCardId === 'social-content' ? (
-              <video
-                key={`reel-prev-${desktopReelIndex}`}
-                src={desktopReelMp4Previews[desktopReelIndex]}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="w-full h-full object-cover select-none brightness-[1.05] contrast-[1.05] group-hover:scale-105 transition-transform duration-700"
-              />
-            ) : (
-              <img
-                key={desktopReelIndex}
-                src={desktopReelThumbnails[desktopReelIndex]}
-                alt="Social Reel Preview"
-                className="w-full h-full object-cover select-none brightness-[1.05] contrast-[1.05] group-hover:scale-105 transition-transform duration-700"
-              />
-            )}
+            <img
+              key={desktopReelIndex}
+              src={desktopReelThumbnails[desktopReelIndex]}
+              alt="Social Reel Preview"
+              className="w-full h-full object-cover select-none brightness-[1.05] contrast-[1.05] group-hover:scale-105 transition-transform duration-700"
+            />
             <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#0F0718]/90 via-[#0F0718]/45 to-transparent pointer-events-none z-10" />
             <div className="absolute bottom-0 inset-x-0 h-36 bg-gradient-to-t from-[#0F0718]/95 via-[#0F0718]/50 to-transparent pointer-events-none z-10" />
           </div>
@@ -448,10 +417,10 @@ export default function BrandCollaborationsSection() {
             </div>
             <div className="flex items-center gap-2.5">
               <span className="text-[11px] font-mono font-bold text-red-400">
-                0{desktopYtIndex + 1} / 04
+                0{desktopYtIndex + 1} / 02
               </span>
               <div className="flex items-center gap-1.5">
-                {[0, 1, 2, 3].map((dotIdx) => (
+                {[0, 1].map((dotIdx) => (
                   <button
                     key={dotIdx}
                     type="button"
@@ -470,7 +439,7 @@ export default function BrandCollaborationsSection() {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setDesktopYtIndex((prev) => (prev === 0 ? 3 : prev - 1));
+                    setDesktopYtIndex((prev) => (prev === 0 ? 1 : prev - 1));
                   }}
                   className="w-6.5 h-6.5 rounded-full bg-black/60 border border-white/20 hover:border-red-500 hover:bg-red-600 hover:text-white text-[#FFF7FF] flex items-center justify-center transition-all cursor-pointer"
                 >
@@ -480,7 +449,7 @@ export default function BrandCollaborationsSection() {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setDesktopYtIndex((prev) => (prev === 3 ? 0 : prev + 1));
+                    setDesktopYtIndex((prev) => (prev === 1 ? 0 : prev + 1));
                   }}
                   className="w-6.5 h-6.5 rounded-full bg-black/60 border border-white/20 hover:border-red-500 hover:bg-red-600 hover:text-white text-[#FFF7FF] flex items-center justify-center transition-all cursor-pointer"
                 >
