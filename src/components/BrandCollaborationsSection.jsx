@@ -71,6 +71,7 @@ export const CATEGORY_CARDS = [
       { id: 'jwl-1', title: 'FINE JEWELRY REEL 01', description: 'Macro reflections and diamond brilliance captured in high-contrast luxury grade.', aspectRatio: '9/16', videoUrl: '/assets/jewellery-1.mp4' },
       { id: 'jwl-2', title: 'LUXURY CRAFTSMANSHIP 02', description: 'Sensory storytelling highlighting gold textures, artisan details, and elegance.', aspectRatio: '9/16', videoUrl: '/assets/jewellery-2.mp4' },
       { id: 'jwl-3', title: 'INTERNATIONAL BRAND FEATURE 03', description: 'Editorial global brand film designed for international luxury campaigns.', aspectRatio: '9/16', videoUrl: '/assets/jewellery-3.mp4' },
+      { id: 'jwl-4', title: 'SOD LUXURY JEWELRY REEL 04', description: 'Refined craftsmanship, elegant lighting, and high-contrast macro details for luxury jewelry campaigns.', aspectRatio: '9/16', videoUrl: '/assets/sod-jewellery-reel.mp4' },
     ],
   },
   {
@@ -228,9 +229,10 @@ export default function BrandCollaborationsSection() {
       icon: Heart,
       accentColor: '#FF9BD2',
       projects: [
-        { id: 'jewel-1', numberLabel: '01 / 03', title: 'FINE JEWELRY REEL 01', description: 'Macro reflections and diamond brilliance captured in high-contrast luxury grade.', gradientBg: 'from-[#FF9BD2]/40 via-[#1F0A33] to-[#B388FF]/30', videoUrl: '/assets/jewellery-1.mp4' },
-        { id: 'jewel-2', numberLabel: '02 / 03', title: 'LUXURY CRAFTSMANSHIP 02', description: 'Sensory storytelling highlighting gold textures, artisan details, and elegance.', gradientBg: 'from-[#B388FF]/40 via-[#1F0A33] to-[#FFB6E6]/30', videoUrl: '/assets/jewellery-2.mp4' },
-        { id: 'jewel-3', numberLabel: '03 / 03', title: 'INTERNATIONAL BRAND FEATURE 03', description: 'Editorial global brand film designed for international luxury campaigns.', gradientBg: 'from-[#FFB6E6]/40 via-[#1F0A33] to-[#FF9BD2]/30', videoUrl: '/assets/jewellery-3.mp4' },
+        { id: 'jewel-1', numberLabel: '01 / 04', title: 'FINE JEWELRY REEL 01', description: 'Macro reflections and diamond brilliance captured in high-contrast luxury grade.', gradientBg: 'from-[#FF9BD2]/40 via-[#1F0A33] to-[#B388FF]/30', videoUrl: '/assets/jewellery-1.mp4' },
+        { id: 'jewel-2', numberLabel: '02 / 04', title: 'LUXURY CRAFTSMANSHIP 02', description: 'Sensory storytelling highlighting gold textures, artisan details, and elegance.', gradientBg: 'from-[#B388FF]/40 via-[#1F0A33] to-[#FFB6E6]/30', videoUrl: '/assets/jewellery-2.mp4' },
+        { id: 'jewel-3', numberLabel: '03 / 04', title: 'INTERNATIONAL BRAND FEATURE 03', description: 'Editorial global brand film designed for international luxury campaigns.', gradientBg: 'from-[#FFB6E6]/40 via-[#1F0A33] to-[#FF9BD2]/30', videoUrl: '/assets/jewellery-3.mp4' },
+        { id: 'jewel-4', numberLabel: '04 / 04', title: 'SOD LUXURY JEWELRY REEL 04', description: 'Refined craftsmanship, elegant lighting, and high-contrast macro details for luxury jewelry campaigns.', gradientBg: 'from-[#FF9BD2]/40 via-[#1F0A33] to-[#B388FF]/30', videoUrl: '/assets/sod-jewellery-reel.mp4' },
       ],
     },
     {
