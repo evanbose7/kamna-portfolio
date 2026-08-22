@@ -80,11 +80,11 @@ export const CATEGORY_CARDS = [
     description: 'Holistic wellness, essential oils & mindful living films.',
     icon: Sparkles,
     projects: [
-      { id: 'wb-1', title: 'ELANURA WELLNESS STORY 01', description: 'Ambient visual essay celebrating holistic health, essential oils, and wellness.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-1.mp4' },
+      { id: 'wb-5', title: 'MODERN WELLNESS COMPOSITION 01', description: 'Minimal compositions, controlled camera movement, and layered visuals create a polished, modern wellness aesthetic.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-august.mp4' },
       { id: 'wb-2', title: 'MINDFUL MOVEMENT REEL 02', description: 'Serene camera work and rhythmic pacing designed for wellness brand engagement.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-2.mp4' },
       { id: 'wb-3', title: 'HOLISTIC LIFESTYLE FILM 03', description: 'Warm editorial lighting and natural imagery focusing on vitality and balance.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-3.mp4' },
       { id: 'wb-4', title: 'VETIVER ESSENTIAL OIL STORY', description: 'Discover the timeless richness of Vetiver Oil, crafted for a deep, earthy and luxurious aroma.', aspectRatio: '9/16', videoUrl: '/assets/vetiver-essential-oil.mp4' },
-      { id: 'wb-5', title: 'MODERN WELLNESS COMPOSITION 05', description: 'Minimal compositions, controlled camera movement, and layered visuals create a polished, modern wellness aesthetic.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-august.mp4' },
+      { id: 'wb-1', title: 'ELANURA WELLNESS STORY 05', description: 'Ambient visual essay celebrating holistic health, essential oils, and wellness.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-1.mp4' },
     ],
   },
   {
@@ -241,11 +241,11 @@ export default function BrandCollaborationsSection() {
       icon: Sparkles,
       accentColor: '#FF9BD2',
       projects: [
-        { id: 'wb-1', numberLabel: '01 / 05', title: 'ELANURA WELLNESS STORY 01', description: 'Ambient visual essay celebrating holistic health, essential oils, and wellness.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#B388FF]/30', videoUrl: '/assets/wellbeing-1.mp4' },
+        { id: 'wb-5', numberLabel: '01 / 05', title: 'MODERN WELLNESS COMPOSITION 01', description: 'Minimal compositions, controlled camera movement, and layered visuals create a polished, modern wellness aesthetic.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#B388FF]/30', videoUrl: '/assets/wellbeing-august.mp4' },
         { id: 'wb-2', numberLabel: '02 / 05', title: 'MINDFUL MOVEMENT REEL 02', description: 'Serene camera work and rhythmic pacing designed for wellness brand engagement.', gradientBg: 'from-[#B388FF]/40 via-[#1A0A2E] to-[#FFB6E6]/30', videoUrl: '/assets/wellbeing-2.mp4' },
         { id: 'wb-3', numberLabel: '03 / 05', title: 'HOLISTIC LIFESTYLE FILM 03', description: 'Warm editorial lighting and natural imagery focusing on vitality and balance.', gradientBg: 'from-[#FFB6E6]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/wellbeing-3.mp4' },
         { id: 'wb-4', numberLabel: '04 / 05', title: 'VETIVER ESSENTIAL OIL STORY', description: 'Discover the timeless richness of Vetiver Oil, crafted for a deep, earthy and luxurious aroma.', gradientBg: 'from-[#6D4AFF]/40 via-[#1A0A2E] to-[#FF9BD2]/30', videoUrl: '/assets/vetiver-essential-oil.mp4' },
-        { id: 'wb-5', numberLabel: '05 / 05', title: 'MODERN WELLNESS COMPOSITION 05', description: 'Minimal compositions, controlled camera movement, and layered visuals create a polished, modern wellness aesthetic.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#B388FF]/30', videoUrl: '/assets/wellbeing-august.mp4' },
+        { id: 'wb-1', numberLabel: '05 / 05', title: 'ELANURA WELLNESS STORY 05', description: 'Ambient visual essay celebrating holistic health, essential oils, and wellness.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#B388FF]/30', videoUrl: '/assets/wellbeing-1.mp4' },
       ],
     },
     {
