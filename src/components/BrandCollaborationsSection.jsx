@@ -20,6 +20,7 @@ export const CATEGORY_CARDS = [
     projects: [
       { id: 'ps-1', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', aspectRatio: '9/16', videoUrl: '/assets/memoire-reel.mp4' },
       { id: 'ps-2', title: 'QUIRKY EDITORIAL BRAND FILM 02', description: 'Cinematic close-ups, quick cuts, playful camera movement, and expressive text overlays give the video a quirky, entertaining feel.', aspectRatio: '9/16', videoUrl: '/assets/brand-campaign-2.mp4' },
+      { id: 'ps-3', title: 'PRABHU PRASAD ICE CREAM STORY 03', description: 'AI-illustrated visuals, gentle character animation, close-up product shots, and emotional storytelling create a nostalgic, homely feel.', aspectRatio: '9/16', videoUrl: '/assets/prabhuprasad-icecream.mp4' },
     ],
   },
   {
@@ -212,8 +213,9 @@ export default function BrandCollaborationsSection() {
       icon: Film,
       accentColor: '#E91E8C',
       projects: [
-        { id: 'ps-1', numberLabel: '01 / 02', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/memoire-reel.mp4' },
-        { id: 'ps-2', numberLabel: '02 / 02', title: 'QUIRKY EDITORIAL BRAND FILM 02', description: 'Cinematic close-ups, quick cuts, playful camera movement, and expressive text overlays give the video a quirky, entertaining feel.', gradientBg: 'from-[#FFB3CB]/40 via-[#1A0A2E] to-[#E91E8C]/30', videoUrl: '/assets/brand-campaign-2.mp4' },
+        { id: 'ps-1', numberLabel: '01 / 03', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/memoire-reel.mp4' },
+        { id: 'ps-2', numberLabel: '02 / 03', title: 'QUIRKY EDITORIAL BRAND FILM 02', description: 'Cinematic close-ups, quick cuts, playful camera movement, and expressive text overlays give the video a quirky, entertaining feel.', gradientBg: 'from-[#FFB3CB]/40 via-[#1A0A2E] to-[#E91E8C]/30', videoUrl: '/assets/brand-campaign-2.mp4' },
+        { id: 'ps-3', numberLabel: '03 / 03', title: 'PRABHU PRASAD ICE CREAM STORY 03', description: 'AI-illustrated visuals, gentle character animation, close-up product shots, and emotional storytelling create a nostalgic, homely feel.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/prabhuprasad-icecream.mp4' },
       ],
     },
     {
