@@ -52,7 +52,7 @@ export default function YouTubeSection() {
     {
       id: 'short-1',
       title: 'When LORD GANESHA saved a DOG',
-      thumbnail: 'https://i.ytimg.com/vi/YTU_5wlTdV4/hqdefault.jpg',
+      thumbnail: '/assets/short-1-thumb.jpg',
       youtubeUrl: 'https://youtube.com/shorts/YTU_5wlTdV4?si=J_zxORJxDxSQDG1m',
       views: '1.2M views',
       duration: '0:45',
@@ -60,7 +60,7 @@ export default function YouTubeSection() {
     {
       id: 'short-2',
       title: 'Same Age, Different Life: This Video Will Move You to Tears',
-      thumbnail: 'https://i.ytimg.com/vi/bJPll8S4Q2A/hqdefault.jpg',
+      thumbnail: '/assets/short-2-thumb.jpg',
       youtubeUrl: 'https://youtube.com/shorts/bJPll8S4Q2A?si=mMxXdMKf36A9Ka-G',
       views: '850K views',
       duration: '0:58',
@@ -189,7 +189,7 @@ export default function YouTubeSection() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="flex sm:grid overflow-x-auto sm:overflow-visible snap-x sm:snap-none snap-mandatory grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-0 scrollbar-none -mx-5 px-5 sm:mx-0 sm:px-0">
             {youtubeShorts.map((short) => (
               <a
                 key={short.id}
@@ -197,47 +197,48 @@ export default function YouTubeSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
-                  group relative aspect-[9/14] sm:aspect-[9/15] rounded-3xl overflow-hidden bg-[#141414] border border-white/15
-                  shadow-[0_15px_45px_rgba(0,0,0,0.65)] hover:border-red-500/80 hover:shadow-[0_0_40px_rgba(239,68,68,0.45)]
-                  transition-all duration-300 flex flex-col justify-between p-5 cursor-pointer hover:-translate-y-1.5
+                  group relative w-[80vw] max-w-[300px] sm:w-full shrink-0 sm:shrink snap-center sm:snap-none
+                  aspect-[9/14] sm:aspect-[9/15] rounded-3xl overflow-hidden bg-[#181818] border border-white/20
+                  shadow-[0_15px_45px_rgba(0,0,0,0.5)] hover:border-red-500/90 hover:shadow-[0_0_40px_rgba(239,68,68,0.5)]
+                  transition-all duration-300 flex flex-col justify-between p-4 sm:p-5 cursor-pointer hover:-translate-y-1.5
                 "
               >
-                {/* Background Image */}
+                {/* Background Image - Brightened */}
                 <img
                   src={short.thumbnail}
                   alt={short.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90 group-hover:brightness-105"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-110 sm:brightness-115 group-hover:brightness-125"
                 />
 
-                {/* Ambient Gradient Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/25 z-10" />
+                {/* Ambient Light Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/5 z-10" />
 
                 {/* Top Badges */}
                 <div className="relative z-20 flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/90 text-white font-mono text-[10px] font-black uppercase tracking-wider backdrop-blur-md shadow-md">
+                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600 text-white font-mono text-[10px] font-black uppercase tracking-wider backdrop-blur-md shadow-md">
                     <YoutubeIcon className="w-3.5 h-3.5 text-white" />
                     <span>SHORTS</span>
                   </div>
 
                   {/* Views Badge */}
-                  <div className="px-3 py-1 rounded-full bg-black/80 border border-white/20 text-red-400 font-mono text-[11px] font-bold backdrop-blur-md shadow-md">
+                  <div className="px-3 py-1 rounded-full bg-black/80 border border-white/25 text-red-400 font-mono text-[11px] font-bold backdrop-blur-md shadow-md">
                     {short.views}
                   </div>
                 </div>
 
                 {/* Center Hover Play Button */}
                 <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-                  <div className="w-16 h-16 rounded-full bg-red-600/90 text-white shadow-[0_0_35px_rgba(239,68,68,0.8)] flex items-center justify-center opacity-90 group-hover:scale-110 group-hover:opacity-100 group-hover:bg-red-600 transition-all duration-300">
-                    <Play className="w-7 h-7 fill-white ml-0.5" />
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-600 text-white shadow-[0_0_35px_rgba(239,68,68,0.85)] flex items-center justify-center opacity-90 group-hover:scale-110 group-hover:opacity-100 group-hover:bg-red-600 transition-all duration-300">
+                    <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-white ml-0.5" />
                   </div>
                 </div>
 
                 {/* Bottom Content */}
                 <div className="relative z-20 space-y-1.5 pt-6">
-                  <h4 className="font-display font-bold text-base sm:text-lg text-white leading-snug group-hover:text-red-400 transition-colors line-clamp-2 drop-shadow-md">
+                  <h4 className="font-display font-bold text-sm sm:text-lg text-white leading-snug group-hover:text-red-400 transition-colors line-clamp-2 drop-shadow-md">
                     {short.title}
                   </h4>
-                  <div className="flex items-center justify-between text-xs text-white/60 font-mono pt-1">
+                  <div className="flex items-center justify-between text-xs text-white/70 font-mono pt-1">
                     <span>Watch Short</span>
                     <span className="flex items-center gap-1 text-red-400 font-bold group-hover:translate-x-1 transition-transform">
                       Open <ExternalLink className="w-3.5 h-3.5" />
