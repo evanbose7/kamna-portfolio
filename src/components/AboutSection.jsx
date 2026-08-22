@@ -5,11 +5,10 @@ export default function AboutSection({ onOpenConnectModal }) {
   const containerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  const paragraph1 = `Hello, I am Ari 👀 I’m a 25-year-old content creator, video editor, and creative who loves bringing ideas to life. I shoot, script, edit, and experiment with AI to create visuals and stories that feel fresh, engaging, and impossible to scroll past.`;
-  const paragraph2 = `I’ve worked with 10+ brands through freelancing, creating and handling content across industries like wellness, beauty, food and beverage, lifestyle, and more. From ideation to the final piece of content, I love being involved in the entire creative process.`;
-  const paragraph3 = `And yeah, I’d love to help bring your ideas to life too 👉🏻👈🏻`;
+  const paragraph1 = `Hello, I am Ari 👀 I’m a 25-year-old content creator, video editor, and creative who loves bringing ideas to life. I shoot, script, edit, and experiment with AI to create visuals and stories that feel fresh, engaging, and impossible to scroll past. I’ve worked with 10+ brands through freelancing, creating and handling content across industries like wellness, beauty, food and beverage, lifestyle, and more. From ideation to the final piece of content, I love being involved in the entire creative process.`;
+  const paragraph2 = `And yeah, I’d love to help bring your ideas to life too 👉🏻👈🏻`;
 
-  const paragraphs = [paragraph1, paragraph2, paragraph3];
+  const paragraphs = [paragraph1, paragraph2];
   
   const highlightWords = [
     'Ari', '👀', 'content', 'creator,', 'video', 'editor,', 'creative', 'AI', 'visuals', 'stories',
