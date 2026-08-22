@@ -221,7 +221,7 @@ export default function YouTubeSection() {
                   </div>
 
                   {/* Views Badge */}
-                  <div className="px-3 py-1 rounded-full bg-black/80 border border-white/25 text-red-400 font-mono text-[11px] font-bold backdrop-blur-md shadow-md">
+                  <div className="px-3 py-1 rounded-full bg-red-600 border border-red-500/30 text-white font-mono text-[11px] font-bold backdrop-blur-md shadow-md">
                     {short.views}
                   </div>
                 </div>
