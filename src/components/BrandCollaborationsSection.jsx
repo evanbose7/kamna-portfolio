@@ -139,7 +139,20 @@ export default function BrandCollaborationsSection() {
     setSelectedCard(card);
   };
 
-  const [hoveredCardId, setHoveredCardId] = useState(null);
+  const [isYtHovered, setIsYtHovered] = useState(false);
+  const ytHoverTimerRef = useRef(null);
+
+  const handleYtMouseEnter = () => {
+    if (ytHoverTimerRef.current) clearTimeout(ytHoverTimerRef.current);
+    ytHoverTimerRef.current = setTimeout(() => {
+      setIsYtHovered(true);
+    }, 1000);
+  };
+
+  const handleYtMouseLeave = () => {
+    if (ytHoverTimerRef.current) clearTimeout(ytHoverTimerRef.current);
+    setIsYtHovered(false);
+  };
 
   const desktopReelThumbnails = [
     '/assets/reel-thumb-1.jpg',
@@ -369,8 +382,8 @@ export default function BrandCollaborationsSection() {
 
         {/* CARD 02 — YOUTUBE VIDEOS */}
         <div
-          onMouseEnter={() => setHoveredCardId('youtube')}
-          onMouseLeave={() => setHoveredCardId(null)}
+          onMouseEnter={handleYtMouseEnter}
+          onMouseLeave={handleYtMouseLeave}
           className="
             col-span-8 row-span-1 min-h-[380px] lg:min-h-[535px] rounded-[28px] overflow-hidden
             border border-white/15 bg-[#120822]
@@ -385,7 +398,7 @@ export default function BrandCollaborationsSection() {
             rel="noopener noreferrer"
             className="absolute inset-0 z-0 w-full h-full block overflow-hidden"
           >
-            {hoveredCardId === 'youtube' ? (
+            {isYtHovered ? (
               <video
                 key={`yt-prev-${desktopYtIndex}`}
                 src={desktopYtMp4Previews[desktopYtIndex]}
