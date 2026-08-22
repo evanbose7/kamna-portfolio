@@ -69,10 +69,10 @@ export default function Hero({ onOpenConnectModal }) {
               SHOOT · SCRIPT · EDIT · CREATE WITH AI
             </p>
             <p
-              className="font-normal leading-relaxed tracking-wide text-[#F5F0EB]/85 pt-1"
-              style={{ fontSize: 'clamp(0.95rem, 1.2vw, 1.2rem)' }}
+              className="font-normal leading-relaxed tracking-wide text-[#F5F0EB]/90 pt-1"
+              style={{ fontSize: 'clamp(1rem, 1.35vw, 1.3rem)' }}
             >
-              I create visually compelling content and bring ideas to life for brands.
+              I create <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-[#FFB3CB] to-[#E91E8C]">visually compelling content</span> and <span className="font-semibold text-white">bring ideas to life</span> for brands.
             </p>
           </div>
 
