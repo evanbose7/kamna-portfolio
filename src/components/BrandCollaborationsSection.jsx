@@ -667,6 +667,12 @@ export default function BrandCollaborationsSection() {
                           </span>
                         </div>
 
+                        {proj.id !== 'ps-2' && (
+                          <div className="absolute top-3 right-3 z-20 pointer-events-none px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#E91E8C] to-[#FFB3CB] text-white font-mono text-[10px] font-black tracking-widest shadow-lg">
+                            AI
+                          </div>
+                        )}
+
                         <div className="absolute bottom-3 left-3 right-3 z-20 pointer-events-none p-2.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between">
                           <span className="font-bold text-xs text-white leading-snug line-clamp-1">
                             {proj.title}
