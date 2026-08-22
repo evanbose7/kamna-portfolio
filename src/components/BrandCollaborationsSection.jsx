@@ -45,7 +45,7 @@ export const CATEGORY_CARDS = [
       { id: 'food-1', title: 'ARTISANAL DESSERT FILM 01', description: 'Cinematic food cinematography highlighting textures, flavor profiles, and artisanal passion.', aspectRatio: '9/16', videoUrl: '/assets/food-1.mp4' },
       { id: 'food-3', title: 'VOICEOVER FOOD STORY 02', description: 'Narrative-driven culinary reel with rich audio score and voiceover storytelling.', aspectRatio: '9/16', videoUrl: '/assets/food-3.mp4' },
       { id: 'food-4', title: 'SEASONAL MENU SPECIAL 03', description: 'Visual feast capturing vibrant colors and sensory culinary experiences.', aspectRatio: '9/16', videoUrl: '/assets/food-4.mp4' },
-      { id: 'food-5', title: 'CHOCO ICECREAM BAR 04', description: 'Rich chocolate dipping, artisanal ice cream texture, and indulgent sensory storytelling.', aspectRatio: '9/16', videoUrl: '/assets/choco-icecream-bar.mp4' },
+      { id: 'food-5', title: 'CHOCO ICECREAM BAR 04', description: 'A sleek, minimal chocolate ice cream bar comes to life with a clean, premium visual style.', aspectRatio: '9/16', videoUrl: '/assets/choco-icecream-bar.mp4' },
     ],
   },
   {
@@ -202,7 +202,7 @@ export default function BrandCollaborationsSection() {
         { id: 'food-1', numberLabel: '01 / 04', title: 'ARTISANAL DESSERT FILM 01', description: 'Cinematic food cinematography highlighting textures, flavor profiles, and artisanal passion.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#FFB6E6]/30', videoUrl: '/assets/food-1.mp4' },
         { id: 'food-3', numberLabel: '02 / 04', title: 'VOICEOVER FOOD STORY 02', description: 'Narrative-driven culinary reel with rich audio score and voiceover storytelling.', gradientBg: 'from-[#FFB6E6]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/food-3.mp4' },
         { id: 'food-4', numberLabel: '03 / 04', title: 'SEASONAL MENU SPECIAL 03', description: 'Visual feast capturing vibrant colors and sensory culinary experiences.', gradientBg: 'from-[#6D4AFF]/40 via-[#1A0A2E] to-[#FF9BD2]/30', videoUrl: '/assets/food-4.mp4' },
-        { id: 'food-5', numberLabel: '04 / 04', title: 'CHOCO ICECREAM BAR 04', description: 'Rich chocolate dipping, artisanal ice cream texture, and indulgent sensory storytelling.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/choco-icecream-bar.mp4' },
+        { id: 'food-5', numberLabel: '04 / 04', title: 'CHOCO ICECREAM BAR 04', description: 'A sleek, minimal chocolate ice cream bar comes to life with a clean, premium visual style.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/choco-icecream-bar.mp4' },
       ],
     },
     {
