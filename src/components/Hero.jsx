@@ -65,9 +65,6 @@ export default function Hero({ onOpenConnectModal }) {
           </div>
 
           <div className="flex flex-col gap-3 max-w-xl mx-auto lg:mx-0">
-            <p className="font-semibold uppercase tracking-widest text-[#E91E8C] text-xs sm:text-sm">
-              CONTENT CREATOR · VIDEO EDITOR · SCRIPTWRITER · AI FOR BRANDS
-            </p>
             <p className="font-bold uppercase tracking-wider text-white text-xs sm:text-sm">
               I SHOOT · I SCRIPT · I EDIT · I CREATE WITH AI
             </p>
@@ -75,7 +72,7 @@ export default function Hero({ onOpenConnectModal }) {
               className="font-normal leading-relaxed tracking-wide text-[#F5F0EB]/85 pt-1"
               style={{ fontSize: 'clamp(0.95rem, 1.2vw, 1.2rem)' }}
             >
-              I create <span className="font-bold text-white underline decoration-[#E91E8C]/60 underline-offset-4">visually compelling content</span> and bring ideas to life for brands.
+              I create visually compelling content and bring ideas to life for brands.
             </p>
           </div>
 
