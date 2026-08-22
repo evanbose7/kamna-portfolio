@@ -33,7 +33,7 @@ export default function SplashLoader() {
           className="font-semibold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#F5F0EB] via-[#FFB3CB] to-[#E91E8C] text-[clamp(6rem,24vw,14rem)] drop-shadow-[0_0_40px_rgba(233,30,140,0.7)] select-none animate-pulse leading-none py-4"
           style={{ fontFamily: "'Alex Brush', 'Great Vibes', 'Allura', 'Sacramento', cursive" }}
         >
-          Arii
+          Ari
         </span>
       </div>
     </div>

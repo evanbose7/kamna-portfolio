@@ -7,7 +7,7 @@ export default function Navbar({ onOpenConnectModal }) {
   const navLinks = [
     { name: 'Instagram', href: '#insta' },
     { name: 'About', href: '#about' },
-    { name: 'MY WORKS', href: '#works' },
+    { name: 'BRAND CONTENT', href: '#works' },
     { name: 'Connect', action: 'connectModal' },
   ];
 
@@ -17,7 +17,7 @@ export default function Navbar({ onOpenConnectModal }) {
         href="#"
         className="font-black uppercase tracking-tight text-[#F5F0EB] hover:text-[#E91E8C] transition-colors duration-200 text-[clamp(1.2rem,2.8vw,2rem)]"
       >
-        ARII
+        ARI
       </a>
 
       {/* Desktop Links */}

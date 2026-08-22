@@ -12,7 +12,7 @@ export default function Footer() {
               href="#"
               className="font-black uppercase tracking-tight text-[#F5F0EB]/90 hover:text-[#E91E8C] transition-colors text-[clamp(1.5rem,4vw,2.5rem)]"
             >
-              ARII
+              ARI
             </a>
             <p className="max-w-xs font-light text-[#F5F0EB]/40 leading-relaxed text-[clamp(0.8rem,1.3vw,0.95rem)]">
               Visuals & Storytelling. Bringing ideas to life through high quality content.
@@ -23,10 +23,10 @@ export default function Footer() {
             <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/30 mb-1 font-bold">
               Navigate
             </p>
-            {['Instagram', 'About', 'MY WORKS'].map((item) => (
+            {['Instagram', 'About', 'BRAND CONTENT'].map((item) => (
               <a
                 key={item}
-                href={item === 'MY WORKS' ? '#works' : `#${item.toLowerCase() === 'instagram' ? 'insta' : item.toLowerCase()}`}
+                href={item === 'BRAND CONTENT' ? '#works' : `#${item.toLowerCase() === 'instagram' ? 'insta' : item.toLowerCase()}`}
                 className="group relative inline-flex w-fit items-center text-xs font-semibold uppercase tracking-widest text-[#F5F0EB]/60 hover:text-[#F5F0EB] transition-colors"
               >
                 {item}
@@ -66,7 +66,7 @@ export default function Footer() {
 
       <div className="border-t border-[#F5F0EB]/5 px-5 py-6 sm:px-8 md:px-10">
         <p className="text-center font-light text-[#F5F0EB]/30 uppercase tracking-widest text-[clamp(0.6rem,1vw,0.75rem)]">
-          © {new Date().getFullYear()} ARII. All rights reserved.
+          © {new Date().getFullYear()} ARI. All rights reserved.
         </p>
       </div>
     </footer>

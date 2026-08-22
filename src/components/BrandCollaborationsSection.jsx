@@ -74,15 +74,15 @@ export const CATEGORY_CARDS = [
   },
   {
     id: 'wellbeing',
-    title: 'WELL BEING',
-    subtitle: 'MIND & MOVEMENT',
-    description: 'Holistic wellness, movement & mindful living films.',
+    title: 'WELLBEING & ESSENTIAL OILS',
+    subtitle: 'MIND, MOVEMENT & ESSENTIAL OILS',
+    description: 'Holistic wellness, essential oils & mindful living films.',
     icon: Sparkles,
     projects: [
-      { id: 'wb-1', title: 'ELANURA WELLNESS STORY 01', description: 'Ambient visual essay celebrating holistic health, natural beauty, and wellness.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-1.mp4' },
+      { id: 'wb-1', title: 'ELANURA WELLNESS STORY 01', description: 'Ambient visual essay celebrating holistic health, essential oils, and wellness.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-1.mp4' },
       { id: 'wb-2', title: 'MINDFUL MOVEMENT REEL 02', description: 'Serene camera work and rhythmic pacing designed for wellness brand engagement.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-2.mp4' },
       { id: 'wb-3', title: 'HOLISTIC LIFESTYLE FILM 03', description: 'Warm editorial lighting and natural imagery focusing on vitality and balance.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-3.mp4' },
-      { id: 'wb-4', title: 'ELANURA ESSENCE CAMPAIGN 04', description: 'Mindful visual narrative showcasing organic wellness experiences.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-4.mp4' },
+      { id: 'wb-4', title: 'ELANURA ESSENCE CAMPAIGN 04', description: 'Mindful visual narrative showcasing organic wellness and essential oils.', aspectRatio: '9/16', videoUrl: '/assets/wellbeing-4.mp4' },
     ],
   },
   {
@@ -232,16 +232,16 @@ export default function BrandCollaborationsSection() {
     },
     {
       id: 'wellbeing',
-      eyebrowLabel: '04 / 05 ✦ MIND & MOVEMENT',
-      title: 'WELL BEING',
-      subhead: 'Holistic wellness, movement & mindful living films.',
+      eyebrowLabel: '04 / 05 ✦ MIND, MOVEMENT & ESSENTIAL OILS',
+      title: 'WELLBEING & ESSENTIAL OILS',
+      subhead: 'Holistic wellness, essential oils & mindful living films.',
       icon: Sparkles,
       accentColor: '#FF9BD2',
       projects: [
-        { id: 'wb-1', numberLabel: '01 / 04', title: 'ELANURA WELLNESS STORY 01', description: 'Ambient visual essay celebrating holistic health, natural beauty, and wellness.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#B388FF]/30', videoUrl: '/assets/wellbeing-1.mp4' },
+        { id: 'wb-1', numberLabel: '01 / 04', title: 'ELANURA WELLNESS STORY 01', description: 'Ambient visual essay celebrating holistic health, essential oils, and wellness.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#B388FF]/30', videoUrl: '/assets/wellbeing-1.mp4' },
         { id: 'wb-2', numberLabel: '02 / 04', title: 'MINDFUL MOVEMENT REEL 02', description: 'Serene camera work and rhythmic pacing designed for wellness brand engagement.', gradientBg: 'from-[#B388FF]/40 via-[#1A0A2E] to-[#FFB6E6]/30', videoUrl: '/assets/wellbeing-2.mp4' },
         { id: 'wb-3', numberLabel: '03 / 04', title: 'HOLISTIC LIFESTYLE FILM 03', description: 'Warm editorial lighting and natural imagery focusing on vitality and balance.', gradientBg: 'from-[#FFB6E6]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/wellbeing-3.mp4' },
-        { id: 'wb-4', numberLabel: '04 / 04', title: 'ELANURA ESSENCE CAMPAIGN 04', description: 'Mindful visual narrative showcasing organic wellness experiences.', gradientBg: 'from-[#6D4AFF]/40 via-[#1A0A2E] to-[#FF9BD2]/30', videoUrl: '/assets/wellbeing-4.mp4' },
+        { id: 'wb-4', numberLabel: '04 / 04', title: 'ELANURA ESSENCE CAMPAIGN 04', description: 'Mindful visual narrative showcasing organic wellness and essential oils.', gradientBg: 'from-[#6D4AFF]/40 via-[#1A0A2E] to-[#FF9BD2]/30', videoUrl: '/assets/wellbeing-4.mp4' },
       ],
     },
     {
@@ -284,7 +284,7 @@ export default function BrandCollaborationsSection() {
           className="font-black uppercase leading-none tracking-tight text-[#F5F0EB]"
           style={{ fontSize: 'clamp(2.5rem, 10vw, 130px)' }}
         >
-          MY WORKS
+          BRAND CONTENT
         </h2>
         <p className="hidden md:block text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
           Collaborations · Campaigns · Proven Results
@@ -619,7 +619,7 @@ export default function BrandCollaborationsSection() {
           </div>
         </div>
 
-        {/* CARD 06 — WELL BEING */}
+        {/* CARD 06 — WELLBEING & ESSENTIAL OILS */}
         <div
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[5])}
           className="
@@ -632,7 +632,7 @@ export default function BrandCollaborationsSection() {
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/wellbeing_bento_bg.jpg"
-              alt="Well Being Category Background"
+              alt="Wellbeing & Essential Oils Category Background"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-85 group-hover:opacity-100 brightness-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#12071B]/90 via-[#12071B]/35 to-black/20 z-10" />
@@ -642,7 +642,7 @@ export default function BrandCollaborationsSection() {
             <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/60 border border-white/20 backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-[#B388FF]" />
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#FFF7FF] uppercase">
-                MIND & MOVEMENT
+                MIND, MOVEMENT & ESSENTIAL OILS
               </span>
             </div>
             <div className="w-7 h-7 rounded-full bg-white/15 border border-white/25 text-[#FFF7FF] backdrop-blur-md group-hover:bg-[#B388FF] group-hover:text-[#100719] flex items-center justify-center transition-colors">
@@ -652,10 +652,10 @@ export default function BrandCollaborationsSection() {
 
           <div className="relative space-y-0.5 z-30 pt-3">
             <h3 className="font-display font-black text-xl text-[#FFF7FF] tracking-tight uppercase group-hover:text-[#B388FF] transition-colors drop-shadow-md">
-              WELL BEING
+              WELLBEING & ESSENTIAL OILS
             </h3>
             <p className="text-[11px] text-[#FFF7FF]/90 line-clamp-2 drop-shadow-md">
-              Holistic wellness & mindful living films.
+              Holistic wellness, essential oils & mindful living films.
             </p>
           </div>
         </div>

@@ -99,7 +99,7 @@ export default function Hero({ onOpenConnectModal }) {
               <span className="inline-block mr-[0.25em]">Hi,</span>
               <span className="inline-block mr-[0.25em]">I'm</span>
               <span className="inline-block bg-gradient-to-r from-[#F5F0EB] via-[#FFB3CB] to-[#E91E8C] bg-clip-text text-transparent">
-                ARII
+                ARI
               </span>
             </h1>
           </div>
