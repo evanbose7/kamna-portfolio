@@ -684,11 +684,8 @@ export default function BrandCollaborationsSection() {
                         <div className="absolute inset-0 z-10 pointer-events-none rounded-[24px] shadow-[inset_0_0_25px_rgba(0,0,0,0.75)]" />
                       </div>
 
-                      <div className="space-y-1 px-1 text-center max-w-[310px] mx-auto">
-                        <h4 className="font-bold text-sm text-white tracking-tight uppercase">
-                          {proj.title}
-                        </h4>
-                        <p className="text-xs text-white/70 line-clamp-2 leading-relaxed font-normal">
+                      <div className="px-1 text-center max-w-[310px] mx-auto">
+                        <p className="text-xs text-white/75 line-clamp-2 leading-relaxed font-normal">
                           {proj.description}
                         </p>
                       </div>
