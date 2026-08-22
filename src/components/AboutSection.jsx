@@ -8,7 +8,7 @@ export default function AboutSection({ onOpenConnectModal }) {
   const aboutText = `Hi, I'm ARII, I bring ideas to life through visuals and storytelling. From shooting content and writing scripts to editing videos and creating AI generated visuals, I help brands turn ideas into engaging, high quality content.`;
 
   const words = aboutText.split(' ');
-  const highlightWords = ['OPPO,', 'MARS,', 'Minimalist,', '17K+', '1k+', 'LinkedIn', 'Instagram', 'storyteller,', 'strategist.'];
+  const highlightWords = ['ARII,', 'visuals', 'storytelling.', 'scripts', 'editing', 'AI', 'content.'];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,7 +18,6 @@ export default function AboutSection({ onOpenConnectModal }) {
       const windowHeight = window.innerHeight;
 
       // Start revealing slowly as section enters screen (65% viewport height)
-      // Progress smoothly until user is just about to reach Free Resources (-10% viewport height)
       const start = windowHeight * 0.65;
       const end = -windowHeight * 0.1;
 
