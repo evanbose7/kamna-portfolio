@@ -64,18 +64,32 @@ export default function Hero({ onOpenConnectModal }) {
             </h1>
           </div>
 
-          <div className="flex flex-col gap-3 max-w-xl mx-auto lg:mx-0">
+          <div className="flex flex-col gap-4 max-w-xl mx-auto lg:mx-0">
+            {/* Styled Category Pills */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-[11px] sm:text-xs font-mono font-bold tracking-widest uppercase">
+              <span className="px-3 py-1 rounded-full bg-[#E91E8C]/15 border border-[#E91E8C]/35 text-[#FF9BD2] shadow-[0_0_15px_rgba(233,30,140,0.2)]">
+                CONTENT CREATOR
+              </span>
+              <span className="text-white/30">•</span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/15 text-[#F5F0EB]/90">
+                VIDEO EDITOR
+              </span>
+              <span className="text-white/30">•</span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/15 text-[#F5F0EB]/90">
+                SCRIPTWRITER
+              </span>
+              <span className="text-white/30">•</span>
+              <span className="px-3 py-1 rounded-full bg-[#E91E8C]/15 border border-[#E91E8C]/35 text-[#FF9BD2] shadow-[0_0_15px_rgba(233,30,140,0.2)]">
+                AI FOR BRANDS
+              </span>
+            </div>
+
+            {/* Description Body */}
             <p
-              className="font-light uppercase leading-snug tracking-wide text-[#F5F0EB] flex items-center justify-center lg:justify-start gap-2"
-              style={{ fontSize: 'clamp(0.9rem, 1.3vw, 1.25rem)' }}
+              className="font-normal leading-relaxed tracking-wide text-[#F5F0EB]/80 pt-1"
+              style={{ fontSize: 'clamp(0.9rem, 1.15vw, 1.15rem)' }}
             >
-              CONTENT CREATOR · VIDEO EDITOR · SCRIPTWRITER · AI FOR BRANDS
-            </p>
-            <p
-              className="font-light leading-relaxed tracking-wide text-[#F5F0EB]/70"
-              style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1.1rem)' }}
-            >
-              I bring ideas to life through visuals and storytelling. From shooting content and writing scripts to editing videos and creating AI generated visuals, I help brands turn ideas into engaging, high quality content.
+              I bring ideas to life through <span className="font-semibold text-white">visuals and storytelling</span>. From <span className="text-[#FF9BD2] font-semibold">shooting content</span> and <span className="text-[#FF9BD2] font-semibold">writing scripts</span> to <span className="text-white font-semibold">editing videos</span> and creating <span className="text-[#FF9BD2] font-semibold">AI generated visuals</span>, I help brands turn ideas into engaging, high quality content.
             </p>
           </div>
 
