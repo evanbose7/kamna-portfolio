@@ -140,11 +140,20 @@ export default function BrandCollaborationsSection() {
     setSelectedCard(card);
   };
 
+  const [hoveredCardId, setHoveredCardId] = useState(null);
+
   const desktopReelThumbnails = [
     '/assets/reel-thumb-1.jpg',
     '/assets/reel-thumb-2.jpg',
     '/assets/reel-thumb-3.jpg',
     '/assets/reel-thumb-4.jpg',
+  ];
+
+  const desktopReelMp4Previews = [
+    '/assets/food-1.mp4',
+    '/assets/architecture-1.mp4',
+    '/assets/jewellery-1.mp4',
+    '/assets/wellbeing-1.mp4',
   ];
 
   const desktopReelTitles = [
@@ -159,6 +168,13 @@ export default function BrandCollaborationsSection() {
     '/assets/yt-thumb-2.jpg',
     '/assets/yt-thumb-1.jpg',
     '/assets/yt-thumb-2.jpg',
+  ];
+
+  const desktopYtMp4Previews = [
+    '/assets/yt-preview-1.mp4',
+    '/assets/yt-preview-2.mp4',
+    '/assets/yt-preview-1.mp4',
+    '/assets/yt-preview-2.mp4',
   ];
 
   const desktopYtTitles = [
@@ -286,6 +302,8 @@ export default function BrandCollaborationsSection() {
         {/* CARD 01 — SOCIAL CONTENT */}
         <div
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[0])}
+          onMouseEnter={() => setHoveredCardId('social-content')}
+          onMouseLeave={() => setHoveredCardId(null)}
           className="
             col-span-4 row-span-2 min-h-[620px] lg:min-h-[835px] rounded-[28px] overflow-hidden
             border border-white/15 bg-[#12071B]
@@ -295,12 +313,25 @@ export default function BrandCollaborationsSection() {
           "
         >
           <div className="absolute inset-0 z-0 w-full h-full">
-            <img
-              key={desktopReelIndex}
-              src={desktopReelThumbnails[desktopReelIndex]}
-              alt="Social Reel Preview"
-              className="w-full h-full object-cover select-none brightness-[1.05] contrast-[1.05] group-hover:scale-105 transition-transform duration-700"
-            />
+            {hoveredCardId === 'social-content' ? (
+              <video
+                key={`reel-prev-${desktopReelIndex}`}
+                src={desktopReelMp4Previews[desktopReelIndex]}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover select-none brightness-[1.05] contrast-[1.05] group-hover:scale-105 transition-transform duration-700"
+              />
+            ) : (
+              <img
+                key={desktopReelIndex}
+                src={desktopReelThumbnails[desktopReelIndex]}
+                alt="Social Reel Preview"
+                className="w-full h-full object-cover select-none brightness-[1.05] contrast-[1.05] group-hover:scale-105 transition-transform duration-700"
+              />
+            )}
             <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#0F0718]/90 via-[#0F0718]/45 to-transparent pointer-events-none z-10" />
             <div className="absolute bottom-0 inset-x-0 h-36 bg-gradient-to-t from-[#0F0718]/95 via-[#0F0718]/50 to-transparent pointer-events-none z-10" />
           </div>
@@ -369,6 +400,8 @@ export default function BrandCollaborationsSection() {
 
         {/* CARD 02 — YOUTUBE VIDEOS */}
         <div
+          onMouseEnter={() => setHoveredCardId('youtube')}
+          onMouseLeave={() => setHoveredCardId(null)}
           className="
             col-span-8 row-span-1 min-h-[380px] lg:min-h-[535px] rounded-[28px] overflow-hidden
             border border-white/15 bg-[#120822]
@@ -383,12 +416,25 @@ export default function BrandCollaborationsSection() {
             rel="noopener noreferrer"
             className="absolute inset-0 z-0 w-full h-full block overflow-hidden"
           >
-            <img
-              key={desktopYtIndex}
-              src={desktopYtThumbnails[desktopYtIndex]}
-              alt="YouTube Video Preview"
-              className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-700"
-            />
+            {hoveredCardId === 'youtube' ? (
+              <video
+                key={`yt-prev-${desktopYtIndex}`}
+                src={desktopYtMp4Previews[desktopYtIndex]}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-700"
+              />
+            ) : (
+              <img
+                key={desktopYtIndex}
+                src={desktopYtThumbnails[desktopYtIndex]}
+                alt="YouTube Video Preview"
+                className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-700"
+              />
+            )}
             <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-[#0F0718]/90 via-[#0F0718]/40 to-transparent pointer-events-none z-10" />
             <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#0F0718]/95 via-[#0F0718]/45 to-transparent pointer-events-none z-10" />
           </a>
