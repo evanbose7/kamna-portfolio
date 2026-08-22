@@ -66,7 +66,7 @@ export default function Hero({ onOpenConnectModal }) {
 
           <div className="flex flex-col gap-3 max-w-xl mx-auto lg:mx-0">
             <p className="font-bold uppercase tracking-wider text-white text-xs sm:text-sm">
-              I SHOOT · I SCRIPT · I EDIT · I CREATE WITH AI
+              SHOOT · SCRIPT · EDIT · CREATE WITH AI
             </p>
             <p
               className="font-normal leading-relaxed tracking-wide text-[#F5F0EB]/85 pt-1"
