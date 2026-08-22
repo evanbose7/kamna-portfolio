@@ -1,14 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 
 export default function Hero({ onOpenConnectModal }) {
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
   const [isTapped, setIsTapped] = useState(false);
   const [hasTappedOnce, setHasTappedOnce] = useState(false);
+  const [heroScrollProgress, setHeroScrollProgress] = useState(1);
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
 
   // Video media configuration (change to true if using video file in public/assets/)
   const isVideoMedia = false; 
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const isMobile = window.innerWidth < 1024;
+      setIsMobileScreen(isMobile);
+      if (!isMobile) {
+        setHeroScrollProgress(1);
+      }
+    };
+
+    const handleScroll = () => {
+      if (window.innerWidth < 1024) {
+        const scrollY = window.scrollY;
+        // Slowly and smoothly reveal text over first 200px of scroll
+        const progress = Math.min(Math.max(scrollY / 180, 0), 1);
+        setHeroScrollProgress(progress);
+      } else {
+        setHeroScrollProgress(1);
+      }
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   // Toggle portrait tilt & stickers state on mobile tap, clearing hover residue
   const handlePortraitClick = () => {
@@ -49,8 +82,15 @@ export default function Hero({ onOpenConnectModal }) {
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center relative z-10">
         
-        {/* Left Column: Heading & Info */}
-        <div className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left">
+        {/* Left Column: Heading & Info (Initially hidden on mobile, slowly revealed on scroll) */}
+        <div
+          className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left transition-all duration-300 ease-out"
+          style={isMobileScreen ? {
+            opacity: heroScrollProgress,
+            transform: `translateY(${(1 - heroScrollProgress) * 28}px)`,
+            pointerEvents: heroScrollProgress < 0.25 ? 'none' : 'auto',
+          } : {}}
+        >
           <div>
             <h1
               className="font-black uppercase leading-[1.05] tracking-tight break-words text-[#F5F0EB]"
