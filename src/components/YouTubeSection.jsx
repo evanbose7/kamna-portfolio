@@ -213,9 +213,9 @@ export default function YouTubeSection() {
                 {/* Ambient Light Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/5 z-10" />
 
-                {/* Top Badge: View Count Pill on Top Left */}
+                {/* Top Badge: View Count Pill on Top Left (Prominent on Phone & Desktop) */}
                 <div className="relative z-20 flex items-center justify-start">
-                  <div className="px-3 py-1 rounded-full bg-red-600 border border-red-500/30 text-white font-mono text-[11px] font-bold backdrop-blur-md shadow-md">
+                  <div className="px-3 py-1.5 rounded-full bg-red-600 border border-red-500/40 text-white font-mono text-xs font-black tracking-wide backdrop-blur-md shadow-lg">
                     {short.views}
                   </div>
                 </div>
