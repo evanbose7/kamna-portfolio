@@ -67,15 +67,15 @@ export default function Hero({ onOpenConnectModal }) {
           <div className="flex flex-col gap-3 max-w-xl mx-auto lg:mx-0">
             <p
               className="font-light uppercase leading-snug tracking-wide text-[#F5F0EB] flex items-center justify-center lg:justify-start gap-2"
-              style={{ fontSize: 'clamp(0.95rem, 1.4vw, 1.35rem)' }}
+              style={{ fontSize: 'clamp(0.9rem, 1.3vw, 1.25rem)' }}
             >
-              Building my brand while teaching you to build yours <span className="text-[#E91E8C]">⭐️</span>
+              CONTENT CREATOR · VIDEO EDITOR · SCRIPTWRITER · AI FOR BRANDS
             </p>
             <p
               className="font-light leading-relaxed tracking-wide text-[#F5F0EB]/70"
               style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1.1rem)' }}
             >
-              Personal brand strategist, Content creator, storyteller, and Ghostwriter.
+              I bring ideas to life through visuals and storytelling. From shooting content and writing scripts to editing videos and creating AI generated visuals, I help brands turn ideas into engaging, high quality content.
             </p>
           </div>
 
