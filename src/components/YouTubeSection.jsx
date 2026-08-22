@@ -48,6 +48,25 @@ export default function YouTubeSection() {
     },
   ];
 
+  const youtubeShorts = [
+    {
+      id: 'short-1',
+      title: 'When LORD GANESHA saved a DOG',
+      thumbnail: 'https://i.ytimg.com/vi/YTU_5wlTdV4/hqdefault.jpg',
+      youtubeUrl: 'https://youtube.com/shorts/YTU_5wlTdV4?si=J_zxORJxDxSQDG1m',
+      views: '1.2M views',
+      duration: '0:45',
+    },
+    {
+      id: 'short-2',
+      title: 'Same Age, Different Life: This Video Will Move You to Tears',
+      thumbnail: 'https://i.ytimg.com/vi/bJPll8S4Q2A/hqdefault.jpg',
+      youtubeUrl: 'https://youtube.com/shorts/bJPll8S4Q2A?si=mMxXdMKf36A9Ka-G',
+      views: '850K views',
+      duration: '0:58',
+    },
+  ];
+
   // Desktop Hover Handlers
   const handleMouseEnter = (id) => {
     if (window.innerWidth < 768) return;
@@ -155,7 +174,80 @@ export default function YouTubeSection() {
           </h2>
         </div>
 
-        {/* --- 📱 MOBILE VIEW: SWIPE CAROUSEL --- */}
+        {/* --- ⚡ YOUTUBE SHORTS SECTION (Just before previous videos) --- */}
+        <div className="mb-14 max-w-4xl mx-auto">
+          <div className="flex items-center justify-between mb-5 px-1">
+            <div className="flex items-center gap-2">
+              <span className="flex h-2.5 w-2.5 rounded-full bg-red-500 animate-pulse" />
+              <h3 className="font-display font-black text-xl sm:text-2xl text-white uppercase tracking-tight flex items-center gap-2">
+                <YoutubeIcon className="w-5 h-5 text-red-500" />
+                YouTube Shorts
+              </h3>
+            </div>
+            <span className="text-xs font-mono font-bold text-white/50 uppercase tracking-widest">
+              2 Viral Shorts
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {youtubeShorts.map((short) => (
+              <a
+                key={short.id}
+                href={short.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  group relative aspect-[9/14] sm:aspect-[9/15] rounded-3xl overflow-hidden bg-[#141414] border border-white/15
+                  shadow-[0_15px_45px_rgba(0,0,0,0.65)] hover:border-red-500/80 hover:shadow-[0_0_40px_rgba(239,68,68,0.45)]
+                  transition-all duration-300 flex flex-col justify-between p-5 cursor-pointer hover:-translate-y-1.5
+                "
+              >
+                {/* Background Image */}
+                <img
+                  src={short.thumbnail}
+                  alt={short.title}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90 group-hover:brightness-105"
+                />
+
+                {/* Ambient Gradient Overlays */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/25 z-10" />
+
+                {/* Top Badges */}
+                <div className="relative z-20 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/90 text-white font-mono text-[10px] font-black uppercase tracking-wider backdrop-blur-md shadow-md">
+                    <YoutubeIcon className="w-3.5 h-3.5 text-white" />
+                    <span>SHORTS</span>
+                  </div>
+
+                  {/* Views Badge */}
+                  <div className="px-3 py-1 rounded-full bg-black/80 border border-white/20 text-red-400 font-mono text-[11px] font-bold backdrop-blur-md shadow-md">
+                    {short.views}
+                  </div>
+                </div>
+
+                {/* Center Hover Play Button */}
+                <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                  <div className="w-16 h-16 rounded-full bg-red-600/90 text-white shadow-[0_0_35px_rgba(239,68,68,0.8)] flex items-center justify-center opacity-90 group-hover:scale-110 group-hover:opacity-100 group-hover:bg-red-600 transition-all duration-300">
+                    <Play className="w-7 h-7 fill-white ml-0.5" />
+                  </div>
+                </div>
+
+                {/* Bottom Content */}
+                <div className="relative z-20 space-y-1.5 pt-6">
+                  <h4 className="font-display font-bold text-base sm:text-lg text-white leading-snug group-hover:text-red-400 transition-colors line-clamp-2 drop-shadow-md">
+                    {short.title}
+                  </h4>
+                  <div className="flex items-center justify-between text-xs text-white/60 font-mono pt-1">
+                    <span>Watch Short</span>
+                    <span className="flex items-center gap-1 text-red-400 font-bold group-hover:translate-x-1 transition-transform">
+                      Open <ExternalLink className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
         <div
           ref={mobileScrollRef}
           onScroll={handleMobileScroll}
