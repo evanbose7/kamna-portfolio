@@ -125,13 +125,13 @@ export default function Hero({ onOpenConnectModal }) {
 
             {/* White Polaroid Card with Tilt & Pop Toggle Animation */}
             <div
-              className={`relative bg-[#121212] border border-white/20 p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform transition-all duration-500 ease-out ${
+              className={`relative bg-white p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform transition-all duration-500 ease-out ${
                 isCardActive
                   ? 'rotate-3 scale-[1.04] translate-y-0 shadow-[0_35px_70px_-15px_rgba(233,30,140,0.4)]'
                   : 'rotate-0 scale-100 translate-y-0'
               }`}
             >
-              <div className="relative overflow-hidden aspect-[2/3] bg-[#0A0A0A]">
+              <div className="relative overflow-hidden aspect-[2/3] bg-[#F5F0EB]">
                 {isVideoMedia ? (
                   <video
                     src={mediaSrc}
@@ -152,7 +152,7 @@ export default function Hero({ onOpenConnectModal }) {
               </div>
 
               {/* Handwritten Polaroid Caption */}
-              <p className="text-center text-white/80 font-caveat text-xl pt-3 pb-1 tracking-wide font-semibold">
+              <p className="text-center text-[#0A0A0A]/70 font-caveat text-xl pt-3 pb-1 tracking-wide font-semibold">
                 @ariimakesfilms
               </p>
             </div>
