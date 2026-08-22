@@ -50,35 +50,19 @@ export default function Footer() {
               >
                 <InstagramIcon className="w-5 h-5" />
               </a>
-              <a
+              <a>
                 href="https://www.youtube.com/@Kidwithcrayons"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
                 className="text-[#F5F0EB]/40 hover:text-[#E91E8C] transition-colors"
-              >
+              </a>
                 <YoutubeIcon className="w-5 h-5" />
-              </a>
-              <a
-                href="https://medium.com/@thekamnabhardwaj"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Medium"
-                className="text-[#F5F0EB]/40 hover:text-[#E91E8C] transition-colors"
-              >
-                <MediumIcon className="w-5 h-5" />
-              </a>
+              
             </div>
 
-            <a
-              href="https://topmate.io/kamna_bhardwaj"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-[#E91E8C]/70 hover:text-[#E91E8C] transition-colors pt-1"
-            >
-              Book on Topmate
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
+            
+          
           </div>
 
         </div>
