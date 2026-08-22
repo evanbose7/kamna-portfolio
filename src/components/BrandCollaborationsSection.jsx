@@ -823,6 +823,12 @@ export default function BrandCollaborationsSection() {
                         0{idx + 1} / 0{selectedCard.projects.length}
                       </span>
                     </div>
+
+                    {proj.id !== 'ps-2' && (
+                      <div className="absolute top-2.5 right-2.5 z-20 pointer-events-none px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#E91E8C] to-[#FFB3CB] text-white font-mono text-[10px] font-black tracking-widest shadow-lg backdrop-blur-md">
+                        AI
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-1.5 flex-1 flex flex-col justify-between">
