@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, ArrowUpRight, Wand2, Compass, Heart, Film } from 'lucide-react';
+import { Sparkles, ArrowUpRight, Wand2, Compass, Heart } from 'lucide-react';
 
 export default function BrandCollaborationsSection() {
   const [hoveredBrandIndex, setHoveredBrandIndex] = useState(null);
@@ -159,27 +159,27 @@ export default function BrandCollaborationsSection() {
   };
 
   return (
-    <section id="brands" className="bg-[#0A0A0A] scroll-mt-6 py-16 sm:py-24 md:py-28 relative overflow-hidden">
+    <section id="brands" className="bg-[#0A0A0A] scroll-mt-6 py-12 sm:py-24 md:py-28 relative overflow-x-hidden w-full max-w-full">
       
       {/* Background ambient glowing halos */}
       <div className="pointer-events-none absolute top-1/3 left-0 w-96 h-96 bg-[#E91E8C]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="pointer-events-none absolute bottom-10 right-0 w-96 h-96 bg-[#FFB3CB]/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Section Header */}
-      <div className="mb-10 sm:mb-14 px-5 sm:px-8 md:px-10 text-center">
+      <div className="mb-8 sm:mb-14 px-5 sm:px-8 md:px-10 text-center">
         <h2
           className="font-black uppercase leading-none tracking-tight text-[#F5F0EB]"
           style={{ fontSize: 'clamp(2.5rem, 10vw, 130px)' }}
         >
           Brands & Impact
         </h2>
-        <p className="text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
+        <p className="hidden md:block text-xs uppercase tracking-widest text-[#F5F0EB]/40 mt-3">
           Collaborations · Campaigns · Proven Results
         </p>
       </div>
 
-      {/* 🚀 1. Infinite Ticker Marquee Carousel */}
-      <div className="w-full overflow-hidden border-y border-white/10 bg-[#121212]/80 backdrop-blur-md py-4 mb-12 sm:mb-16 relative">
+      {/* 🚀 1. Infinite Ticker Marquee Carousel (Desktop Only) */}
+      <div className="hidden md:block w-full overflow-hidden border-y border-white/10 bg-[#121212]/80 backdrop-blur-md py-4 mb-12 sm:mb-16 relative">
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#0A0A0A] to-transparent z-10" />
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0A0A0A] to-transparent z-10" />
 
@@ -200,22 +200,9 @@ export default function BrandCollaborationsSection() {
       </div>
 
       {/* ========================================================================= */}
-      {/* 📱 2. MOBILE PHONE ONLY: CATEGORY WORK VIDEO CAROUSELS (FROM ARII WEBSITE) */}
+      {/* 📱 2. MOBILE PHONE ONLY: CATEGORY WORK VIDEO CAROUSELS (CLEANED UP & NO PAGE SCROLL) */}
       {/* ========================================================================= */}
-      <div className="block md:hidden w-full px-5 space-y-12 mb-14">
-        <div className="text-center space-y-1 mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E91E8C]/15 border border-[#E91E8C]/30 text-[10px] font-mono font-bold tracking-widest text-[#FF9BD2] uppercase">
-            <span>SEE MY WORK</span>
-            <Sparkles className="w-3 h-3 text-[#E91E8C]" />
-          </div>
-          <h3 className="text-2xl font-black uppercase tracking-tight text-white pt-2">
-            Selected Video Portfolio
-          </h3>
-          <p className="text-xs text-white/50 font-serif italic">
-            Swipe left/right on any category to view video work
-          </p>
-        </div>
-
+      <div className="block md:hidden w-full max-w-full overflow-x-hidden px-4 space-y-10 mb-10">
         {mobilePortfolioSections.map((section) => {
           const Icon = section.icon;
           const activeIdx = activeCardIds[section.id] || 0;
@@ -237,10 +224,10 @@ export default function BrandCollaborationsSection() {
                 </p>
               </div>
 
-              {/* HORIZONTAL SWIPE CAROUSEL (NATIVE CSS SCROLL-SNAP) */}
+              {/* HORIZONTAL SWIPE CAROUSEL (CLEAN 100% CONTAINER FIT) */}
               <div
                 onScroll={(e) => handleCarouselScroll(section.id, e)}
-                className="w-full flex flex-row flex-nowrap items-stretch gap-4 overflow-x-auto scroll-snap-type-x-mandatory scrollbar-none py-2 -mx-5 px-5"
+                className="w-full flex flex-row flex-nowrap items-stretch gap-4 overflow-x-auto scroll-snap-type-x-mandatory scrollbar-none py-2 px-1"
                 style={{
                   scrollSnapType: 'x mandatory',
                   WebkitOverflowScrolling: 'touch',
@@ -279,7 +266,7 @@ export default function BrandCollaborationsSection() {
                         }
                       }}
                       className={`
-                        w-[82vw] max-w-[310px] shrink-0 flex flex-col justify-between space-y-3
+                        w-[78vw] max-w-[290px] shrink-0 flex flex-col justify-between space-y-3
                         snap-center transition-all duration-300 cursor-pointer
                         ${isActive ? 'scale-100 opacity-100' : 'scale-[0.96] opacity-75'}
                       `}
