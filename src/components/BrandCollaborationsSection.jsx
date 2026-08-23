@@ -10,7 +10,7 @@ const InstagramIcon = ({ className = 'w-4 h-4 text-white' }) => (
   </svg>
 );
 
-// High-Performance Lazy Video Component: Only buffers & plays when visible in viewport
+// High-Performance AutoPlay Video Component: Seamless 60FPS Continuous Loop Playback
 function LazyVideo({ src, className, style, ...props }) {
   const videoRef = useRef(null);
 
@@ -21,20 +21,26 @@ function LazyVideo({ src, className, style, ...props }) {
     video.muted = true;
     video.defaultMuted = true;
 
+    const playVideo = () => {
+      video.muted = true;
+      video.defaultMuted = true;
+      const p = video.play();
+      if (p && typeof p.then === 'function') {
+        p.catch(() => {});
+      }
+    };
+
+    playVideo();
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            video.muted = true;
-            video.defaultMuted = true;
-            const p = video.play();
-            if (p && typeof p.then === 'function') p.catch(() => {});
-          } else {
-            video.pause();
+            playVideo();
           }
         });
       },
-      { threshold: 0.05 }
+      { threshold: 0.01 }
     );
 
     observer.observe(video);
@@ -48,16 +54,17 @@ function LazyVideo({ src, className, style, ...props }) {
     <video
       ref={videoRef}
       src={src}
+      autoPlay
       loop
       muted
       playsInline
-      preload="metadata"
+      preload="auto"
       onLoadedData={(e) => {
         e.target.muted = true;
         const p = e.target.play();
         if (p && typeof p.then === 'function') p.catch(() => {});
       }}
-      className={className}
+      className={`${className || ''} transform-gpu will-change-transform`}
       style={style}
       {...props}
     />
