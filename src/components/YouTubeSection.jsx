@@ -54,7 +54,7 @@ export default function YouTubeSection() {
       title: 'When LORD GANESHA saved a DOG',
       thumbnail: '/assets/short-1-thumb.jpg',
       youtubeUrl: 'https://youtube.com/shorts/YTU_5wlTdV4?si=J_zxORJxDxSQDG1m',
-      views: '58K views',
+      views: '50K views',
       duration: '0:45',
     },
     {
