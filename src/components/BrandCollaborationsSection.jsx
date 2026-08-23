@@ -49,16 +49,16 @@ export const CATEGORY_CARDS = [
   },
   {
     id: 'food',
-    title: 'FOOD & BEVERAGES',
-    subtitle: 'GOURMET & CULINARY',
-    description: 'Artisanal food, luxury beverages & culinary stories.',
+    title: 'ICE CREAM BRAND',
+    subtitle: 'ICE CREAM & DESSERT BRANDS',
+    description: 'Artisanal ice cream films, luxury dessert stories & high-impact culinary reels.',
     icon: Wand2,
     projects: [
-      { id: 'food-1', title: 'ARTISANAL DESSERT FILM 01', description: 'Cinematic food cinematography highlighting textures, flavor profiles, and artisanal passion.', aspectRatio: '9/16', videoUrl: '/assets/food-1.mp4' },
-      { id: 'food-3', title: 'VOICEOVER FOOD STORY 02', description: 'Narrative-driven culinary reel with rich audio score and voiceover storytelling.', aspectRatio: '9/16', videoUrl: '/assets/food-3.mp4' },
-      { id: 'food-4', title: 'SEASONAL MENU SPECIAL 03', description: 'Visual feast capturing vibrant colors and sensory culinary experiences.', aspectRatio: '9/16', videoUrl: '/assets/food-4.mp4' },
-      { id: 'food-5', title: 'CHOCO ICECREAM BAR 04', description: 'A sleek, minimal chocolate ice cream bar comes to life with a clean, premium visual style.', aspectRatio: '9/16', videoUrl: '/assets/choco-icecream-bar.mp4' },
-      { id: 'anim-1', title: 'CREATIVE ANIMATION REEL 05', description: 'Dynamic 3D animation, fluid visual effects, and high-speed motion design.', aspectRatio: '9/16', videoUrl: '/assets/food-2.mp4' },
+      { id: 'food-1', title: 'ARTISANAL DESSERT FILM 01', description: 'Cinematic dessert cinematography highlighting rich textures, gourmet flavor profiles, and artisanal craftsmanship.', aspectRatio: '9/16', videoUrl: '/assets/food-1.mp4' },
+      { id: 'food-3', title: 'VOICEOVER FOOD STORY 02', description: 'Narrative-driven ice cream brand film with rich sound design and engaging voiceover storytelling.', aspectRatio: '9/16', videoUrl: '/assets/food-3.mp4' },
+      { id: 'food-4', title: 'SEASONAL MENU SPECIAL 03', description: 'Vibrant visual story capturing gourmet dessert creations and sensory culinary experiences.', aspectRatio: '9/16', videoUrl: '/assets/food-4.mp4' },
+      { id: 'food-5', title: 'CHOCO ICECREAM BAR 04', description: 'A sleek, premium chocolate ice cream bar launch featuring high-contrast macro visuals and clean aesthetics.', aspectRatio: '9/16', videoUrl: '/assets/choco-icecream-bar.mp4' },
+      { id: 'anim-1', title: 'CREATIVE ANIMATION REEL 05', description: 'Dynamic 3D motion design and fluid visual effects showcasing creative brand animation.', aspectRatio: '9/16', videoUrl: '/assets/food-2.mp4' },
     ],
   },
   {
@@ -221,17 +221,17 @@ export default function BrandCollaborationsSection() {
     },
     {
       id: 'food',
-      eyebrowLabel: '01 / 05 ✦ GOURMET & CULINARY',
-      title: 'FOOD & BEVERAGES',
-      subhead: 'Artisanal food, luxury beverages & culinary stories.',
+      eyebrowLabel: '01 / 05 ✦ ICE CREAM & DESSERT BRANDS',
+      title: 'ICE CREAM BRAND',
+      subhead: 'Artisanal ice cream films, luxury dessert stories & high-impact culinary reels.',
       icon: Wand2,
       accentColor: '#FF9BD2',
       projects: [
-        { id: 'food-1', numberLabel: '01 / 05', title: 'ARTISANAL DESSERT FILM 01', description: 'Cinematic food cinematography highlighting textures, flavor profiles, and artisanal passion.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#FFB6E6]/30', videoUrl: '/assets/food-1.mp4' },
-        { id: 'food-3', numberLabel: '02 / 05', title: 'VOICEOVER FOOD STORY 02', description: 'Narrative-driven culinary reel with rich audio score and voiceover storytelling.', gradientBg: 'from-[#FFB6E6]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/food-3.mp4' },
-        { id: 'food-4', numberLabel: '03 / 05', title: 'SEASONAL MENU SPECIAL 03', description: 'Visual feast capturing vibrant colors and sensory culinary experiences.', gradientBg: 'from-[#6D4AFF]/40 via-[#1A0A2E] to-[#FF9BD2]/30', videoUrl: '/assets/food-4.mp4' },
-        { id: 'food-5', numberLabel: '04 / 05', title: 'CHOCO ICECREAM BAR 04', description: 'A sleek, minimal chocolate ice cream bar comes to life with a clean, premium visual style.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/choco-icecream-bar.mp4' },
-        { id: 'anim-1', numberLabel: '05 / 05', title: 'CREATIVE ANIMATION REEL 05', description: 'Dynamic 3D animation, fluid visual effects, and high-speed motion design.', gradientBg: 'from-[#B388FF]/40 via-[#1A0A2E] to-[#FF9BD2]/30', videoUrl: '/assets/food-2.mp4' },
+        { id: 'food-1', numberLabel: '01 / 05', title: 'ARTISANAL DESSERT FILM 01', description: 'Cinematic dessert cinematography highlighting rich textures, gourmet flavor profiles, and artisanal craftsmanship.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#FFB6E6]/30', videoUrl: '/assets/food-1.mp4' },
+        { id: 'food-3', numberLabel: '02 / 05', title: 'VOICEOVER FOOD STORY 02', description: 'Narrative-driven ice cream brand film with rich sound design and engaging voiceover storytelling.', gradientBg: 'from-[#FFB6E6]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/food-3.mp4' },
+        { id: 'food-4', numberLabel: '03 / 05', title: 'SEASONAL MENU SPECIAL 03', description: 'Vibrant visual story capturing gourmet dessert creations and sensory culinary experiences.', gradientBg: 'from-[#6D4AFF]/40 via-[#1A0A2E] to-[#FF9BD2]/30', videoUrl: '/assets/food-4.mp4' },
+        { id: 'food-5', numberLabel: '04 / 05', title: 'CHOCO ICECREAM BAR 04', description: 'A sleek, premium chocolate ice cream bar launch featuring high-contrast macro visuals and clean aesthetics.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#6D4AFF]/30', videoUrl: '/assets/choco-icecream-bar.mp4' },
+        { id: 'anim-1', numberLabel: '05 / 05', title: 'CREATIVE ANIMATION REEL 05', description: 'Dynamic 3D motion design and fluid visual effects showcasing creative brand animation.', gradientBg: 'from-[#B388FF]/40 via-[#1A0A2E] to-[#FF9BD2]/30', videoUrl: '/assets/food-2.mp4' },
       ],
     },
     {
@@ -389,7 +389,7 @@ export default function BrandCollaborationsSection() {
             <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/60 border border-white/20 backdrop-blur-md">
               <Wand2 className="w-3.5 h-3.5 text-[#FF9BD2]" />
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#FFF7FF] uppercase">
-                GOURMET & CULINARY
+                ICE CREAM & DESSERT BRANDS
               </span>
             </div>
             <div className="w-8 h-8 rounded-full bg-white/15 border border-white/25 text-[#FFF7FF] backdrop-blur-md group-hover:bg-[#FF9BD2] group-hover:text-[#100719] flex items-center justify-center transition-colors">
@@ -399,10 +399,10 @@ export default function BrandCollaborationsSection() {
 
           <div className="relative space-y-1 z-30 pt-4">
             <h3 className="font-display font-black text-2xl text-[#FFF7FF] tracking-tight uppercase group-hover:text-[#FF9BD2] transition-colors drop-shadow-md">
-              FOOD & BEVERAGES
+              ICE CREAM BRAND
             </h3>
             <p className="text-xs text-[#FFF7FF]/90 line-clamp-2 drop-shadow-md">
-              Artisanal food, luxury beverages & culinary stories.
+              Artisanal ice cream films, luxury dessert stories & high-impact culinary reels.
             </p>
           </div>
         </div>
