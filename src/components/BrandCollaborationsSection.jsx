@@ -675,7 +675,7 @@ export default function BrandCollaborationsSection() {
                           </div>
                         )}
 
-                        <div className="absolute bottom-3 left-3 right-3 z-20 pointer-events-none p-2.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between">
+                        <div className="absolute bottom-3 left-3 right-3 z-20 pointer-events-none p-2.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/15 flex items-center justify-between shadow-lg">
                           <span className="font-bold text-xs text-white leading-snug line-clamp-1">
                             {proj.title}
                           </span>
@@ -684,7 +684,10 @@ export default function BrandCollaborationsSection() {
                         <div className="absolute inset-0 z-10 pointer-events-none rounded-[24px] shadow-[inset_0_0_25px_rgba(0,0,0,0.75)]" />
                       </div>
 
-                      <div className="px-1 text-center max-w-[310px] mx-auto">
+                      <div className="space-y-1 px-1 text-center max-w-[310px] mx-auto pt-1">
+                        <h4 className="font-display font-bold text-sm text-white tracking-tight uppercase line-clamp-1">
+                          {proj.title}
+                        </h4>
                         <p className="text-xs text-white/75 line-clamp-2 leading-relaxed font-normal">
                           {proj.description}
                         </p>
