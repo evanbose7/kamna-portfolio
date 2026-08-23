@@ -54,7 +54,7 @@ export default function YouTubeSection() {
       title: 'When LORD GANESHA saved a DOG',
       thumbnail: '/assets/short-1-thumb.jpg',
       youtubeUrl: 'https://youtube.com/shorts/YTU_5wlTdV4?si=J_zxORJxDxSQDG1m',
-      views: '1.2M views',
+      views: '58K views',
       duration: '0:45',
     },
     {
@@ -62,7 +62,7 @@ export default function YouTubeSection() {
       title: 'Same Age, Different Life: This Video Will Move You to Tears',
       thumbnail: '/assets/short-2-thumb.jpg',
       youtubeUrl: 'https://youtube.com/shorts/bJPll8S4Q2A?si=mMxXdMKf36A9Ka-G',
-      views: '850K views',
+      views: '22K views',
       duration: '0:58',
     },
   ];
