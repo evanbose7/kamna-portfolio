@@ -207,6 +207,8 @@ export default function YouTubeSection() {
                 <img
                   src={short.thumbnail}
                   alt={short.title}
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-110 sm:brightness-115 group-hover:brightness-125"
                 />
 

@@ -7,4 +7,25 @@ export default defineConfig({
   server: {
     host: true, // Exposes server to local network (Wi-Fi access on mobile)
   },
+  build: {
+    target: 'es2015',
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) {
+              return 'vendor-react';
+            }
+            if (id.includes('lucide-react')) {
+              return 'vendor-lucide';
+            }
+            if (id.includes('lenis')) {
+              return 'vendor-lenis';
+            }
+          }
+        },
+      },
+    },
+  },
 })
