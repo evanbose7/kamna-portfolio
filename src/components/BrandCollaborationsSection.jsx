@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Sparkles, Play, ArrowUpRight, ExternalLink, X, Film, Tv, Wand2, Compass, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -9,67 +9,6 @@ const InstagramIcon = ({ className = 'w-4 h-4 text-white' }) => (
     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
   </svg>
 );
-
-// High-Performance AutoPlay Video Component: Seamless 60FPS Continuous Loop Playback
-function LazyVideo({ src, className, style, ...props }) {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.muted = true;
-    video.defaultMuted = true;
-
-    const playVideo = () => {
-      video.muted = true;
-      video.defaultMuted = true;
-      const p = video.play();
-      if (p && typeof p.then === 'function') {
-        p.catch(() => {});
-      }
-    };
-
-    playVideo();
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            playVideo();
-          }
-        });
-      },
-      { threshold: 0.01 }
-    );
-
-    observer.observe(video);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [src]);
-
-  return (
-    <video
-      ref={videoRef}
-      src={src}
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="auto"
-      onLoadedData={(e) => {
-        e.target.muted = true;
-        const p = e.target.play();
-        if (p && typeof p.then === 'function') p.catch(() => {});
-      }}
-      className={`${className || ''} transform-gpu will-change-transform`}
-      style={style}
-      {...props}
-    />
-  );
-}
 
 export const CATEGORY_CARDS = [
   {
@@ -399,8 +338,13 @@ export default function BrandCollaborationsSection() {
           "
         >
           <div className="absolute inset-0 z-0">
-            <LazyVideo
+            <video
               src="/assets/memoire-reel.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-65 group-hover:opacity-85 brightness-110"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#12071B]/95 via-[#12071B]/60 to-black/30 z-10" />
@@ -709,8 +653,13 @@ export default function BrandCollaborationsSection() {
                           aspect-[9/16] transition-all duration-300
                         `}
                       >
-                        <LazyVideo
+                        <video
                           src={proj.videoUrl}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="auto"
                           className="w-full h-full object-cover rounded-[24px]"
                         />
 
@@ -850,8 +799,13 @@ export default function BrandCollaborationsSection() {
                     className="relative w-full aspect-[9/16] max-h-[260px] sm:max-h-[280px] rounded-[18px] overflow-hidden border border-white/15 bg-black shadow-lg cursor-pointer group/vid"
                   >
                     {proj.videoUrl ? (
-                      <LazyVideo
+                      <video
                         src={proj.videoUrl}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
                         className="w-full h-full object-cover rounded-[18px]"
                       />
                     ) : proj.thumbnail ? (

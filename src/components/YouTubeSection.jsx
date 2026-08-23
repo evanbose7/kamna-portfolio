@@ -287,20 +287,7 @@ export default function YouTubeSection() {
                           loop
                           muted
                           playsInline
-                          preload="metadata"
-                          ref={(el) => {
-                            if (el) {
-                              el.muted = true;
-                              el.defaultMuted = true;
-                              const p = el.play();
-                              if (p && typeof p.then === 'function') p.catch(() => {});
-                            }
-                          }}
-                          onLoadedData={(e) => {
-                            e.target.muted = true;
-                            const p = e.target.play();
-                            if (p && typeof p.then === 'function') p.catch(() => {});
-                          }}
+                          preload="auto"
                           className="w-full h-full object-cover rounded-xl"
                         />
                       ) : (
