@@ -13,6 +13,8 @@ export default function Hero({ onOpenConnectModal }) {
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
 
   useEffect(() => {
+    let ticking = false;
+
     const checkMobile = () => {
       const isMobile = window.innerWidth < 1024;
       setIsMobileScreen(isMobile);
@@ -21,21 +23,29 @@ export default function Hero({ onOpenConnectModal }) {
       }
     };
 
-    const handleScroll = () => {
+    const updateScroll = () => {
       if (window.innerWidth < 1024) {
         const scrollY = window.scrollY;
-        // Slowly and smoothly reveal text over first 200px of scroll
+        // Slowly and smoothly reveal text over first 180px of scroll
         const progress = Math.min(Math.max(scrollY / 180, 0), 1);
         setHeroScrollProgress(progress);
       } else {
         setHeroScrollProgress(1);
+      }
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
       }
     };
 
     checkMobile();
     window.addEventListener('resize', checkMobile);
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    updateScroll();
 
     return () => {
       window.removeEventListener('resize', checkMobile);

@@ -16,8 +16,13 @@ export default function AboutSection({ onOpenConnectModal }) {
   ];
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
+    let ticking = false;
+
+    const updateScroll = () => {
+      if (!containerRef.current) {
+        ticking = false;
+        return;
+      }
 
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
@@ -29,10 +34,18 @@ export default function AboutSection({ onOpenConnectModal }) {
       progress = Math.min(Math.max(progress, 0), 1);
 
       setScrollProgress(progress);
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    updateScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);

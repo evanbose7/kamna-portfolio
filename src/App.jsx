@@ -20,12 +20,15 @@ export default function App() {
 
   // Initialize 60 FPS Lenis Inertia Smooth Scroll & attach to window
   useEffect(() => {
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.2,
+      smoothTouch: false, // Allows ultra-fluid native mobile momentum touch scroll
     });
 
     window.lenis = lenis;

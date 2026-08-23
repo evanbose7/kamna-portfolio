@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <title>ARI — Visuals & Storytelling</title>
     <meta name="description" content="From shooting content and writing scripts to editing videos and creating AI generated visuals." />
     
@@ -19,12 +19,26 @@
     <!-- Performance: DNS Prefetch & Font Preconnecting -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://i.ytimg.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Caveat:wght@400..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Sacramento&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Caveat:wght@400..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Sacramento&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      html, body {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+        touch-action: manipulation;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
   </head>
-  <body class="min-h-full bg-[#0A0A0A] text-[#F5F0EB] font-dmsans antialiased selection:bg-[#E91E8C] selection:text-white overflow-x-hidden">
+  <body class="min-h-full bg-[#0A0A0A] text-[#F5F0EB] font-dmsans antialiased selection:bg-[#E91E8C] selection:text-white overflow-x-hidden w-full">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
