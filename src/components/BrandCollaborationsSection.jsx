@@ -344,7 +344,20 @@ export default function BrandCollaborationsSection() {
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="auto"
+              ref={(el) => {
+                if (el) {
+                  el.muted = true;
+                  el.defaultMuted = true;
+                  const p = el.play();
+                  if (p && typeof p.then === 'function') p.catch(() => {});
+                }
+              }}
+              onLoadedData={(e) => {
+                e.target.muted = true;
+                const p = e.target.play();
+                if (p && typeof p.then === 'function') p.catch(() => {});
+              }}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-65 group-hover:opacity-85 brightness-110"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#12071B]/95 via-[#12071B]/60 to-black/30 z-10" />
@@ -659,7 +672,20 @@ export default function BrandCollaborationsSection() {
                           loop
                           muted
                           playsInline
-                          preload="metadata"
+                          preload="auto"
+                          ref={(el) => {
+                            if (el) {
+                              el.muted = true;
+                              el.defaultMuted = true;
+                              const p = el.play();
+                              if (p && typeof p.then === 'function') p.catch(() => {});
+                            }
+                          }}
+                          onLoadedData={(e) => {
+                            e.target.muted = true;
+                            const p = e.target.play();
+                            if (p && typeof p.then === 'function') p.catch(() => {});
+                          }}
                           className="w-full h-full object-cover rounded-[24px]"
                         />
 
@@ -806,6 +832,19 @@ export default function BrandCollaborationsSection() {
                         muted
                         playsInline
                         preload="auto"
+                        ref={(el) => {
+                          if (el) {
+                            el.muted = true;
+                            el.defaultMuted = true;
+                            const p = el.play();
+                            if (p && typeof p.then === 'function') p.catch(() => {});
+                          }
+                        }}
+                        onLoadedData={(e) => {
+                          e.target.muted = true;
+                          const p = e.target.play();
+                          if (p && typeof p.then === 'function') p.catch(() => {});
+                        }}
                         className="w-full h-full object-cover rounded-[18px]"
                       />
                     ) : proj.thumbnail ? (
