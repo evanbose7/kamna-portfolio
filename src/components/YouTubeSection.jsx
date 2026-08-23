@@ -287,7 +287,7 @@ export default function YouTubeSection() {
                           loop
                           muted
                           playsInline
-                          preload="auto"
+                          preload="metadata"
                           ref={(el) => {
                             if (el) {
                               el.muted = true;
