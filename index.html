@@ -41,6 +41,12 @@
       .scrollbar-none::-webkit-scrollbar {
         display: none;
       }
+      /* Pre-render sections offscreen to eliminate scroll tile pop-in flicker */
+      section {
+        contain: layout style;
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 600px;
+      }
     </style>
   </head>
   <body class="min-h-full bg-[#0A0A0A] text-[#F5F0EB] font-dmsans antialiased selection:bg-[#E91E8C] selection:text-white overflow-x-hidden w-full">
