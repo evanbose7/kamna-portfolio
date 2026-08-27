@@ -126,47 +126,57 @@ export const CATEGORY_CARDS = [
 export default function BrandCollaborationsSection() {
   const [activeCardIds, setActiveCardIds] = useState({});
   const [selectedCard, setSelectedCard] = useState(null);
-  const [activeFullscreenVideo, setActiveFullscreenVideo] = useState(null);
   const [modalScrollTop, setModalScrollTop] = useState(0);
 
-  // Smoothly close fullscreen video, stop audio, and restore exact scroll position
-  const closeFullscreenVideo = React.useCallback(() => {
-    const savedY = modalScrollTop;
-    setActiveFullscreenVideo(null);
-    if (typeof document !== 'undefined' && document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
-    }
-    setTimeout(() => {
-      window.scrollTo({ top: savedY, behavior: 'instant' });
-    }, 50);
-  }, [modalScrollTop]);
+  const handleCardVideoClick = (e, proj) => {
+    e.stopPropagation();
+    const container = e.currentTarget;
+    const video = container.querySelector('video') || container;
+    
+    if (video && video.tagName === 'VIDEO') {
+      const audioUrl = getAudioVideoUrl(proj.videoUrl || proj.url);
+      const originalUrl = proj.videoUrl || proj.url;
 
-  // Handle phone physical/gesture Back Button & Fullscreen Exit
-  React.useEffect(() => {
-    if (!activeFullscreenVideo) return;
-
-    window.history.pushState({ modal: 'video' }, '');
-
-    const handlePopState = () => {
-      closeFullscreenVideo();
-    };
-
-    const handleFullscreenChange = () => {
-      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        closeFullscreenVideo();
+      if (audioUrl && !video.src.includes(audioUrl)) {
+        video.src = audioUrl;
       }
-    };
 
-    window.addEventListener('popstate', handlePopState);
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+      video.muted = false;
+      video.volume = 1.0;
+      video.play().catch(() => {});
 
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
-    };
-  }, [activeFullscreenVideo, closeFullscreenVideo]);
+      const handleExitFullscreen = () => {
+        video.muted = true;
+        if (originalUrl && !video.src.includes(originalUrl)) {
+          video.src = originalUrl;
+        }
+        video.play().catch(() => {});
+        video.removeEventListener('webkitendfullscreen', handleExitFullscreen);
+        document.removeEventListener('fullscreenchange', handleExitFullscreen);
+        document.removeEventListener('webkitfullscreenchange', handleExitFullscreen);
+      };
+
+      video.addEventListener('webkitendfullscreen', handleExitFullscreen);
+      document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+          handleExitFullscreen();
+        }
+      });
+      document.addEventListener('webkitfullscreenchange', () => {
+        if (!document.webkitIsFullScreen) {
+          handleExitFullscreen();
+        }
+      });
+
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(() => {});
+      } else if (video.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen();
+      } else if (video.msRequestFullscreen) {
+        video.msRequestFullscreen();
+      }
+    }
+  };
 
   // Desktop Internal Carousel States
   const [desktopReelIndex, setDesktopReelIndex] = useState(0);
@@ -657,14 +667,7 @@ export default function BrandCollaborationsSection() {
                   return (
                     <div
                       key={proj.id}
-                      onClick={() => {
-                        const currentY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
-                        setModalScrollTop(currentY);
-                        setActiveFullscreenVideo({
-                          url: getAudioVideoUrl(proj.videoUrl || '/assets/food-1.mp4'),
-                          title: proj.title,
-                        });
-                      }}
+                      onClick={(e) => handleCardVideoClick(e, proj)}
                       className="w-full shrink-0 snap-center flex flex-col justify-between space-y-3 px-1 cursor-pointer"
                       style={{ scrollSnapAlign: 'center' }}
                     >
@@ -813,12 +816,7 @@ export default function BrandCollaborationsSection() {
                   }
                 >
                   <div
-                    onClick={() => {
-                      setActiveFullscreenVideo({
-                        url: getAudioVideoUrl(proj.videoUrl || proj.url || '/assets/food-1.mp4'),
-                        title: proj.title,
-                      });
-                    }}
+                    onClick={(e) => handleCardVideoClick(e, proj)}
                     className="relative w-full aspect-[9/16] max-h-[260px] sm:max-h-[280px] rounded-[18px] overflow-hidden border border-white/15 bg-black shadow-lg cursor-pointer group/vid"
                   >
                     {proj.videoUrl ? (
@@ -868,12 +866,7 @@ export default function BrandCollaborationsSection() {
 
                     <button
                       type="button"
-                      onClick={() => {
-                        setActiveFullscreenVideo({
-                          url: getAudioVideoUrl(proj.videoUrl || proj.url || '/assets/food-1.mp4'),
-                          title: proj.title,
-                        });
-                      }}
+                      onClick={(e) => handleCardVideoClick(e, proj)}
                       className="
                         w-full py-2.5 rounded-full bg-[#FF9BD2] text-[#100719] border border-[#FF9BD2]
                         font-mono font-bold text-xs uppercase tracking-widest
@@ -925,86 +918,6 @@ export default function BrandCollaborationsSection() {
               >
                 START A PROJECT WITH ARI ✦
               </a>
-            </div>
-
-          </div>
-        </div>,
-        document.body
-      )}
-
-      {/* ========================================================================= */}
-      {/* 4. DESKTOP FULLSCREEN VIDEO THEATER OVERLAY */}
-      {/* ========================================================================= */}
-      {typeof document !== 'undefined' && activeFullscreenVideo && createPortal(
-        <div
-          style={{
-            position: 'absolute',
-            top: `${modalScrollTop}px`,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            zIndex: 9999999999,
-          }}
-          className="flex items-center justify-center p-4 sm:p-8 bg-black/95 backdrop-blur-3xl select-none"
-        >
-          <div
-            onClick={closeFullscreenVideo}
-            className="absolute inset-0 bg-black/90 cursor-pointer z-0"
-          />
-
-          <div
-            className="
-              relative z-10 w-full max-w-5xl rounded-3xl overflow-hidden
-              border border-[#FF9BD2]/50 bg-black shadow-[0_0_120px_rgba(255,155,210,0.5)]
-              flex flex-col items-center justify-center transition-all duration-300
-            "
-          >
-            <button
-              type="button"
-              onClick={closeFullscreenVideo}
-              aria-label="Close fullscreen video"
-              className="
-                absolute top-4 right-4 z-50 flex h-11 w-11 items-center justify-center
-                rounded-full bg-black/70 border border-white/20 text-white
-                hover:bg-[#FF9BD2] hover:text-[#100719] hover:border-[#FF9BD2]
-                transition-all duration-300 cursor-pointer shadow-2xl
-              "
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            <div className="relative w-full aspect-[9/16] max-h-[85vh] flex items-center justify-center bg-black">
-              <video
-                ref={(el) => {
-                  if (el) {
-                    el.muted = false;
-                    el.volume = 1.0;
-                    el.play().catch(() => {});
-                    if (el.requestFullscreen) {
-                      el.requestFullscreen().catch(() => {});
-                    } else if (el.webkitEnterFullscreen) {
-                      el.webkitEnterFullscreen();
-                    }
-                  }
-                }}
-                src={getAudioVideoUrl(activeFullscreenVideo.url)}
-                controls
-                autoPlay
-                playsInline
-                preload="auto"
-                className="w-full h-full object-contain max-h-[85vh]"
-              />
-            </div>
-
-            <div className="w-full p-4 sm:p-5 bg-gradient-to-t from-[#140824] via-[#140824]/90 to-transparent border-t border-white/15 flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-mono text-[#FF9BD2] font-bold uppercase tracking-widest block">
-                  NOW PLAYING FULLSCREEN
-                </span>
-                <h4 className="font-display font-black text-lg sm:text-xl text-white uppercase tracking-tight">
-                  {activeFullscreenVideo.title}
-                </h4>
-              </div>
             </div>
 
           </div>
