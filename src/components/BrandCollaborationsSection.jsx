@@ -976,9 +976,9 @@ export default function BrandCollaborationsSection() {
           {/* 9:16 Vertical Video Container Centered on Desktop */}
           <div
             className="
-              relative z-10 w-full max-w-[460px] sm:max-w-[520px] aspect-[9/16] max-h-[92vh]
-              rounded-[32px] overflow-hidden border border-[#FF9BD2]/50 bg-black
-              shadow-[0_0_120px_rgba(255,155,210,0.5)] flex flex-col justify-between
+              relative z-10 h-full max-h-[86vh] aspect-[9/16] w-auto max-w-[90vw]
+              rounded-[28px] overflow-hidden border border-[#FF9BD2]/50 bg-black
+              shadow-[0_0_120px_rgba(255,155,210,0.5)] flex items-center justify-center
               animate-modal-pop transition-all duration-300
             "
           >
@@ -997,7 +997,7 @@ export default function BrandCollaborationsSection() {
               <X className="w-6 h-6" />
             </button>
 
-            {/* 9:16 Video Player Element */}
+            {/* 9:16 Video Player Element (object-contain displays 100% of video frame) */}
             <div className="relative w-full h-full bg-black flex items-center justify-center">
               <video
                 ref={(el) => {
@@ -1012,7 +1012,7 @@ export default function BrandCollaborationsSection() {
                 autoPlay
                 playsInline
                 preload="auto"
-                className="w-full h-full object-cover rounded-[32px]"
+                className="w-full h-full object-contain max-h-[86vh] rounded-[28px]"
               />
             </div>
           </div>
