@@ -934,14 +934,26 @@ export default function BrandCollaborationsSection() {
               <X className="w-6 h-6" />
             </button>
 
-            <div className="relative w-full aspect-[9/16] max-h-[80vh] flex items-center justify-center bg-black">
+            <div className="relative w-full aspect-[9/16] max-h-[85vh] flex items-center justify-center bg-black">
               <video
+                ref={(el) => {
+                  if (el) {
+                    el.muted = false;
+                    el.volume = 1.0;
+                    el.play().catch(() => {});
+                    if (el.requestFullscreen) {
+                      el.requestFullscreen().catch(() => {});
+                    } else if (el.webkitEnterFullscreen) {
+                      el.webkitEnterFullscreen();
+                    }
+                  }
+                }}
                 src={getAudioVideoUrl(activeFullscreenVideo.url)}
                 controls
                 autoPlay
                 playsInline
                 preload="auto"
-                className="w-full h-full object-contain max-h-[80vh]"
+                className="w-full h-full object-contain max-h-[85vh]"
               />
             </div>
 
