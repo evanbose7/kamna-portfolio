@@ -618,30 +618,13 @@ export default function BrandCollaborationsSection() {
                   return (
                     <div
                       key={proj.id}
-                      onClick={(e) => {
-                        const video = e.currentTarget.querySelector('video');
-                        if (video) {
-                          video.muted = false;
-
-                          const handleExitFullscreen = () => {
-                            video.muted = true;
-                            video.removeEventListener('webkitendfullscreen', handleExitFullscreen);
-                            document.removeEventListener('fullscreenchange', handleExitFullscreen);
-                          };
-
-                          video.addEventListener('webkitendfullscreen', handleExitFullscreen);
-                          document.addEventListener('fullscreenchange', () => {
-                            if (!document.fullscreenElement) {
-                              handleExitFullscreen();
-                            }
-                          });
-
-                          if (video.requestFullscreen) {
-                            video.requestFullscreen().catch(() => {});
-                          } else if (video.webkitEnterFullscreen) {
-                            video.webkitEnterFullscreen();
-                          }
-                        }
+                      onClick={() => {
+                        const currentY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+                        setModalScrollTop(currentY);
+                        setActiveFullscreenVideo({
+                          url: getAudioVideoUrl(proj.videoUrl || '/assets/food-1.mp4'),
+                          title: proj.title,
+                        });
                       }}
                       className="w-full shrink-0 snap-center flex flex-col justify-between space-y-3 px-1 cursor-pointer"
                       style={{ scrollSnapAlign: 'center' }}
@@ -793,7 +776,7 @@ export default function BrandCollaborationsSection() {
                   <div
                     onClick={() => {
                       setActiveFullscreenVideo({
-                        url: proj.videoUrl || proj.url || '/assets/food-1.mp4',
+                        url: getAudioVideoUrl(proj.videoUrl || proj.url || '/assets/food-1.mp4'),
                         title: proj.title,
                       });
                     }}
@@ -848,7 +831,7 @@ export default function BrandCollaborationsSection() {
                       type="button"
                       onClick={() => {
                         setActiveFullscreenVideo({
-                          url: proj.videoUrl || proj.url || '/assets/food-1.mp4',
+                          url: getAudioVideoUrl(proj.videoUrl || proj.url || '/assets/food-1.mp4'),
                           title: proj.title,
                         });
                       }}
