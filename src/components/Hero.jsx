@@ -12,25 +12,22 @@ export default function Hero({ onOpenConnectModal }) {
   const isVideoMedia = false; 
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
 
+  const leftColRef = React.useRef(null);
+
   useEffect(() => {
     let ticking = false;
 
-    const checkMobile = () => {
-      const isMobile = window.innerWidth < 1024;
-      setIsMobileScreen(isMobile);
-      if (!isMobile) {
-        setHeroScrollProgress(1);
-      }
-    };
-
     const updateScroll = () => {
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < 1024 && leftColRef.current) {
         const scrollY = window.scrollY;
-        // Slowly and smoothly reveal text over first 180px of scroll
         const progress = Math.min(Math.max(scrollY / 180, 0), 1);
-        setHeroScrollProgress(progress);
-      } else {
-        setHeroScrollProgress(1);
+        leftColRef.current.style.opacity = progress;
+        leftColRef.current.style.transform = `translate3d(0, ${(1 - progress) * 28}px, 0)`;
+        leftColRef.current.style.pointerEvents = progress < 0.25 ? 'none' : 'auto';
+      } else if (leftColRef.current) {
+        leftColRef.current.style.opacity = '1';
+        leftColRef.current.style.transform = 'translate3d(0, 0, 0)';
+        leftColRef.current.style.pointerEvents = 'auto';
       }
       ticking = false;
     };
@@ -42,13 +39,12 @@ export default function Hero({ onOpenConnectModal }) {
       }
     };
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener('resize', updateScroll, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
     updateScroll();
 
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('resize', updateScroll);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -92,14 +88,10 @@ export default function Hero({ onOpenConnectModal }) {
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center relative z-10">
         
-        {/* Left Column: Heading & Info (Initially hidden on mobile, slowly revealed on scroll) */}
+        {/* Left Column: Heading & Info */}
         <div
-          className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left transition-all duration-300 ease-out"
-          style={isMobileScreen ? {
-            opacity: heroScrollProgress,
-            transform: `translateY(${(1 - heroScrollProgress) * 28}px)`,
-            pointerEvents: heroScrollProgress < 0.25 ? 'none' : 'auto',
-          } : {}}
+          ref={leftColRef}
+          className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left transition-all duration-300 ease-out will-change-transform"
         >
           <div>
             <h1

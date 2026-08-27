@@ -158,3 +158,23 @@
 .animate-backdrop-fade {
   animation: backdropFadeIn 450ms ease-out forwards;
 }
+
+/* 120 FPS GPU Hardware Acceleration Utilities */
+.gpu-layer {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Hardware Video Rendering Containment */
+video {
+  contain: layout paint style;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+

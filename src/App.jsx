@@ -18,29 +18,29 @@ export default function App() {
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
 
-  // Initialize 60 FPS Lenis Inertia Smooth Scroll & attach to window
+  // Initialize 120 FPS Lenis Inertia Smooth Scroll & attach to window
   useEffect(() => {
-    const isTouch = window.matchMedia('(pointer: coarse)').matches;
-
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.2,
-      smoothTouch: false, // Allows ultra-fluid native mobile momentum touch scroll
+      touchMultiplier: 1.5,
+      smoothTouch: false, // Allows native 120 FPS mobile hardware touch momentum
     });
 
     window.lenis = lenis;
 
+    let animationFrameId;
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      animationFrameId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    animationFrameId = requestAnimationFrame(raf);
 
     return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
       lenis.destroy();
       delete window.lenis;
     };

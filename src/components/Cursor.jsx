@@ -1,49 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export default function Cursor() {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
-  const [glowPos, setGlowPos] = useState({ x: -100, y: -100 });
+  const dotRef = useRef(null);
+  const glowRef = useRef(null);
+
+  const targetRef = useRef({ x: -100, y: -100 });
+  const currentRef = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
+    // Only run on desktop devices with fine pointer
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
     const handleMouseMove = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      targetRef.current.x = e.clientX;
+      targetRef.current.y = e.clientY;
+
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+      }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    let rafId;
+    const animateGlow = () => {
+      currentRef.current.x += (targetRef.current.x - currentRef.current.x) * 0.18;
+      currentRef.current.y += (targetRef.current.y - currentRef.current.y) * 0.18;
+
+      if (glowRef.current) {
+        glowRef.current.style.transform = `translate3d(${currentRef.current.x}px, ${currentRef.current.y}px, 0) translate(-50%, -50%)`;
+      }
+      rafId = requestAnimationFrame(animateGlow);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    rafId = requestAnimationFrame(animateGlow);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(rafId);
+    };
   }, []);
-
-  useEffect(() => {
-    let animationFrameId;
-    const updateGlow = () => {
-      setGlowPos((prev) => ({
-        x: prev.x + (position.x - prev.x) * 0.15,
-        y: prev.y + (position.y - prev.y) * 0.15,
-      }));
-      animationFrameId = requestAnimationFrame(updateGlow);
-    };
-
-    animationFrameId = requestAnimationFrame(updateGlow);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [position]);
 
   return (
     <>
       {/* Trailing radial aura */}
       <div
+        ref={glowRef}
         className="cursor-glow hidden md:block"
-        style={{
-          left: `${glowPos.x}px`,
-          top: `${glowPos.y}px`,
-        }}
+        style={{ left: 0, top: 0, transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)' }}
       />
       {/* Sharp follower dot */}
       <div
+        ref={dotRef}
         className="cursor-dot hidden md:block"
-        style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-        }}
+        style={{ left: 0, top: 0, transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)' }}
       />
     </>
   );
