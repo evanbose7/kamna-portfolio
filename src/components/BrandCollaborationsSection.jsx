@@ -126,57 +126,52 @@ export const CATEGORY_CARDS = [
 export default function BrandCollaborationsSection() {
   const [activeCardIds, setActiveCardIds] = useState({});
   const [selectedCard, setSelectedCard] = useState(null);
+  const [activeFullscreenVideo, setActiveFullscreenVideo] = useState(null);
+  const [showExitHint, setShowExitHint] = useState(true);
   const [modalScrollTop, setModalScrollTop] = useState(0);
+
+  const closeFullscreenVideo = React.useCallback(() => {
+    const savedY = modalScrollTop;
+    setActiveFullscreenVideo(null);
+    setShowExitHint(false);
+    setTimeout(() => {
+      window.scrollTo({ top: savedY, behavior: 'instant' });
+    }, 50);
+  }, [modalScrollTop]);
 
   const handleCardVideoClick = (e, proj) => {
     e.stopPropagation();
-    const container = e.currentTarget;
-    const video = container.querySelector('video') || container;
-    
-    if (video && video.tagName === 'VIDEO') {
-      const audioUrl = getAudioVideoUrl(proj.videoUrl || proj.url);
-      const originalUrl = proj.videoUrl || proj.url;
-
-      if (audioUrl && !video.src.includes(audioUrl)) {
-        video.src = audioUrl;
-      }
-
-      video.muted = false;
-      video.volume = 1.0;
-      video.play().catch(() => {});
-
-      const handleExitFullscreen = () => {
-        video.muted = true;
-        if (originalUrl && !video.src.includes(originalUrl)) {
-          video.src = originalUrl;
-        }
-        video.play().catch(() => {});
-        video.removeEventListener('webkitendfullscreen', handleExitFullscreen);
-        document.removeEventListener('fullscreenchange', handleExitFullscreen);
-        document.removeEventListener('webkitfullscreenchange', handleExitFullscreen);
-      };
-
-      video.addEventListener('webkitendfullscreen', handleExitFullscreen);
-      document.addEventListener('fullscreenchange', () => {
-        if (!document.fullscreenElement) {
-          handleExitFullscreen();
-        }
-      });
-      document.addEventListener('webkitfullscreenchange', () => {
-        if (!document.webkitIsFullScreen) {
-          handleExitFullscreen();
-        }
-      });
-
-      if (video.requestFullscreen) {
-        video.requestFullscreen().catch(() => {});
-      } else if (video.webkitEnterFullscreen) {
-        video.webkitEnterFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
-      }
-    }
+    const currentY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+    setModalScrollTop(currentY);
+    setShowExitHint(true);
+    setActiveFullscreenVideo({
+      url: getAudioVideoUrl(proj.videoUrl || proj.url || '/assets/food-1.mp4'),
+      title: proj.title,
+    });
   };
+
+  // 1-second auto-disappearing exit hint timer
+  React.useEffect(() => {
+    if (!activeFullscreenVideo) return;
+
+    setShowExitHint(true);
+    const hintTimer = setTimeout(() => {
+      setShowExitHint(false);
+    }, 1000);
+
+    window.history.pushState({ modal: 'fullscreen-video' }, '');
+
+    const handlePopState = () => {
+      closeFullscreenVideo();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      clearTimeout(hintTimer);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [activeFullscreenVideo, closeFullscreenVideo]);
 
   // Desktop Internal Carousel States
   const [desktopReelIndex, setDesktopReelIndex] = useState(0);
@@ -920,6 +915,54 @@ export default function BrandCollaborationsSection() {
               </a>
             </div>
 
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* ========================================================================= */}
+      {/* 4. CLEAN EDGE-TO-EDGE FULLSCREEN VIDEO PLAYER (WITH 1-SECOND EXIT TOAST) */}
+      {/* ========================================================================= */}
+      {typeof document !== 'undefined' && activeFullscreenVideo && createPortal(
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 9999999999,
+          }}
+          className="fixed inset-0 bg-black flex items-center justify-center select-none overflow-hidden"
+        >
+          <video
+            ref={(el) => {
+              if (el) {
+                el.muted = false;
+                el.volume = 1.0;
+                el.play().catch(() => {});
+              }
+            }}
+            src={getAudioVideoUrl(activeFullscreenVideo.url)}
+            controls
+            autoPlay
+            playsInline
+            preload="auto"
+            className="w-full h-full object-contain max-h-screen"
+          />
+
+          {/* 1-SECOND AUTO-DISAPPEARING TOAST INSTRUCTION AT BOTTOM */}
+          <div
+            className={`
+              pointer-events-none fixed bottom-8 left-1/2 -translate-x-1/2 z-50
+              px-4 py-2 rounded-full bg-black/85 border border-white/20 backdrop-blur-md
+              text-[#FFF7FF] font-mono text-xs font-semibold shadow-2xl
+              transition-opacity duration-300 flex items-center gap-2
+              ${showExitHint ? 'opacity-100' : 'opacity-0'}
+            `}
+          >
+            <span className="w-2 h-2 rounded-full bg-[#FF9BD2] animate-pulse" />
+            <span>To exit full screen, drag down or press Back</span>
           </div>
         </div>,
         document.body
