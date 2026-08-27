@@ -126,57 +126,84 @@ export const CATEGORY_CARDS = [
 export default function BrandCollaborationsSection() {
   const [activeCardIds, setActiveCardIds] = useState({});
   const [selectedCard, setSelectedCard] = useState(null);
+  const [activeDesktopVideo, setActiveDesktopVideo] = useState(null);
   const [modalScrollTop, setModalScrollTop] = useState(0);
 
   const handleCardVideoClick = (e, proj) => {
     e.stopPropagation();
-    const container = e.currentTarget;
-    const video = container.querySelector('video') || container;
-    
-    if (video && video.tagName === 'VIDEO') {
-      const audioUrl = getAudioVideoUrl(proj.videoUrl || proj.url);
-      const originalUrl = proj.videoUrl || proj.url;
+    const isDesktop = window.innerWidth >= 1024 || !window.matchMedia('(pointer: coarse)').matches;
 
-      if (audioUrl && !video.src.includes(audioUrl)) {
-        video.src = audioUrl;
-      }
+    if (isDesktop) {
+      // ON DESKTOP: Open centered 9:16 aspect ratio vertical Reel / Shorts portrait video player
+      const currentY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+      setModalScrollTop(currentY);
+      setActiveDesktopVideo({
+        url: getAudioVideoUrl(proj.videoUrl || proj.url || '/assets/food-1.mp4'),
+        title: proj.title,
+      });
+    } else {
+      // ON MOBILE: Trigger clean native device fullscreen playback
+      const container = e.currentTarget;
+      const video = container.querySelector('video') || container;
+      if (video && video.tagName === 'VIDEO') {
+        const audioUrl = getAudioVideoUrl(proj.videoUrl || proj.url);
+        const originalUrl = proj.videoUrl || proj.url;
 
-      video.muted = false;
-      video.volume = 1.0;
-      video.play().catch(() => {});
-
-      const handleExitFullscreen = () => {
-        video.muted = true;
-        if (originalUrl && !video.src.includes(originalUrl)) {
-          video.src = originalUrl;
+        if (audioUrl && !video.src.includes(audioUrl)) {
+          video.src = audioUrl;
         }
+
+        video.muted = false;
+        video.volume = 1.0;
         video.play().catch(() => {});
-        video.removeEventListener('webkitendfullscreen', handleExitFullscreen);
-        document.removeEventListener('fullscreenchange', handleExitFullscreen);
-        document.removeEventListener('webkitfullscreenchange', handleExitFullscreen);
-      };
 
-      video.addEventListener('webkitendfullscreen', handleExitFullscreen);
-      document.addEventListener('fullscreenchange', () => {
-        if (!document.fullscreenElement) {
-          handleExitFullscreen();
-        }
-      });
-      document.addEventListener('webkitfullscreenchange', () => {
-        if (!document.webkitIsFullScreen) {
-          handleExitFullscreen();
-        }
-      });
+        const handleExitFullscreen = () => {
+          video.muted = true;
+          if (originalUrl && !video.src.includes(originalUrl)) {
+            video.src = originalUrl;
+          }
+          video.play().catch(() => {});
+          video.removeEventListener('webkitendfullscreen', handleExitFullscreen);
+          document.removeEventListener('fullscreenchange', handleExitFullscreen);
+          document.removeEventListener('webkitfullscreenchange', handleExitFullscreen);
+        };
 
-      if (video.requestFullscreen) {
-        video.requestFullscreen().catch(() => {});
-      } else if (video.webkitEnterFullscreen) {
-        video.webkitEnterFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
+        video.addEventListener('webkitendfullscreen', handleExitFullscreen);
+        document.addEventListener('fullscreenchange', () => {
+          if (!document.fullscreenElement) {
+            handleExitFullscreen();
+          }
+        });
+        document.addEventListener('webkitfullscreenchange', () => {
+          if (!document.webkitIsFullScreen) {
+            handleExitFullscreen();
+          }
+        });
+
+        if (video.requestFullscreen) {
+          video.requestFullscreen().catch(() => {});
+        } else if (video.webkitEnterFullscreen) {
+          video.webkitEnterFullscreen();
+        } else if (video.msRequestFullscreen) {
+          video.msRequestFullscreen();
+        }
       }
     }
   };
+
+  // Esc key listener for desktop 9:16 video modal
+  React.useEffect(() => {
+    if (!activeDesktopVideo) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setActiveDesktopVideo(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeDesktopVideo]);
 
   // Desktop Internal Carousel States
   const [desktopReelIndex, setDesktopReelIndex] = useState(0);
@@ -920,6 +947,86 @@ export default function BrandCollaborationsSection() {
               </a>
             </div>
 
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* ========================================================================= */}
+      {/* 4. DESKTOP ONLY: 9:16 ASPECT RATIO PORTRAIT VIDEO PLAYER MODAL */}
+      {/* ========================================================================= */}
+      {typeof document !== 'undefined' && activeDesktopVideo && createPortal(
+        <div
+          style={{
+            position: 'absolute',
+            top: `${modalScrollTop}px`,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 9999999999,
+          }}
+          className="flex items-center justify-center p-4 select-none overflow-hidden"
+        >
+          {/* Backdrop overlay click to close */}
+          <div
+            onClick={() => setActiveDesktopVideo(null)}
+            className="absolute inset-0 bg-black/85 backdrop-blur-2xl cursor-pointer z-0 transition-opacity duration-300"
+          />
+
+          {/* 9:16 Vertical Video Container Centered on Desktop */}
+          <div
+            className="
+              relative z-10 w-full max-w-[360px] sm:max-w-[400px] aspect-[9/16] max-h-[86vh]
+              rounded-[32px] overflow-hidden border border-[#FF9BD2]/50 bg-black
+              shadow-[0_0_100px_rgba(255,155,210,0.45)] flex flex-col justify-between
+              animate-modal-pop transition-all duration-300
+            "
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setActiveDesktopVideo(null)}
+              aria-label="Close video player"
+              className="
+                absolute top-4 right-4 z-50 flex h-10 w-10 items-center justify-center
+                rounded-full bg-black/70 border border-white/20 text-white
+                hover:bg-[#FF9BD2] hover:text-[#100719] hover:border-[#FF9BD2]
+                transition-all duration-300 cursor-pointer shadow-xl
+              "
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* 9:16 Video Player Element */}
+            <div className="relative w-full h-full bg-black flex items-center justify-center">
+              <video
+                ref={(el) => {
+                  if (el) {
+                    el.muted = false;
+                    el.volume = 1.0;
+                    el.play().catch(() => {});
+                  }
+                }}
+                src={activeDesktopVideo.url}
+                controls
+                autoPlay
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover rounded-[32px]"
+              />
+            </div>
+
+            {/* Video Title Footer Bar */}
+            <div className="absolute bottom-0 left-0 right-0 z-20 p-4 bg-gradient-to-t from-black via-black/80 to-transparent border-t border-white/10 pointer-events-none flex items-center justify-between">
+              <div>
+                <span className="text-[10px] font-mono text-[#FF9BD2] font-bold uppercase tracking-widest block">
+                  NOW PLAYING ✦ 9:16 PORTRAIT VIEW
+                </span>
+                <h4 className="font-display font-bold text-sm text-white uppercase tracking-tight line-clamp-1">
+                  {activeDesktopVideo.title}
+                </h4>
+              </div>
+            </div>
           </div>
         </div>,
         document.body
