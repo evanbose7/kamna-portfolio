@@ -129,6 +129,45 @@ export default function BrandCollaborationsSection() {
   const [activeFullscreenVideo, setActiveFullscreenVideo] = useState(null);
   const [modalScrollTop, setModalScrollTop] = useState(0);
 
+  // Smoothly close fullscreen video, stop audio, and restore exact scroll position
+  const closeFullscreenVideo = React.useCallback(() => {
+    const savedY = modalScrollTop;
+    setActiveFullscreenVideo(null);
+    if (typeof document !== 'undefined' && document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
+    setTimeout(() => {
+      window.scrollTo({ top: savedY, behavior: 'instant' });
+    }, 50);
+  }, [modalScrollTop]);
+
+  // Handle phone physical/gesture Back Button & Fullscreen Exit
+  React.useEffect(() => {
+    if (!activeFullscreenVideo) return;
+
+    window.history.pushState({ modal: 'video' }, '');
+
+    const handlePopState = () => {
+      closeFullscreenVideo();
+    };
+
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        closeFullscreenVideo();
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+    };
+  }, [activeFullscreenVideo, closeFullscreenVideo]);
+
   // Desktop Internal Carousel States
   const [desktopReelIndex, setDesktopReelIndex] = useState(0);
   const [desktopYtIndex, setDesktopYtIndex] = useState(0);
@@ -909,7 +948,7 @@ export default function BrandCollaborationsSection() {
           className="flex items-center justify-center p-4 sm:p-8 bg-black/95 backdrop-blur-3xl select-none"
         >
           <div
-            onClick={() => setActiveFullscreenVideo(null)}
+            onClick={closeFullscreenVideo}
             className="absolute inset-0 bg-black/90 cursor-pointer z-0"
           />
 
@@ -922,7 +961,7 @@ export default function BrandCollaborationsSection() {
           >
             <button
               type="button"
-              onClick={() => setActiveFullscreenVideo(null)}
+              onClick={closeFullscreenVideo}
               aria-label="Close fullscreen video"
               className="
                 absolute top-4 right-4 z-50 flex h-11 w-11 items-center justify-center
