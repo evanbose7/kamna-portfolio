@@ -2,6 +2,16 @@ import React, { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Sparkles, Play, ArrowUpRight, ExternalLink, X, Film, Tv, Wand2, Compass, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 
+const getAudioVideoUrl = (url) => {
+  if (!url || typeof url !== 'string') return '/assets/food-1.mp4';
+  if (url.startsWith('/assets/audio/')) return url;
+  if (url.startsWith('/assets/')) {
+    const filename = url.replace('/assets/', '');
+    return `/assets/audio/audio_${filename}`;
+  }
+  return url;
+};
+
 const InstagramIcon = ({ className = 'w-4 h-4 text-white' }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -943,7 +953,7 @@ export default function BrandCollaborationsSection() {
 
             <div className="relative w-full aspect-[9/16] max-h-[80vh] flex items-center justify-center bg-black">
               <video
-                src={activeFullscreenVideo.url}
+                src={getAudioVideoUrl(activeFullscreenVideo.url)}
                 controls
                 autoPlay
                 playsInline
