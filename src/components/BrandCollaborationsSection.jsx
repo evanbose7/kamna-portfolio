@@ -976,25 +976,25 @@ export default function BrandCollaborationsSection() {
           {/* 9:16 Vertical Video Container Centered on Desktop */}
           <div
             className="
-              relative z-10 w-full max-w-[360px] sm:max-w-[400px] aspect-[9/16] max-h-[86vh]
+              relative z-10 w-full max-w-[460px] sm:max-w-[520px] aspect-[9/16] max-h-[92vh]
               rounded-[32px] overflow-hidden border border-[#FF9BD2]/50 bg-black
-              shadow-[0_0_100px_rgba(255,155,210,0.45)] flex flex-col justify-between
+              shadow-[0_0_120px_rgba(255,155,210,0.5)] flex flex-col justify-between
               animate-modal-pop transition-all duration-300
             "
           >
-            {/* Close Button */}
+            {/* Top Left Close Button */}
             <button
               type="button"
               onClick={() => setActiveDesktopVideo(null)}
               aria-label="Close video player"
               className="
-                absolute top-4 right-4 z-50 flex h-10 w-10 items-center justify-center
+                absolute top-4 left-4 z-50 flex h-11 w-11 items-center justify-center
                 rounded-full bg-black/70 border border-white/20 text-white
                 hover:bg-[#FF9BD2] hover:text-[#100719] hover:border-[#FF9BD2]
-                transition-all duration-300 cursor-pointer shadow-xl
+                transition-all duration-300 cursor-pointer shadow-2xl backdrop-blur-md
               "
             >
-              <X className="w-5 h-5" />
+              <X className="w-6 h-6" />
             </button>
 
             {/* 9:16 Video Player Element */}
@@ -1014,18 +1014,6 @@ export default function BrandCollaborationsSection() {
                 preload="auto"
                 className="w-full h-full object-cover rounded-[32px]"
               />
-            </div>
-
-            {/* Video Title Footer Bar */}
-            <div className="absolute bottom-0 left-0 right-0 z-20 p-4 bg-gradient-to-t from-black via-black/80 to-transparent border-t border-white/10 pointer-events-none flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-mono text-[#FF9BD2] font-bold uppercase tracking-widest block">
-                  NOW PLAYING ✦ 9:16 PORTRAIT VIEW
-                </span>
-                <h4 className="font-display font-bold text-sm text-white uppercase tracking-tight line-clamp-1">
-                  {activeDesktopVideo.title}
-                </h4>
-              </div>
             </div>
           </div>
         </div>,
