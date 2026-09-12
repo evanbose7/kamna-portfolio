@@ -27,7 +27,8 @@ export default function AboutSection({ onOpenConnectModal }) {
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      const start = windowHeight * 0.65;
+      // Start revealing as section enters screen (75% viewport height)
+      const start = windowHeight * 0.75;
       const end = -windowHeight * 0.1;
 
       let progress = (start - rect.top) / (start - end);
@@ -44,10 +45,20 @@ export default function AboutSection({ onOpenConnectModal }) {
       }
     };
 
+    if (window.lenis) {
+      window.lenis.on('scroll', handleScroll);
+    }
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateScroll, { passive: true });
     updateScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      if (window.lenis) {
+        window.lenis.off('scroll', handleScroll);
+      }
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateScroll);
+    };
   }, []);
 
   return (
