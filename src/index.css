@@ -40,9 +40,15 @@
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar (Vertical only, removes lower/horizontal scrollbar completely) */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 0px !important;
+}
+::-webkit-scrollbar:horizontal {
+  display: none !important;
+  height: 0px !important;
+  width: 0px !important;
 }
 ::-webkit-scrollbar-track {
   background: #0A0A0A;
@@ -53,6 +59,19 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #E91E8C;
+}
+
+/* No Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+}
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
 
 /* Selection Color */

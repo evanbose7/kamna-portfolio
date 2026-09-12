@@ -422,10 +422,10 @@ export default function BrandCollaborationsSection() {
               <img
                 src="/assets/brand-collab-thumb.jpg"
                 alt="Brand Collaborations & Creative Strategy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-65 group-hover:opacity-85 brightness-105"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-95 group-hover:opacity-100 brightness-120 contrast-105"
               />
             </picture>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#12071B]/95 via-[#12071B]/60 to-black/30 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#12071B]/75 via-[#12071B]/35 to-black/20 z-10" />
           </div>
 
           <div className="relative flex items-center justify-between z-30">
@@ -818,10 +818,10 @@ export default function BrandCollaborationsSection() {
 
               <div
                 ref={modalScrollContainerRef}
-                style={{ scrollBehavior: 'smooth' }}
+                style={{ scrollBehavior: 'smooth', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 className={
                   selectedCard.projects.length > 3
-                    ? "flex flex-row overflow-x-auto gap-5 pb-1 no-scrollbar scroll-smooth snap-x items-stretch w-full px-1"
+                    ? "flex flex-row overflow-x-auto gap-5 pb-1 no-scrollbar scrollbar-none scroll-smooth snap-x items-stretch w-full px-1"
                     : "grid grid-cols-1 md:grid-cols-3 gap-5 w-full items-stretch"
                 }
               >
