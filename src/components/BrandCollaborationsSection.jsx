@@ -417,15 +417,14 @@ export default function BrandCollaborationsSection() {
           "
         >
           <div className="absolute inset-0 z-0">
-            <video
-              src="/assets/sukkus-brownie.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-65 group-hover:opacity-85 brightness-110"
-            />
+            <picture>
+              <source srcSet="/assets/brand-collab-thumb.avif" type="image/avif" />
+              <img
+                src="/assets/brand-collab-thumb.jpg"
+                alt="Brand Collaborations & Creative Strategy"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-65 group-hover:opacity-85 brightness-105"
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-r from-[#12071B]/95 via-[#12071B]/60 to-black/30 z-10" />
           </div>
 
