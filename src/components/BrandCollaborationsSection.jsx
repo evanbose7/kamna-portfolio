@@ -1,61 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Sparkles, Play, ArrowUpRight, ExternalLink, X, Film, Tv, Wand2, Compass, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
-
-const LazyMobileVideo = ({ src, className, ...props }) => {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    let playTimeout = null;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          playTimeout = setTimeout(() => {
-            if (video && video.paused) {
-              video.play().catch(() => {});
-            }
-          }, 80);
-        } else {
-          if (playTimeout) {
-            clearTimeout(playTimeout);
-            playTimeout = null;
-          }
-          if (video && !video.paused) {
-            video.pause();
-          }
-        }
-      },
-      {
-        threshold: 0.15,
-        rootMargin: '60px 0px 60px 0px',
-      }
-    );
-
-    observer.observe(video);
-
-    return () => {
-      if (playTimeout) clearTimeout(playTimeout);
-      observer.disconnect();
-    };
-  }, [src]);
-
-  return (
-    <video
-      ref={videoRef}
-      src={src}
-      loop
-      muted
-      playsInline
-      preload="none"
-      className={className}
-      {...props}
-    />
-  );
-};
 
 const getAudioVideoUrl = (url) => {
   if (!url || typeof url !== 'string') return '/assets/food-1.mp4';
@@ -180,6 +125,7 @@ export const CATEGORY_CARDS = [
 ];
 
 export default function BrandCollaborationsSection() {
+  const [activeCardIds, setActiveCardIds] = useState({});
   const [selectedCard, setSelectedCard] = useState(null);
   const [activeDesktopVideo, setActiveDesktopVideo] = useState(null);
   const [modalScrollTop, setModalScrollTop] = useState(0);
@@ -420,6 +366,20 @@ export default function BrandCollaborationsSection() {
       ],
     },
   ];
+
+  const handleCarouselScroll = (sectionId, e) => {
+    const target = e.currentTarget;
+    const scrollLeft = target.scrollLeft;
+    const cardWidth = target.clientWidth;
+    const newIdx = Math.max(0, Math.round(scrollLeft / cardWidth));
+
+    if (activeCardIds[sectionId] !== newIdx) {
+      setActiveCardIds((prev) => ({
+        ...prev,
+        [sectionId]: newIdx,
+      }));
+    }
+  };
 
   return (
     <section id="works" className="bg-[#0A0A0A] scroll-mt-6 py-12 sm:py-24 md:py-28 relative overflow-x-hidden w-full max-w-full">
@@ -723,6 +683,7 @@ export default function BrandCollaborationsSection() {
 
               {/* HORIZONTAL SWIPE CAROUSEL (EXACTLY 1 CARD PER SWIPE) */}
               <div
+                onScroll={(e) => handleCarouselScroll(section.id, e)}
                 className="w-full flex flex-row flex-nowrap items-stretch overflow-x-auto snap-x snap-mandatory scrollbar-none py-2 px-0"
                 style={{
                   scrollSnapType: 'x mandatory',
@@ -746,8 +707,13 @@ export default function BrandCollaborationsSection() {
                           aspect-[9/16] transition-all duration-300
                         `}
                       >
-                        <LazyMobileVideo
+                        <video
                           src={proj.videoUrl}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="auto"
                           className="w-full h-full object-cover rounded-[24px]"
                         />
 

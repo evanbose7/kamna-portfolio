@@ -91,7 +91,7 @@ export default function Hero({ onOpenConnectModal }) {
         {/* Left Column: Heading & Info */}
         <div
           ref={leftColRef}
-          className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left will-change-transform"
+          className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left transition-all duration-300 ease-out will-change-transform"
         >
           <div>
             <h1
