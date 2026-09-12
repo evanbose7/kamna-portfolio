@@ -28,6 +28,7 @@ export const CATEGORY_CARDS = [
     description: 'Playful editorial narratives, bold imagery & graphic campaign storytelling.',
     icon: Film,
     projects: [
+      { id: 'sukku-1', title: "SUKKU'S THE BROWNIE COMMERCIAL", description: 'A playful narrative commercial capturing a comedic heist for the ultimate brownie, featuring dynamic pacing, character comedy, and rich culinary visuals.', aspectRatio: '9/16', videoUrl: '/assets/sukkus-brownie.mp4' },
       { id: 'ps-1', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', aspectRatio: '9/16', videoUrl: '/assets/memoire-reel.mp4' },
       { id: 'ps-2', title: 'QUIRKY EDITORIAL BRAND FILM 02', description: 'Cinematic close-ups, quick cuts, playful camera movement, and expressive text overlays give the video a quirky, entertaining feel.', aspectRatio: '9/16', videoUrl: '/assets/brand-campaign-2.mp4' },
       { id: 'ps-3', title: 'PRABHU PRASAD ICE CREAM STORY 03', description: 'AI-illustrated visuals, gentle character animation, close-up product shots, and emotional storytelling create a nostalgic, homely feel.', aspectRatio: '9/16', videoUrl: '/assets/prabhuprasad-icecream.mp4' },
@@ -300,9 +301,10 @@ export default function BrandCollaborationsSection() {
       icon: Film,
       accentColor: '#E91E8C',
       projects: [
-        { id: 'ps-1', numberLabel: '01 / 03', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/memoire-reel.mp4' },
-        { id: 'ps-2', numberLabel: '02 / 03', title: 'QUIRKY EDITORIAL BRAND FILM 02', description: 'Cinematic close-ups, quick cuts, playful camera movement, and expressive text overlays give the video a quirky, entertaining feel.', gradientBg: 'from-[#FFB3CB]/40 via-[#1A0A2E] to-[#E91E8C]/30', videoUrl: '/assets/brand-campaign-2.mp4' },
-        { id: 'ps-3', numberLabel: '03 / 03', title: 'PRABHU PRASAD ICE CREAM STORY 03', description: 'AI-illustrated visuals, gentle character animation, close-up product shots, and emotional storytelling create a nostalgic, homely feel.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/prabhuprasad-icecream.mp4' },
+        { id: 'sukku-1', numberLabel: '01 / 04', title: "SUKKU'S THE BROWNIE COMMERCIAL", description: 'A playful narrative commercial capturing a comedic heist for the ultimate brownie, featuring dynamic pacing, character comedy, and rich culinary visuals.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#E91E8C]/30', videoUrl: '/assets/sukkus-brownie.mp4' },
+        { id: 'ps-1', numberLabel: '02 / 04', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/memoire-reel.mp4' },
+        { id: 'ps-2', numberLabel: '03 / 04', title: 'QUIRKY EDITORIAL BRAND FILM 02', description: 'Cinematic close-ups, quick cuts, playful camera movement, and expressive text overlays give the video a quirky, entertaining feel.', gradientBg: 'from-[#FFB3CB]/40 via-[#1A0A2E] to-[#E91E8C]/30', videoUrl: '/assets/brand-campaign-2.mp4' },
+        { id: 'ps-3', numberLabel: '04 / 04', title: 'PRABHU PRASAD ICE CREAM STORY 03', description: 'AI-illustrated visuals, gentle character animation, close-up product shots, and emotional storytelling create a nostalgic, homely feel.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/prabhuprasad-icecream.mp4' },
       ],
     },
     {
@@ -416,7 +418,7 @@ export default function BrandCollaborationsSection() {
         >
           <div className="absolute inset-0 z-0">
             <video
-              src="/assets/memoire-reel.mp4"
+              src="/assets/sukkus-brownie.mp4"
               autoPlay
               loop
               muted
@@ -722,26 +724,17 @@ export default function BrandCollaborationsSection() {
                           </span>
                         </div>
 
-                        {proj.id !== 'ps-2' && (
+                        {proj.id !== 'ps-2' && proj.id !== 'sukku-1' && (
                           <div className="absolute top-3 right-3 z-20 pointer-events-none px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#E91E8C] to-[#FFB3CB] text-white font-mono text-[10px] font-black tracking-widest shadow-lg">
                             AI
                           </div>
                         )}
 
-                        <div className="absolute bottom-3 left-3 right-3 z-20 pointer-events-none p-2.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/15 flex items-center justify-between shadow-lg">
-                          <span className="font-bold text-xs text-white leading-snug line-clamp-1">
-                            {proj.title}
-                          </span>
-                        </div>
-
                         <div className="absolute inset-0 z-10 pointer-events-none rounded-[24px] shadow-[inset_0_0_25px_rgba(0,0,0,0.75)]" />
                       </div>
 
-                      <div className="space-y-1 px-1 text-center max-w-[310px] mx-auto pt-1">
-                        <h4 className="font-display font-bold text-sm text-white tracking-tight uppercase line-clamp-1">
-                          {proj.title}
-                        </h4>
-                        <p className="text-xs text-white/75 line-clamp-2 leading-relaxed font-normal">
+                      <div className="px-2 text-center max-w-[310px] mx-auto pt-1">
+                        <p className="text-xs text-white/75 line-clamp-3 leading-relaxed font-normal">
                           {proj.description}
                         </p>
                       </div>
@@ -874,7 +867,7 @@ export default function BrandCollaborationsSection() {
                       </span>
                     </div>
 
-                    {proj.id !== 'ps-2' && (
+                    {proj.id !== 'ps-2' && proj.id !== 'sukku-1' && (
                       <div className="absolute top-2.5 right-2.5 z-20 pointer-events-none px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#E91E8C] to-[#FFB3CB] text-white font-mono text-[10px] font-black tracking-widest shadow-lg backdrop-blur-md">
                         AI
                       </div>
@@ -883,10 +876,7 @@ export default function BrandCollaborationsSection() {
 
                   <div className="space-y-1.5 flex-1 flex flex-col justify-between">
                     <div>
-                      <h4 className="font-display font-bold text-sm sm:text-base text-[#FFF7FF] leading-snug group-hover/card:text-[#FF9BD2] transition-colors line-clamp-1">
-                        {proj.title}
-                      </h4>
-                      <p className="text-[11px] text-[#FFF7FF]/70 line-clamp-2 mt-0.5 leading-relaxed">
+                      <p className="text-xs text-[#FFF7FF]/80 line-clamp-3 leading-relaxed">
                         {proj.description}
                       </p>
                     </div>
