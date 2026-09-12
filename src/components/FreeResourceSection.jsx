@@ -9,8 +9,13 @@ export default function FreeResourceSection({ onOpenPdfModal }) {
   const words = quoteText.split(' ');
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!quoteRef.current) return;
+    let ticking = false;
+
+    const updateScroll = () => {
+      if (!quoteRef.current) {
+        ticking = false;
+        return;
+      }
 
       const rect = quoteRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
@@ -29,10 +34,18 @@ export default function FreeResourceSection({ onOpenPdfModal }) {
       }
 
       setScrollProgress(progress);
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    updateScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);

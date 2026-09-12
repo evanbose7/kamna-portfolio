@@ -18,15 +18,19 @@ export default function App() {
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
 
-  // Initialize 120 FPS Lenis Inertia Smooth Scroll & attach to window
+  // Initialize 120 FPS Lenis Inertia Smooth Scroll & attach to window (Desktop only)
   useEffect(() => {
+    // Only run Lenis on desktop / non-touch devices so mobile gets pure native hardware touch momentum
+    const isTouch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 1024;
+    if (isTouch) return;
+
     const lenis = new Lenis({
       duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1.0,
       touchMultiplier: 1.5,
-      smoothTouch: false, // Allows native 120 FPS mobile hardware touch momentum
+      smoothTouch: false,
     });
 
     window.lenis = lenis;
