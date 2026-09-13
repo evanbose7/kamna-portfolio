@@ -10,6 +10,54 @@ export default function Hero({ onOpenConnectModal }) {
   const isVideoMedia = false; 
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
 
+  const leftColRef = React.useRef(null);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const updateScroll = () => {
+      if (!leftColRef.current) return;
+      const scrollY = window.lenis ? window.lenis.scroll : (window.scrollY || window.pageYOffset || 0);
+      // Smoothly reveal text over the first 180px of scroll
+      const progress = Math.min(Math.max(scrollY / 180, 0), 1);
+      leftColRef.current.style.opacity = progress.toFixed(3);
+      leftColRef.current.style.transform = `translate3d(0, ${((1 - progress) * 28).toFixed(1)}px, 0)`;
+      leftColRef.current.style.pointerEvents = progress >= 0.25 ? 'auto' : 'none';
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    };
+
+    if (window.lenis) {
+      window.lenis.on('scroll', handleScroll);
+    }
+    const lenisCheck = setInterval(() => {
+      if (window.lenis) {
+        window.lenis.on('scroll', handleScroll);
+        clearInterval(lenisCheck);
+      }
+    }, 100);
+    setTimeout(() => clearInterval(lenisCheck), 2500);
+
+    window.addEventListener('resize', updateScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    updateScroll();
+
+    return () => {
+      clearInterval(lenisCheck);
+      if (window.lenis) {
+        window.lenis.off('scroll', handleScroll);
+      }
+      window.removeEventListener('resize', updateScroll);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   // Toggle portrait tilt & stickers state on mobile tap, clearing hover residue
   const handlePortraitClick = () => {
     setIsTapped((prev) => {
@@ -49,8 +97,17 @@ export default function Hero({ onOpenConnectModal }) {
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center relative z-10">
         
-        {/* Left Column: Heading & Info */}
-        <div className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left">
+        {/* Left Column: Heading & Info (Initially hidden, revealed on scroll down with fading effect) */}
+        <div
+          ref={leftColRef}
+          style={{
+            opacity: 0,
+            transform: 'translate3d(0, 28px, 0)',
+            pointerEvents: 'none',
+            transition: 'opacity 0.2s ease-out, transform 0.2s ease-out',
+          }}
+          className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left will-change-transform transform-gpu"
+        >
           <div>
             <h1
               className="font-black uppercase leading-[1.05] tracking-tight break-words text-[#F5F0EB]"
