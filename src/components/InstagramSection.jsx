@@ -144,7 +144,8 @@ export default function InstagramSection() {
           style={{
             scrollBehavior: 'smooth',
             WebkitOverflowScrolling: 'touch',
-            touchAction: 'pan-x pan-y',
+            touchAction: 'auto',
+            overscrollBehaviorX: 'contain',
           }}
         >
           {reels.map((reel) => (

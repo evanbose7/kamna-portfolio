@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Sparkles, Play, ArrowUpRight, ExternalLink, X, Film, Tv, Wand2, Compass, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -20,6 +20,88 @@ const InstagramIcon = ({ className = 'w-4 h-4 text-white' }) => (
   </svg>
 );
 
+const getVideoPosterUrl = (url) => {
+  if (!url || typeof url !== 'string') return '';
+  const filename = url.replace(/^.*[\\\/]/, '').replace('.mp4', '.jpg');
+  return `/assets/posters/${filename}`;
+};
+
+function LazyMobileVideo({ src, poster, className }) {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Only trigger when the video is in view (user is directly on this video card)
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          if (timerRef.current) clearTimeout(timerRef.current);
+          // Wait 300ms while user lands/settles on the card before auto-playing
+          timerRef.current = setTimeout(() => {
+            setIsPlaying(true);
+            if (videoRef.current) {
+              videoRef.current.play().catch(() => {});
+            }
+          }, 300);
+        } else {
+          // Immediately pause and revert to thumbnail when moving away
+          if (timerRef.current) clearTimeout(timerRef.current);
+          setIsPlaying(false);
+          if (videoRef.current) {
+            videoRef.current.pause();
+            try {
+              videoRef.current.currentTime = 0;
+            } catch (e) {}
+          }
+        }
+      },
+      {
+        threshold: [0, 0.25, 0.5, 0.75],
+        rootMargin: '0px',
+      }
+    );
+
+    observer.observe(el);
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative w-full h-full overflow-hidden rounded-[24px]">
+      {/* Static thumbnail poster: always shown before reaching the video or when moving away */}
+      {poster && (
+        <img
+          src={poster}
+          alt=""
+          loading="lazy"
+          className={`absolute inset-0 w-full h-full object-cover rounded-[24px] pointer-events-none transition-opacity duration-500 z-10 ${
+            isPlaying ? 'opacity-0' : 'opacity-100'
+          }`}
+        />
+      )}
+
+      {/* Video element: plays only when user is directly on the video */}
+      <video
+        ref={videoRef}
+        src={src}
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        className={`${className} absolute inset-0 z-0`}
+      />
+    </div>
+  );
+}
+
 export const CATEGORY_CARDS = [
   {
     id: 'problem-solving',
@@ -30,7 +112,7 @@ export const CATEGORY_CARDS = [
     projects: [
       { id: 'sukku-1', title: "SUKKU'S THE BROWNIE COMMERCIAL", description: 'A playful narrative commercial capturing a comedic heist for the ultimate brownie, featuring dynamic pacing, character comedy, and rich culinary visuals.', aspectRatio: '9/16', videoUrl: '/assets/sukkus-brownie.mp4' },
       { id: 'ps-1', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', aspectRatio: '9/16', videoUrl: '/assets/memoire-reel.mp4' },
-      { id: 'ps-2', title: 'QUIRKY EDITORIAL BRAND FILM 02', description: 'Cinematic close-ups, quick cuts, playful camera movement, and expressive text overlays give the video a quirky, entertaining feel.', aspectRatio: '9/16', videoUrl: '/assets/brand-campaign-2.mp4' },
+      { id: 'ps-2', title: 'GOJU UNSCRIPTED BRAND FILM', description: 'Candid, energetic brand storytelling capturing dynamic real-world visuals, rhythm, and the authentic spirit of Goju.', aspectRatio: '9/16', videoUrl: '/assets/goju-unscripted.mp4' },
       { id: 'ps-3', title: 'PRABHU PRASAD ICE CREAM STORY 03', description: 'AI-illustrated visuals, gentle character animation, close-up product shots, and emotional storytelling create a nostalgic, homely feel.', aspectRatio: '9/16', videoUrl: '/assets/prabhuprasad-icecream.mp4' },
     ],
   },
@@ -125,7 +207,6 @@ export const CATEGORY_CARDS = [
 ];
 
 export default function BrandCollaborationsSection() {
-  const [activeCardIds, setActiveCardIds] = useState({});
   const [selectedCard, setSelectedCard] = useState(null);
   const [activeDesktopVideo, setActiveDesktopVideo] = useState(null);
   const [modalScrollTop, setModalScrollTop] = useState(0);
@@ -303,7 +384,7 @@ export default function BrandCollaborationsSection() {
       projects: [
         { id: 'sukku-1', numberLabel: '01 / 04', title: "SUKKU'S THE BROWNIE COMMERCIAL", description: 'A playful narrative commercial capturing a comedic heist for the ultimate brownie, featuring dynamic pacing, character comedy, and rich culinary visuals.', gradientBg: 'from-[#FF9BD2]/40 via-[#1A0A2E] to-[#E91E8C]/30', videoUrl: '/assets/sukkus-brownie.mp4' },
         { id: 'ps-1', numberLabel: '02 / 04', title: 'MEMOIRE EDITORIAL CAMPAIGN 01', description: 'A visually striking reel introducing Memoire through a playful editorial narrative, using bold imagery and graphic elements to communicate its story.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/memoire-reel.mp4' },
-        { id: 'ps-2', numberLabel: '03 / 04', title: 'QUIRKY EDITORIAL BRAND FILM 02', description: 'Cinematic close-ups, quick cuts, playful camera movement, and expressive text overlays give the video a quirky, entertaining feel.', gradientBg: 'from-[#FFB3CB]/40 via-[#1A0A2E] to-[#E91E8C]/30', videoUrl: '/assets/brand-campaign-2.mp4' },
+        { id: 'ps-2', numberLabel: '03 / 04', title: 'GOJU UNSCRIPTED BRAND FILM', description: 'Candid, energetic brand storytelling capturing dynamic real-world visuals, rhythm, and the authentic spirit of Goju.', gradientBg: 'from-[#FFB3CB]/40 via-[#1A0A2E] to-[#E91E8C]/30', videoUrl: '/assets/goju-unscripted.mp4' },
         { id: 'ps-3', numberLabel: '04 / 04', title: 'PRABHU PRASAD ICE CREAM STORY 03', description: 'AI-illustrated visuals, gentle character animation, close-up product shots, and emotional storytelling create a nostalgic, homely feel.', gradientBg: 'from-[#E91E8C]/40 via-[#1A0A2E] to-[#FFB3CB]/30', videoUrl: '/assets/prabhuprasad-icecream.mp4' },
       ],
     },
@@ -367,17 +448,11 @@ export default function BrandCollaborationsSection() {
     },
   ];
 
-  const handleCarouselScroll = (sectionId, e) => {
-    const target = e.currentTarget;
-    const scrollLeft = target.scrollLeft;
-    const cardWidth = target.clientWidth;
-    const newIdx = Math.max(0, Math.round(scrollLeft / cardWidth));
-
-    if (activeCardIds[sectionId] !== newIdx) {
-      setActiveCardIds((prev) => ({
-        ...prev,
-        [sectionId]: newIdx,
-      }));
+  const scrollCarousel = (id, direction) => {
+    const container = document.getElementById(`carousel-${id}`);
+    if (container) {
+      const cardWidth = container.clientWidth;
+      container.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
     }
   };
 
@@ -671,24 +746,45 @@ export default function BrandCollaborationsSection() {
             <div key={section.id} className="w-full space-y-4">
               
               {/* SUBSECTION HEADER */}
-              <div className="w-full flex flex-col justify-between gap-1 border-b border-white/10 pb-3">
-                <h4 className="font-black text-xl text-[#FFF7FF] tracking-tight uppercase flex items-center gap-2">
-                  <Icon className="w-4.5 h-4.5" style={{ color: section.accentColor }} />
-                  {section.title}
-                </h4>
-                <p className="text-xs font-serif italic text-white/60">
-                  {section.subhead}
-                </p>
+              <div className="w-full flex items-center justify-between border-b border-white/10 pb-3">
+                <div className="flex flex-col gap-0.5">
+                  <h4 className="font-black text-lg sm:text-xl text-[#FFF7FF] tracking-tight uppercase flex items-center gap-2">
+                    <Icon className="w-4.5 h-4.5" style={{ color: section.accentColor }} />
+                    {section.title}
+                  </h4>
+                  <p className="text-xs font-serif italic text-white/60">
+                    {section.subhead}
+                  </p>
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0 pl-2">
+                  <button
+                    type="button"
+                    onClick={() => scrollCarousel(section.id, -1)}
+                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white/80 active:scale-90 transition-all cursor-pointer"
+                    aria-label="Previous video"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollCarousel(section.id, 1)}
+                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white/80 active:scale-90 transition-all cursor-pointer"
+                    aria-label="Next video"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               {/* HORIZONTAL SWIPE CAROUSEL (EXACTLY 1 CARD PER SWIPE) */}
               <div
-                onScroll={(e) => handleCarouselScroll(section.id, e)}
+                id={`carousel-${section.id}`}
                 className="w-full flex flex-row flex-nowrap items-stretch overflow-x-auto snap-x snap-mandatory scrollbar-none py-2 px-0"
                 style={{
                   scrollSnapType: 'x mandatory',
                   WebkitOverflowScrolling: 'touch',
-                  touchAction: 'pan-x pan-y',
+                  touchAction: 'auto',
+                  overscrollBehaviorX: 'contain',
                 }}
               >
                 {section.projects.map((proj) => {
@@ -707,13 +803,9 @@ export default function BrandCollaborationsSection() {
                           aspect-[9/16] transition-all duration-300
                         `}
                       >
-                        <video
+                        <LazyMobileVideo
                           src={proj.videoUrl}
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          preload="auto"
+                          poster={getVideoPosterUrl(proj.videoUrl)}
                           className="w-full h-full object-cover rounded-[24px]"
                         />
 

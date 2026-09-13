@@ -5,49 +5,10 @@ export default function Hero({ onOpenConnectModal }) {
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
   const [isTapped, setIsTapped] = useState(false);
   const [hasTappedOnce, setHasTappedOnce] = useState(false);
-  const [heroScrollProgress, setHeroScrollProgress] = useState(1);
-  const [isMobileScreen, setIsMobileScreen] = useState(false);
 
   // Video media configuration (change to true if using video file in public/assets/)
   const isVideoMedia = false; 
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
-
-  const leftColRef = React.useRef(null);
-
-  useEffect(() => {
-    let ticking = false;
-
-    const updateScroll = () => {
-      if (window.innerWidth < 1024 && leftColRef.current) {
-        const scrollY = window.scrollY;
-        const progress = Math.min(Math.max(scrollY / 180, 0), 1);
-        leftColRef.current.style.opacity = progress;
-        leftColRef.current.style.transform = `translate3d(0, ${(1 - progress) * 28}px, 0)`;
-        leftColRef.current.style.pointerEvents = progress < 0.25 ? 'none' : 'auto';
-      } else if (leftColRef.current) {
-        leftColRef.current.style.opacity = '1';
-        leftColRef.current.style.transform = 'translate3d(0, 0, 0)';
-        leftColRef.current.style.pointerEvents = 'auto';
-      }
-      ticking = false;
-    };
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateScroll);
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('resize', updateScroll, { passive: true });
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    updateScroll();
-
-    return () => {
-      window.removeEventListener('resize', updateScroll);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   // Toggle portrait tilt & stickers state on mobile tap, clearing hover residue
   const handlePortraitClick = () => {
@@ -89,10 +50,7 @@ export default function Hero({ onOpenConnectModal }) {
       <div className="w-full grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center relative z-10">
         
         {/* Left Column: Heading & Info */}
-        <div
-          ref={leftColRef}
-          className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left transition-all duration-300 ease-out will-change-transform"
-        >
+        <div className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left">
           <div>
             <h1
               className="font-black uppercase leading-[1.05] tracking-tight break-words text-[#F5F0EB]"
@@ -157,17 +115,17 @@ export default function Hero({ onOpenConnectModal }) {
           >
             {/* Polaroid Radial Glow */}
             <div
-              className={`pointer-events-none absolute inset-0 m-auto h-[85%] w-[85%] rounded-full blur-3xl bg-gradient-to-r from-[#FFB3CB]/40 via-[#E91E8C]/30 to-transparent transition-opacity duration-500 ${
+              className={`pointer-events-none absolute inset-0 m-auto h-[85%] w-[85%] rounded-full blur-3xl bg-gradient-to-r from-[#FFB3CB]/40 via-[#E91E8C]/30 to-transparent transition-opacity duration-300 transform-gpu ${
                 isCardActive ? 'opacity-100' : 'opacity-60'
               }`}
             />
 
             {/* White Polaroid Card with Tilt & Pop Toggle Animation */}
             <div
-              className={`relative bg-white p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform transition-all duration-500 ease-out ${
+              className={`relative bg-white p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] rounded-sm transform-gpu transition-transform duration-300 ease-out will-change-transform ${
                 isCardActive
-                  ? 'rotate-3 scale-[1.04] translate-y-0 shadow-[0_35px_70px_-15px_rgba(233,30,140,0.4)]'
-                  : 'rotate-0 scale-100 translate-y-0'
+                  ? 'rotate-3 scale-[1.04]'
+                  : 'rotate-0 scale-100'
               }`}
             >
               <div className="relative overflow-hidden aspect-[2/3] bg-[#F5F0EB]">
@@ -200,7 +158,7 @@ export default function Hero({ onOpenConnectModal }) {
 
             {/* 1. Sticker Top-Left: "ai video creator" */}
             <div
-              className={`pointer-events-none absolute -top-6 -left-6 sm:-left-10 z-30 transform -rotate-6 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute -top-6 -left-6 sm:-left-10 z-30 transform-gpu -rotate-6 transition-[transform,opacity] duration-300 ease-back-out will-change-transform ${
                 isCardActive
                   ? 'opacity-100 scale-100 translate-y-0 delay-75'
                   : 'opacity-0 scale-75 translate-y-4'
@@ -218,7 +176,7 @@ export default function Hero({ onOpenConnectModal }) {
 
             {/* 2. Sticker Top-Right: "content strategist" */}
             <div
-              className={`pointer-events-none absolute -top-6 -right-6 sm:-right-12 z-30 transform rotate-6 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute -top-6 -right-6 sm:-right-12 z-30 transform-gpu rotate-6 transition-[transform,opacity] duration-300 ease-back-out will-change-transform ${
                 isCardActive
                   ? 'opacity-100 scale-100 translate-y-0 delay-150'
                   : 'opacity-0 scale-75 translate-y-4'
@@ -236,7 +194,7 @@ export default function Hero({ onOpenConnectModal }) {
 
             {/* 3. Sticker Middle-Left: "video editor" */}
             <div
-              className={`pointer-events-none absolute top-[35%] -left-10 sm:-left-16 transform -translate-y-1/2 -rotate-12 z-30 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute top-[35%] -left-10 sm:-left-16 transform-gpu -translate-y-1/2 -rotate-12 z-30 transition-[transform,opacity] duration-300 ease-back-out will-change-transform ${
                 isCardActive
                   ? 'opacity-100 scale-100 translate-x-0 delay-220'
                   : 'opacity-0 scale-75 -translate-x-4'
@@ -254,7 +212,7 @@ export default function Hero({ onOpenConnectModal }) {
 
             {/* 4. Sticker Middle-Right: "ugc creator" */}
             <div
-              className={`pointer-events-none absolute top-[48%] -right-10 sm:-right-16 transform -translate-y-1/2 rotate-12 z-30 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute top-[48%] -right-10 sm:-right-16 transform-gpu -translate-y-1/2 rotate-12 z-30 transition-[transform,opacity] duration-300 ease-back-out will-change-transform ${
                 isCardActive
                   ? 'opacity-100 scale-100 translate-x-0 delay-280'
                   : 'opacity-0 scale-75 translate-x-4'
@@ -272,7 +230,7 @@ export default function Hero({ onOpenConnectModal }) {
 
             {/* 5. Sticker Bottom-Left: "storyteller" */}
             <div
-              className={`pointer-events-none absolute -bottom-8 -left-4 sm:-left-8 z-30 transform rotate-3 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute -bottom-8 -left-4 sm:-left-8 z-30 transform-gpu rotate-3 transition-[transform,opacity] duration-300 ease-back-out will-change-transform ${
                 isCardActive
                   ? 'opacity-100 scale-100 translate-y-0 delay-340'
                   : 'opacity-0 scale-75 -translate-y-4'
@@ -290,7 +248,7 @@ export default function Hero({ onOpenConnectModal }) {
 
             {/* 6. Sticker Bottom-Right: "content creator" */}
             <div
-              className={`pointer-events-none absolute -bottom-8 -right-4 sm:-right-8 z-30 transform -rotate-3 transition-all duration-300 ease-back-out ${
+              className={`pointer-events-none absolute -bottom-8 -right-4 sm:-right-8 z-30 transform-gpu -rotate-3 transition-[transform,opacity] duration-300 ease-back-out will-change-transform ${
                 isCardActive
                   ? 'opacity-100 scale-108 translate-y-0 delay-400'
                   : 'opacity-0 scale-75 -translate-y-4'

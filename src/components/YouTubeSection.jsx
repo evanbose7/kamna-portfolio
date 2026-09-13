@@ -249,6 +249,11 @@ export default function YouTubeSection() {
           ref={mobileScrollRef}
           onScroll={handleMobileScroll}
           className="md:hidden flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-1 -mx-5 px-5"
+          style={{
+            WebkitOverflowScrolling: 'touch',
+            touchAction: 'auto',
+            overscrollBehaviorX: 'contain',
+          }}
         >
           {videos.map((video) => {
             const isPreviewActive = activePreviewVideoId === video.id;
