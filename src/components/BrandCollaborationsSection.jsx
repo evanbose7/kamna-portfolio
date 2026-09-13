@@ -448,14 +448,6 @@ export default function BrandCollaborationsSection() {
     },
   ];
 
-  const scrollCarousel = (id, direction) => {
-    const container = document.getElementById(`carousel-${id}`);
-    if (container) {
-      const cardWidth = container.clientWidth;
-      container.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
-    }
-  };
-
   return (
     <section id="works" className="bg-[#0A0A0A] scroll-mt-6 py-12 sm:py-24 md:py-28 relative overflow-x-hidden w-full max-w-full">
       
@@ -746,34 +738,14 @@ export default function BrandCollaborationsSection() {
             <div key={section.id} className="w-full space-y-4">
               
               {/* SUBSECTION HEADER */}
-              <div className="w-full flex items-center justify-between border-b border-white/10 pb-3">
-                <div className="flex flex-col gap-0.5">
-                  <h4 className="font-black text-lg sm:text-xl text-[#FFF7FF] tracking-tight uppercase flex items-center gap-2">
-                    <Icon className="w-4.5 h-4.5" style={{ color: section.accentColor }} />
-                    {section.title}
-                  </h4>
-                  <p className="text-xs font-serif italic text-white/60">
-                    {section.subhead}
-                  </p>
-                </div>
-                <div className="flex items-center gap-1.5 shrink-0 pl-2">
-                  <button
-                    type="button"
-                    onClick={() => scrollCarousel(section.id, -1)}
-                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white/80 active:scale-90 transition-all cursor-pointer"
-                    aria-label="Previous video"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => scrollCarousel(section.id, 1)}
-                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white/80 active:scale-90 transition-all cursor-pointer"
-                    aria-label="Next video"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
+              <div className="w-full flex flex-col justify-between gap-1 border-b border-white/10 pb-3">
+                <h4 className="font-black text-xl text-[#FFF7FF] tracking-tight uppercase flex items-center gap-2">
+                  <Icon className="w-4.5 h-4.5" style={{ color: section.accentColor }} />
+                  {section.title}
+                </h4>
+                <p className="text-xs font-serif italic text-white/60">
+                  {section.subhead}
+                </p>
               </div>
 
               {/* HORIZONTAL SWIPE CAROUSEL (EXACTLY 1 CARD PER SWIPE) */}
