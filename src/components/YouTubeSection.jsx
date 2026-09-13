@@ -189,7 +189,15 @@ export default function YouTubeSection() {
             </span>
           </div>
 
-          <div className="flex sm:grid overflow-x-auto sm:overflow-visible snap-x sm:snap-none snap-mandatory grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-0 scrollbar-none -mx-5 px-5 sm:mx-0 sm:px-0">
+          <div
+            data-lenis-prevent
+            className="flex sm:grid overflow-x-auto sm:overflow-visible snap-x sm:snap-none snap-mandatory grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-0 scrollbar-none -mx-5 px-5 sm:mx-0 sm:px-0"
+            style={{
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-x pan-y',
+              overscrollBehaviorX: 'contain',
+            }}
+          >
             {youtubeShorts.map((short) => (
               <a
                 key={short.id}
@@ -247,11 +255,12 @@ export default function YouTubeSection() {
         </div>
         <div
           ref={mobileScrollRef}
+          data-lenis-prevent
           onScroll={handleMobileScroll}
           className="md:hidden flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-6 pt-2 px-1 -mx-5 px-5"
           style={{
             WebkitOverflowScrolling: 'touch',
-            touchAction: 'auto',
+            touchAction: 'pan-x pan-y',
             overscrollBehaviorX: 'contain',
           }}
         >

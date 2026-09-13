@@ -14,12 +14,21 @@ export default function Hero({ onOpenConnectModal }) {
 
   useEffect(() => {
     let ticking = false;
+    let lastProgress = -1;
 
     const updateScroll = () => {
       if (!leftColRef.current) return;
       const scrollY = window.lenis ? window.lenis.scroll : (window.scrollY || window.pageYOffset || 0);
       // Smoothly reveal text over the first 180px of scroll
       const progress = Math.min(Math.max(scrollY / 180, 0), 1);
+
+      // Stop DOM style writes if already settled at 1 (scrolled down) or 0 (at top)
+      if ((progress === 1 && lastProgress === 1) || (progress === 0 && lastProgress === 0)) {
+        ticking = false;
+        return;
+      }
+      lastProgress = progress;
+
       leftColRef.current.style.opacity = progress.toFixed(3);
       leftColRef.current.style.transform = `translate3d(0, ${((1 - progress) * 28).toFixed(1)}px, 0)`;
       leftColRef.current.style.pointerEvents = progress >= 0.25 ? 'auto' : 'none';

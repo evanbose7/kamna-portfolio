@@ -132,6 +132,7 @@ export default function InstagramSection() {
       <div className="md:hidden relative w-full overflow-hidden px-4">
         <div
           ref={scrollContainerRef}
+          data-lenis-prevent
           onScroll={(e) => {
             const scrollLeft = e.currentTarget.scrollLeft;
             const cardWidth = 260;
@@ -144,7 +145,7 @@ export default function InstagramSection() {
           style={{
             scrollBehavior: 'smooth',
             WebkitOverflowScrolling: 'touch',
-            touchAction: 'auto',
+            touchAction: 'pan-x pan-y',
             overscrollBehaviorX: 'contain',
           }}
         >

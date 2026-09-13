@@ -28,7 +28,6 @@ const getVideoPosterUrl = (url) => {
 
 function LazyMobileVideo({ src, poster, className }) {
   const containerRef = useRef(null);
-  const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const timerRef = useRef(null);
 
@@ -38,30 +37,21 @@ function LazyMobileVideo({ src, poster, className }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Only trigger when the video is in view (user is directly on this video card)
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+        // Only trigger when the video card is comfortably in view (at least 60%)
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
           if (timerRef.current) clearTimeout(timerRef.current);
-          // Wait 300ms while user lands/settles on the card before auto-playing
+          // Wait 350ms while user lands/settles on the card before mounting and playing
           timerRef.current = setTimeout(() => {
             setIsPlaying(true);
-            if (videoRef.current) {
-              videoRef.current.play().catch(() => {});
-            }
-          }, 300);
+          }, 350);
         } else {
-          // Immediately pause and revert to thumbnail when moving away
+          // Immediately cancel any pending play and unmount when moving away
           if (timerRef.current) clearTimeout(timerRef.current);
           setIsPlaying(false);
-          if (videoRef.current) {
-            videoRef.current.pause();
-            try {
-              videoRef.current.currentTime = 0;
-            } catch (e) {}
-          }
         }
       },
       {
-        threshold: [0, 0.25, 0.5, 0.75],
+        threshold: [0, 0.6],
         rootMargin: '0px',
       }
     );
@@ -75,29 +65,32 @@ function LazyMobileVideo({ src, poster, className }) {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full h-full overflow-hidden rounded-[24px]">
-      {/* Static thumbnail poster: always shown before reaching the video or when moving away */}
+    <div ref={containerRef} className="relative w-full h-full overflow-hidden rounded-[24px] bg-black">
+      {/* Static thumbnail poster: always shown first, completely smooth and instant */}
       {poster && (
         <img
           src={poster}
           alt=""
           loading="lazy"
-          className={`absolute inset-0 w-full h-full object-cover rounded-[24px] pointer-events-none transition-opacity duration-500 z-10 ${
+          decoding="async"
+          className={`absolute inset-0 w-full h-full object-cover rounded-[24px] pointer-events-none transition-opacity duration-300 z-10 ${
             isPlaying ? 'opacity-0' : 'opacity-100'
           }`}
         />
       )}
 
-      {/* Video element: plays only when user is directly on the video */}
-      <video
-        ref={videoRef}
-        src={src}
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        className={`${className} absolute inset-0 z-0`}
-      />
+      {/* Video element: ONLY mounted and decoded when the user has actually paused on this card */}
+      {isPlaying && (
+        <video
+          src={src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className={`${className} absolute inset-0 z-0`}
+        />
+      )}
     </div>
   );
 }
@@ -478,7 +471,7 @@ export default function BrandCollaborationsSection() {
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[0])}
           className="
             relative col-span-12 row-span-1 min-h-[300px] lg:min-h-[360px] rounded-[28px] overflow-hidden p-6 sm:p-8
-            border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
+            border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#E91E8C]/70 hover:shadow-[0_0_40px_rgba(233,30,140,0.4)] hover:-translate-y-1 hover:scale-[1.002]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
           "
@@ -525,7 +518,7 @@ export default function BrandCollaborationsSection() {
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[3])}
           className="
             relative col-span-6 row-span-1 min-h-[250px] lg:min-h-[320px] rounded-[28px] overflow-hidden p-6
-            border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
+            border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#FF9BD2]/70 hover:shadow-[0_0_35px_rgba(255,155,210,0.35)] hover:-translate-y-1 hover:scale-[1.005]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
           "
@@ -566,7 +559,7 @@ export default function BrandCollaborationsSection() {
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[4])}
           className="
             relative col-span-6 row-span-1 min-h-[250px] lg:min-h-[320px] rounded-[28px] overflow-hidden p-6
-            border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
+            border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#C4A1FF]/70 hover:shadow-[0_0_35px_rgba(196,161,255,0.35)] hover:-translate-y-1 hover:scale-[1.005]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
           "
@@ -607,7 +600,7 @@ export default function BrandCollaborationsSection() {
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[5])}
           className="
             relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
-            border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
+            border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#FF9BD2]/70 hover:shadow-[0_0_35px_rgba(255,155,210,0.35)] hover:-translate-y-1 hover:scale-[1.005]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
           "
@@ -648,7 +641,7 @@ export default function BrandCollaborationsSection() {
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[6])}
           className="
             relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
-            border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
+            border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#B388FF]/70 hover:shadow-[0_0_35px_rgba(179,136,255,0.35)] hover:-translate-y-1 hover:scale-[1.005]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
           "
@@ -689,7 +682,7 @@ export default function BrandCollaborationsSection() {
           onClick={() => handleOpenCategoryCard(CATEGORY_CARDS[7])}
           className="
             relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
-            border border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)]
+            border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#FFB6E6]/70 hover:shadow-[0_0_35px_rgba(255,182,230,0.35)] hover:-translate-y-1 hover:scale-[1.005]
             transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
           "
@@ -751,11 +744,12 @@ export default function BrandCollaborationsSection() {
               {/* HORIZONTAL SWIPE CAROUSEL (EXACTLY 1 CARD PER SWIPE) */}
               <div
                 id={`carousel-${section.id}`}
+                data-lenis-prevent
                 className="w-full flex flex-row flex-nowrap items-stretch overflow-x-auto snap-x snap-mandatory scrollbar-none py-2 px-0"
                 style={{
                   scrollSnapType: 'x mandatory',
                   WebkitOverflowScrolling: 'touch',
-                  touchAction: 'auto',
+                  touchAction: 'pan-x pan-y',
                   overscrollBehaviorX: 'contain',
                 }}
               >
@@ -882,7 +876,8 @@ export default function BrandCollaborationsSection() {
 
               <div
                 ref={modalScrollContainerRef}
-                style={{ scrollBehavior: 'smooth', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                data-lenis-prevent
+                style={{ scrollBehavior: 'smooth', scrollbarWidth: 'none', msOverflowStyle: 'none', touchAction: 'pan-x pan-y' }}
                 className={
                   selectedCard.projects.length > 3
                     ? "flex flex-row overflow-x-auto gap-5 pb-1 no-scrollbar scrollbar-none scroll-smooth snap-x items-stretch w-full px-1"

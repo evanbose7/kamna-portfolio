@@ -17,6 +17,7 @@ export default function AboutSection({ onOpenConnectModal }) {
 
   useEffect(() => {
     let ticking = false;
+    let lastProgress = -1;
 
     const updateScroll = () => {
       if (!containerRef.current) {
@@ -34,6 +35,19 @@ export default function AboutSection({ onOpenConnectModal }) {
       let progress = (start - rect.top) / (start - end);
       progress = Math.min(Math.max(progress, 0), 1);
 
+      // Skip re-renders when already fully revealed (e.g. scrolling in brand content) or not yet reached
+      if ((progress === 1 && lastProgress === 1) || (progress === 0 && lastProgress === 0)) {
+        ticking = false;
+        return;
+      }
+
+      // Throttle micro changes to avoid jittery re-renders
+      if (Math.abs(progress - lastProgress) < 0.015 && progress > 0 && progress < 1) {
+        ticking = false;
+        return;
+      }
+
+      lastProgress = progress;
       setScrollProgress(progress);
       ticking = false;
     };
