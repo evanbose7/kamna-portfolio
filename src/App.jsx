@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Lenis from 'lenis';
 
 import Cursor from './components/Cursor';
 import ProgressBar from './components/ProgressBar';
@@ -17,51 +16,6 @@ import Footer from './components/Footer';
 export default function App() {
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
-
-  // Smooth scroll down & up ONLY on desktop; 100% native touch scrolling on mobile
-  useEffect(() => {
-    let lenisInstance = null;
-
-    const startLenis = () => {
-      if (lenisInstance) return;
-      // Only enable on desktop screens (>= 1024px)
-      if (window.innerWidth < 1024) return;
-
-      lenisInstance = new Lenis({
-        lerp: 0.1, // True continuous linear interpolation - buttery smooth & glitch-free
-        smoothWheel: true,
-        wheelMultiplier: 1.0,
-        touchMultiplier: 0, // Never intercept touch
-        autoRaf: true, // High-precision delta-timed internal animation loop
-      });
-
-      window.lenis = lenisInstance;
-    };
-
-    const stopLenis = () => {
-      if (lenisInstance) {
-        lenisInstance.destroy();
-        lenisInstance = null;
-        delete window.lenis;
-      }
-    };
-
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        if (!lenisInstance) startLenis();
-      } else {
-        if (lenisInstance) stopLenis();
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize, { passive: true });
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      stopLenis();
-    };
-  }, []);
 
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F5F0EB] relative selection:bg-[#E91E8C] selection:text-white">
