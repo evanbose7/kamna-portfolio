@@ -22,18 +22,28 @@ export default function App() {
   useEffect(() => {
     let lenisInstance = null;
 
+    const isDesktopDevice = () => {
+      if (typeof window === 'undefined') return false;
+      if (window.innerWidth < 1024) return false;
+      if (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+        return false;
+      }
+      return true;
+    };
+
     const startLenis = () => {
       if (lenisInstance) return;
-      // Only enable on desktop screens (>= 1024px)
-      if (window.innerWidth < 1024) return;
+      if (!isDesktopDevice()) return;
 
       lenisInstance = new Lenis({
         lerp: 0.09, // Consistent, silky smooth linear interpolation
         smoothWheel: true,
         wheelMultiplier: 1.0,
-        touchMultiplier: 0, // Keep touch scrolling 100% native on mobile
+        syncTouch: false,
+        smoothTouch: false, // Keep touch gestures 100% native
+        touchMultiplier: 1.0,
         autoRaf: true,
-        overscroll: false, // PREVENTS Lenis from falling back to native scroll at bottom/top boundaries
+        overscroll: false, // Prevents Lenis from falling back to native scroll at bottom/top boundaries
       });
 
       window.lenis = lenisInstance;
@@ -48,7 +58,7 @@ export default function App() {
     };
 
     const handleResize = () => {
-      if (window.innerWidth >= 1024) {
+      if (isDesktopDevice()) {
         if (!lenisInstance) startLenis();
       } else {
         if (lenisInstance) stopLenis();
