@@ -190,12 +190,10 @@ export default function YouTubeSection() {
           </div>
 
           <div
-            data-lenis-prevent
             className="flex sm:grid overflow-x-auto sm:overflow-visible snap-x sm:snap-none snap-mandatory grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-0 scrollbar-none -mx-5 px-5 sm:mx-0 sm:px-0"
             style={{
               WebkitOverflowScrolling: 'touch',
               touchAction: 'pan-x pan-y',
-              overscrollBehaviorX: 'contain',
             }}
           >
             {youtubeShorts.map((short) => (
