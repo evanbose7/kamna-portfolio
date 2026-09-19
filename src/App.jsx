@@ -18,15 +18,15 @@ export default function App() {
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
 
-  // Initialize 120 FPS Lenis Inertia Smooth Scroll & attach to window
+  // Initialize 60-120 FPS Lenis Inertia Smooth Scroll & attach to window
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.95,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1.0,
       touchMultiplier: 1.0,
-      smoothTouch: false, // Preserves native 120 FPS hardware compositor momentum on touch devices
+      smoothTouch: false, // Preserves native compositor momentum on touch devices
     });
 
     window.lenis = lenis;
@@ -39,7 +39,16 @@ export default function App() {
 
     animationFrameId = requestAnimationFrame(raf);
 
+    // Keep Lenis scroll limits accurate as dynamic assets/images render
+    const resizeObserver = new ResizeObserver(() => {
+      lenis.resize();
+    });
+    if (document.body) {
+      resizeObserver.observe(document.body);
+    }
+
     return () => {
+      resizeObserver.disconnect();
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
       lenis.destroy();
       delete window.lenis;

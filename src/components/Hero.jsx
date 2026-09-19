@@ -11,6 +11,16 @@ export default function Hero({ onOpenConnectModal }) {
   const mediaSrc = isVideoMedia ? '/assets/kamna-video.mp4' : '/assets/kamna-portrait.jpg';
 
   const leftColRef = React.useRef(null);
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    const checkViewport = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    checkViewport();
+    window.addEventListener('resize', checkViewport, { passive: true });
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -18,8 +28,18 @@ export default function Hero({ onOpenConnectModal }) {
 
     const updateScroll = () => {
       if (!leftColRef.current) return;
+
+      // On desktop, NEVER fade - keep fully visible, static, and interactive
+      if (window.innerWidth >= 1024) {
+        leftColRef.current.style.opacity = '1';
+        leftColRef.current.style.transform = 'none';
+        leftColRef.current.style.pointerEvents = 'auto';
+        ticking = false;
+        return;
+      }
+
       const scrollY = window.lenis ? window.lenis.scroll : (window.scrollY || window.pageYOffset || 0);
-      // Smoothly reveal text over the first 180px of scroll
+      // Smoothly reveal text over the first 180px of scroll on mobile
       const progress = Math.min(Math.max(scrollY / 180, 0), 1);
 
       // Stop DOM style writes if already settled at 1 (scrolled down) or 0 (at top)
@@ -36,6 +56,7 @@ export default function Hero({ onOpenConnectModal }) {
     };
 
     const handleScroll = () => {
+      if (window.innerWidth >= 1024) return;
       if (!ticking) {
         window.requestAnimationFrame(updateScroll);
         ticking = true;
@@ -106,16 +127,20 @@ export default function Hero({ onOpenConnectModal }) {
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center relative z-10">
         
-        {/* Left Column: Heading & Info (Initially hidden, revealed on scroll down with fading effect) */}
+        {/* Left Column: Heading & Info (Always visible on desktop; smooth fade on mobile scroll) */}
         <div
           ref={leftColRef}
-          style={{
+          style={isDesktop ? {
+            opacity: 1,
+            transform: 'none',
+            pointerEvents: 'auto',
+          } : {
             opacity: 0,
             transform: 'translate3d(0, 28px, 0)',
             pointerEvents: 'none',
             transition: 'opacity 0.2s ease-out, transform 0.2s ease-out',
           }}
-          className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left will-change-transform transform-gpu"
+          className="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1 text-center lg:text-left will-change-transform transform-gpu lg:!opacity-100 lg:!transform-none lg:!pointer-events-auto"
         >
           <div>
             <h1
