@@ -21,8 +21,6 @@ export default function App() {
   // Smooth scroll down & up ONLY on desktop; 100% native touch scrolling on mobile
   useEffect(() => {
     let lenisInstance = null;
-    let animationFrameId = null;
-    let resizeObserver = null;
 
     const startLenis = () => {
       if (lenisInstance) return;
@@ -30,42 +28,17 @@ export default function App() {
       if (window.innerWidth < 1024) return;
 
       lenisInstance = new Lenis({
-        duration: 0.95,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        lerp: 0.1, // True continuous linear interpolation - buttery smooth & glitch-free
         smoothWheel: true,
         wheelMultiplier: 1.0,
-        touchMultiplier: 0, // Never intercept touch on mobile
-        smoothTouch: false,
+        touchMultiplier: 0, // Never intercept touch
+        autoRaf: true, // High-precision delta-timed internal animation loop
       });
 
       window.lenis = lenisInstance;
-
-      function raf(time) {
-        if (lenisInstance) {
-          lenisInstance.raf(time);
-          animationFrameId = requestAnimationFrame(raf);
-        }
-      }
-      animationFrameId = requestAnimationFrame(raf);
-
-      // Keep Lenis scroll limits accurate as dynamic assets render
-      resizeObserver = new ResizeObserver(() => {
-        if (lenisInstance) lenisInstance.resize();
-      });
-      if (document.body) {
-        resizeObserver.observe(document.body);
-      }
     };
 
     const stopLenis = () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = null;
-      }
-      if (resizeObserver) {
-        resizeObserver.disconnect();
-        resizeObserver = null;
-      }
       if (lenisInstance) {
         lenisInstance.destroy();
         lenisInstance = null;

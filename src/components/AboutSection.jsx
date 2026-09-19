@@ -18,6 +18,14 @@ export default function AboutSection({ onOpenConnectModal }) {
   useEffect(() => {
     let ticking = false;
     let lastProgress = -1;
+    let containerDocTop = 0;
+
+    const measureTop = () => {
+      if (containerRef.current) {
+        const scrollY = window.lenis ? window.lenis.scroll : (window.scrollY || window.pageYOffset || 0);
+        containerDocTop = containerRef.current.getBoundingClientRect().top + scrollY;
+      }
+    };
 
     const updateScroll = () => {
       if (!containerRef.current) {
@@ -25,14 +33,19 @@ export default function AboutSection({ onOpenConnectModal }) {
         return;
       }
 
-      const rect = containerRef.current.getBoundingClientRect();
+      if (!containerDocTop) {
+        measureTop();
+      }
+
+      const scrollY = window.lenis ? window.lenis.scroll : (window.scrollY || window.pageYOffset || 0);
+      const rectTop = containerDocTop - scrollY;
       const windowHeight = window.innerHeight;
 
       // Start revealing as section enters screen (75% viewport height)
       const start = windowHeight * 0.75;
       const end = -windowHeight * 0.1;
 
-      let progress = (start - rect.top) / (start - end);
+      let progress = (start - rectTop) / (start - end);
       progress = Math.min(Math.max(progress, 0), 1);
 
       // Skip re-renders when already fully revealed (e.g. scrolling in brand content) or not yet reached
@@ -42,7 +55,7 @@ export default function AboutSection({ onOpenConnectModal }) {
       }
 
       // Throttle micro changes to avoid jittery re-renders
-      if (Math.abs(progress - lastProgress) < 0.015 && progress > 0 && progress < 1) {
+      if (Math.abs(progress - lastProgress) < 0.02 && progress > 0 && progress < 1) {
         ticking = false;
         return;
       }
@@ -59,19 +72,35 @@ export default function AboutSection({ onOpenConnectModal }) {
       }
     };
 
+    const handleResize = () => {
+      measureTop();
+      updateScroll();
+    };
+
+    measureTop();
+    updateScroll();
+
     if (window.lenis) {
       window.lenis.on('scroll', handleScroll);
     }
+    const lenisCheck = setInterval(() => {
+      if (window.lenis) {
+        window.lenis.on('scroll', handleScroll);
+        clearInterval(lenisCheck);
+      }
+    }, 100);
+    setTimeout(() => clearInterval(lenisCheck), 2500);
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', updateScroll, { passive: true });
-    updateScroll();
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
+      clearInterval(lenisCheck);
       if (window.lenis) {
         window.lenis.off('scroll', handleScroll);
       }
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', updateScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -137,7 +166,9 @@ export default function AboutSection({ onOpenConnectModal }) {
                     return (
                       <span
                         key={wIdx}
-                        className="inline-block mr-[0.28em] transition-colors duration-400 ease-out select-none"
+                        className={`inline-block mr-[0.28em] transition-colors duration-300 ease-out select-none ${
+                          isSpecial ? 'font-bold' : 'font-medium'
+                        }`}
                         style={{
                           color: wordWeight > 0.6
                             ? isSpecial
@@ -145,7 +176,6 @@ export default function AboutSection({ onOpenConnectModal }) {
                               : '#FFFFFF'
                             : `rgba(245, 240, 235, ${opacity})`,
                           opacity,
-                          fontWeight: isSpecial ? '700' : '500',
                           textShadow: isSpecial && wordWeight > 0.6
                             ? '0 0 16px rgba(233,30,140,0.85)'
                             : 'none',
