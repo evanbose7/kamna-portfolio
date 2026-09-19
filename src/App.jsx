@@ -18,40 +18,75 @@ export default function App() {
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
 
-  // Initialize 60-120 FPS Lenis Inertia Smooth Scroll & attach to window
+  // Smooth scroll down & up ONLY on desktop; 100% native touch scrolling on mobile
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 0.95,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.0,
-      smoothTouch: false, // Preserves native compositor momentum on touch devices
-    });
+    let lenisInstance = null;
+    let animationFrameId = null;
+    let resizeObserver = null;
 
-    window.lenis = lenis;
+    const startLenis = () => {
+      if (lenisInstance) return;
+      // Only enable on desktop screens (>= 1024px)
+      if (window.innerWidth < 1024) return;
 
-    let animationFrameId;
-    function raf(time) {
-      lenis.raf(time);
+      lenisInstance = new Lenis({
+        duration: 0.95,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 0, // Never intercept touch on mobile
+        smoothTouch: false,
+      });
+
+      window.lenis = lenisInstance;
+
+      function raf(time) {
+        if (lenisInstance) {
+          lenisInstance.raf(time);
+          animationFrameId = requestAnimationFrame(raf);
+        }
+      }
       animationFrameId = requestAnimationFrame(raf);
-    }
 
-    animationFrameId = requestAnimationFrame(raf);
+      // Keep Lenis scroll limits accurate as dynamic assets render
+      resizeObserver = new ResizeObserver(() => {
+        if (lenisInstance) lenisInstance.resize();
+      });
+      if (document.body) {
+        resizeObserver.observe(document.body);
+      }
+    };
 
-    // Keep Lenis scroll limits accurate as dynamic assets/images render
-    const resizeObserver = new ResizeObserver(() => {
-      lenis.resize();
-    });
-    if (document.body) {
-      resizeObserver.observe(document.body);
-    }
+    const stopLenis = () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
+      if (lenisInstance) {
+        lenisInstance.destroy();
+        lenisInstance = null;
+        delete window.lenis;
+      }
+    };
+
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        if (!lenisInstance) startLenis();
+      } else {
+        if (lenisInstance) stopLenis();
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
-      resizeObserver.disconnect();
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      lenis.destroy();
-      delete window.lenis;
+      window.removeEventListener('resize', handleResize);
+      stopLenis();
     };
   }, []);
 
