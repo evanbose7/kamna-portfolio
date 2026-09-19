@@ -67,6 +67,23 @@
   background: #E91E8C;
 }
 
+/* Remove scrollbar on the right side on desktop only (>= 1024px) */
+@media (min-width: 1024px) {
+  html,
+  body,
+  :root {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  :root::-webkit-scrollbar {
+    display: none !important;
+    width: 0px !important;
+    height: 0px !important;
+  }
+}
+
 /* No Scrollbar Utility */
 .no-scrollbar::-webkit-scrollbar,
 .scrollbar-none::-webkit-scrollbar {
