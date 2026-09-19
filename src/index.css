@@ -82,26 +82,27 @@
   background: #E91E8C;
 }
 
-/* Desktop-only: smooth boundary lock and remove right-side scrollbar (>= 1024px) */
+/* Remove main page right-side scrollbar completely on all devices (mobile & desktop) */
+html,
+body,
+:root {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+:root::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+}
+
+/* Desktop-only: smooth boundary lock */
 @media (min-width: 1024px) {
   html,
   body {
     overscroll-behavior-y: none !important;
     scroll-behavior: auto !important;
-  }
-
-  html,
-  body,
-  :root {
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-  }
-  html::-webkit-scrollbar,
-  body::-webkit-scrollbar,
-  :root::-webkit-scrollbar {
-    display: none !important;
-    width: 0px !important;
-    height: 0px !important;
   }
 }
 
