@@ -28,11 +28,12 @@ export default function App() {
       if (window.innerWidth < 1024) return;
 
       lenisInstance = new Lenis({
-        lerp: 0.08, // Liquid-silk linear interpolation
+        lerp: 0.09, // Consistent, silky smooth linear interpolation
         smoothWheel: true,
-        wheelMultiplier: 0.9, // Gentle, premium wheel velocity
+        wheelMultiplier: 1.0,
         touchMultiplier: 0, // Keep touch scrolling 100% native on mobile
-        autoRaf: true, // High-precision delta-timed animation loop
+        autoRaf: true,
+        overscroll: false, // PREVENTS Lenis from falling back to native scroll at bottom/top boundaries
       });
 
       window.lenis = lenisInstance;
