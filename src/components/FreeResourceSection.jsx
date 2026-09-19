@@ -10,11 +10,21 @@ export default function FreeResourceSection({ onOpenPdfModal }) {
 
   useEffect(() => {
     let ticking = false;
+    let quoteDocTop = 0;
+    let lastProgress = -1;
+
+    const measureTop = () => {
+      if (!quoteRef.current) return;
+      const rect = quoteRef.current.getBoundingClientRect();
+      quoteDocTop = rect.top + (window.scrollY || window.pageYOffset || 0);
+    };
 
     const updateScroll = () => {
       if (!quoteRef.current) return;
+      if (!quoteDocTop) measureTop();
 
-      const rect = quoteRef.current.getBoundingClientRect();
+      const scrollY = window.lenis ? window.lenis.scroll : (window.scrollY || window.pageYOffset || 0);
+      const rectTop = quoteDocTop - scrollY;
       const windowHeight = window.innerHeight;
 
       // Start revealing when the text enters middle of screen (75%)
@@ -22,14 +32,22 @@ export default function FreeResourceSection({ onOpenPdfModal }) {
       const start = windowHeight * 0.75;
       const end = windowHeight * 0.45;
 
-      let progress = (start - rect.top) / (start - end);
+      let progress = (start - rectTop) / (start - end);
+      progress = Math.min(Math.max(progress, 0), 1);
 
-      if (rect.top <= end) {
-        progress = 1;
-      } else {
-        progress = Math.min(Math.max(progress, 0), 1);
+      // Skip re-rendering when already settled at 1 (scrolled past) or 0 (not reached)
+      if ((progress === 1 && lastProgress === 1) || (progress === 0 && lastProgress === 0)) {
+        ticking = false;
+        return;
       }
 
+      // Throttle sub-pixel micro increments to keep 60 FPS compositor smooth
+      if (Math.abs(progress - lastProgress) < 0.03 && progress > 0 && progress < 1) {
+        ticking = false;
+        return;
+      }
+
+      lastProgress = progress;
       setScrollProgress(progress);
       ticking = false;
     };
@@ -41,13 +59,23 @@ export default function FreeResourceSection({ onOpenPdfModal }) {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', updateScroll, { passive: true });
+    measureTop();
     updateScroll();
 
+    if (window.lenis) {
+      window.lenis.on('scroll', handleScroll);
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      measureTop();
+      updateScroll();
+    }, { passive: true });
+
     return () => {
+      if (window.lenis) {
+        window.lenis.off('scroll', handleScroll);
+      }
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', updateScroll);
     };
   }, []);
 

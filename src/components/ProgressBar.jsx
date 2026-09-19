@@ -2,9 +2,21 @@ import React, { useEffect, useRef } from 'react';
 
 export default function ProgressBar() {
   const barRef = useRef(null);
+  const totalHeightRef = useRef(1);
 
   useEffect(() => {
     let animationFrameId;
+
+    const measureHeight = () => {
+      const docHeight = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight,
+        document.documentElement.clientHeight
+      );
+      totalHeightRef.current = Math.max(docHeight - window.innerHeight, 1);
+    };
+
+    measureHeight();
 
     const calculateProgress = () => {
       let progress = 0;
@@ -12,11 +24,8 @@ export default function ProgressBar() {
       if (window.lenis && typeof window.lenis.progress === 'number') {
         progress = window.lenis.progress;
       } else {
-        const scrollY = window.scrollY || document.documentElement.scrollTop;
-        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-        if (totalHeight > 0) {
-          progress = scrollY / totalHeight;
-        }
+        const scrollY = window.scrollY || window.pageYOffset || 0;
+        progress = scrollY / totalHeightRef.current;
       }
 
       const clamped = Math.min(Math.max(progress, 0), 1);
@@ -30,11 +39,16 @@ export default function ProgressBar() {
       animationFrameId = requestAnimationFrame(calculateProgress);
     };
 
+    const onResize = () => {
+      measureHeight();
+      onScrollUpdate();
+    };
+
     if (window.lenis) {
       window.lenis.on('scroll', onScrollUpdate);
     }
     window.addEventListener('scroll', onScrollUpdate, { passive: true });
-    window.addEventListener('resize', onScrollUpdate, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
 
     calculateProgress();
 
@@ -43,7 +57,7 @@ export default function ProgressBar() {
         window.lenis.off('scroll', onScrollUpdate);
       }
       window.removeEventListener('scroll', onScrollUpdate);
-      window.removeEventListener('resize', onScrollUpdate);
+      window.removeEventListener('resize', onResize);
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, []);
