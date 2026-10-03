@@ -203,6 +203,15 @@ export default function BrandCollaborationsSection() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [activeDesktopVideo, setActiveDesktopVideo] = useState(null);
   const [modalScrollTop, setModalScrollTop] = useState(0);
+  const [isDesktopScreen, setIsDesktopScreen] = useState(() => (typeof window !== 'undefined' ? window.innerWidth >= 1024 : true));
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktopScreen(window.innerWidth >= 1024);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleCardVideoClick = (e, proj) => {
     e.stopPropagation();
@@ -473,7 +482,7 @@ export default function BrandCollaborationsSection() {
             relative col-span-12 row-span-1 min-h-[300px] lg:min-h-[360px] rounded-[28px] overflow-hidden p-6 sm:p-8
             border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#E91E8C]/70 hover:shadow-[0_0_40px_rgba(233,30,140,0.4)] hover:-translate-y-1 hover:scale-[1.002]
-            transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
+            transition-[transform,border-color,box-shadow] duration-300 flex flex-col justify-between cursor-pointer group transform-gpu will-change-transform
           "
         >
           <div className="absolute inset-0 z-0">
@@ -520,7 +529,7 @@ export default function BrandCollaborationsSection() {
             relative col-span-6 row-span-1 min-h-[250px] lg:min-h-[320px] rounded-[28px] overflow-hidden p-6
             border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#FF9BD2]/70 hover:shadow-[0_0_35px_rgba(255,155,210,0.35)] hover:-translate-y-1 hover:scale-[1.005]
-            transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
+            transition-[transform,border-color,box-shadow] duration-300 flex flex-col justify-between cursor-pointer group transform-gpu will-change-transform
           "
         >
           <div className="absolute inset-0 z-0">
@@ -561,7 +570,7 @@ export default function BrandCollaborationsSection() {
             relative col-span-6 row-span-1 min-h-[250px] lg:min-h-[320px] rounded-[28px] overflow-hidden p-6
             border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#C4A1FF]/70 hover:shadow-[0_0_35px_rgba(196,161,255,0.35)] hover:-translate-y-1 hover:scale-[1.005]
-            transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
+            transition-[transform,border-color,box-shadow] duration-300 flex flex-col justify-between cursor-pointer group transform-gpu will-change-transform
           "
         >
           <div className="absolute inset-0 z-0">
@@ -602,7 +611,7 @@ export default function BrandCollaborationsSection() {
             relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
             border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#FF9BD2]/70 hover:shadow-[0_0_35px_rgba(255,155,210,0.35)] hover:-translate-y-1 hover:scale-[1.005]
-            transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
+            transition-[transform,border-color,box-shadow] duration-300 flex flex-col justify-between cursor-pointer group transform-gpu will-change-transform
           "
         >
           <div className="absolute inset-0 z-0">
@@ -643,7 +652,7 @@ export default function BrandCollaborationsSection() {
             relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
             border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#B388FF]/70 hover:shadow-[0_0_35px_rgba(179,136,255,0.35)] hover:-translate-y-1 hover:scale-[1.005]
-            transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
+            transition-[transform,border-color,box-shadow] duration-300 flex flex-col justify-between cursor-pointer group transform-gpu will-change-transform
           "
         >
           <div className="absolute inset-0 z-0">
@@ -684,7 +693,7 @@ export default function BrandCollaborationsSection() {
             relative col-span-4 row-span-1 min-h-[200px] lg:min-h-[240px] rounded-[28px] overflow-hidden p-5
             border border-white/15 bg-[#12071B] shadow-[0_20px_50px_rgba(0,0,0,0.65)]
             hover:border-[#FFB6E6]/70 hover:shadow-[0_0_35px_rgba(255,182,230,0.35)] hover:-translate-y-1 hover:scale-[1.005]
-            transition-all duration-300 flex flex-col justify-between cursor-pointer group gpu-layer
+            transition-[transform,border-color,box-shadow] duration-300 flex flex-col justify-between cursor-pointer group transform-gpu will-change-transform
           "
         >
           <div className="absolute inset-0 z-0">
@@ -723,7 +732,8 @@ export default function BrandCollaborationsSection() {
       {/* ========================================================================= */}
       {/* 📱 2. MOBILE PHONE ONLY: SINGLE CARD PER SWIPE VIDEO CAROUSELS */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden w-full max-w-full overflow-x-hidden px-4 space-y-10 mb-6">
+      {!isDesktopScreen && (
+        <div className="block lg:hidden w-full max-w-full overflow-x-hidden px-4 space-y-10 mb-6">
         {mobilePortfolioSections.map((section) => {
           const Icon = section.icon;
 
@@ -804,6 +814,7 @@ export default function BrandCollaborationsSection() {
           );
         })}
       </div>
+      )}
 
       {/* ========================================================================= */}
       {/* 3. DESKTOP INTERACTIVE ARCHIVE SHOWCASE MODAL */}

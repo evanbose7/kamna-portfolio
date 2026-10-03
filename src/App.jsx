@@ -36,7 +36,7 @@ export default function App() {
       if (!isDesktopDevice()) return;
 
       lenisInstance = new Lenis({
-        lerp: 0.09, // Consistent, silky smooth linear interpolation
+        lerp: 0.1, // True continuous linear interpolation - buttery smooth & glitch-free
         smoothWheel: true,
         wheelMultiplier: 1.0,
         syncTouch: false,
