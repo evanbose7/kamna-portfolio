@@ -36,20 +36,22 @@ export default function AboutSection({ onOpenConnectModal }) {
       if (!totalWords) return;
       for (let i = 1; i < totalWords; i++) {
         const el = wordsElements[i];
-        const center = i / (totalWords - 1);
-        const localProgress = (progress - (center - 0.25)) / 0.35;
-        const weight = Math.min(Math.max(localProgress, 0), 1);
+        const threshold = 0.05 + (i / (totalWords - 1)) * 0.85;
         const isSpecial = el.getAttribute('data-special') === '1';
-        const opacity = (0.22 + weight * 0.78).toFixed(2);
+        const isActive = progress >= threshold;
+        const wasActive = el.dataset.active === '1';
 
-        if (weight > 0.6) {
-          el.style.color = isSpecial ? '#E91E8C' : '#FFFFFF';
-          el.style.opacity = '1';
-          el.style.textShadow = isSpecial ? '0 0 16px rgba(233,30,140,0.85)' : 'none';
-        } else {
-          el.style.color = `rgba(245, 240, 235, ${opacity})`;
-          el.style.opacity = opacity;
-          el.style.textShadow = 'none';
+        if (isActive !== wasActive) {
+          el.dataset.active = isActive ? '1' : '0';
+          if (isActive) {
+            el.style.color = isSpecial ? '#E91E8C' : '#FFFFFF';
+            el.style.opacity = '1';
+            el.style.textShadow = isSpecial ? '0 0 16px rgba(233,30,140,0.85)' : 'none';
+          } else {
+            el.style.color = 'rgba(245, 240, 235, 0.22)';
+            el.style.opacity = '0.22';
+            el.style.textShadow = 'none';
+          }
         }
       }
     };
@@ -82,7 +84,7 @@ export default function AboutSection({ onOpenConnectModal }) {
       }
 
       // Small threshold to avoid subpixel noise
-      if (Math.abs(progress - lastProgress) < 0.005 && progress > 0 && progress < 1) {
+      if (Math.abs(progress - lastProgress) < 0.002 && progress > 0 && progress < 1) {
         ticking = false;
         return;
       }
@@ -176,13 +178,16 @@ export default function AboutSection({ onOpenConnectModal }) {
                       <span
                         key={wIdx}
                         data-special={isSpecial ? '1' : '0'}
-                        className={`about-word inline-block mr-[0.28em] select-none ${
+                        data-active={isFirst ? '1' : '0'}
+                        className={`about-word inline-block mr-[0.28em] select-none transition-[color,opacity,text-shadow] duration-500 ease-out ${
                           isSpecial ? 'font-bold' : 'font-medium'
                         }`}
                         style={{
                           color: isFirst ? '#FFFFFF' : 'rgba(245, 240, 235, 0.22)',
                           opacity: isFirst ? 1 : 0.22,
                           textShadow: 'none',
+                          transition: 'color 0.45s ease-out, opacity 0.45s ease-out, text-shadow 0.45s ease-out',
+                          willChange: 'color, opacity, text-shadow',
                         }}
                       >
                         {word}
